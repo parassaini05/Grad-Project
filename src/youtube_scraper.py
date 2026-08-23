@@ -2,6 +2,32 @@ import os
 import pandas as pd
 from googleapiclient.discovery import build
 from dotenv import load_dotenv
+from datetime import datetime, timedelta, timezone
+import emoji
+from langdetect import detect
+import dateutil.parser
+
+def is_valid_comment(text):
+    if not isinstance(text, str) or not text.strip():
+        return False
+        
+    # 1. Less than 8 words
+    if len(text.split()) < 8:
+        return False
+        
+    # 2. Contains emoji
+    if emoji.emoji_count(text) > 0:
+        return False
+        
+    # 3. In Hindi language
+    try:
+        lang = detect(text)
+        if lang == 'hi':
+            return False
+    except:
+        return False
+        
+    return True
 
 def search_youtube_videos(youtube, query, max_results=5):
     print(f"Searching YouTube for: {query}")
@@ -23,8 +49,10 @@ def search_youtube_videos(youtube, query, max_results=5):
         })
     return videos
 
-def fetch_video_comments(youtube, video_id, max_results=50):
+def fetch_video_comments(youtube, video_id, max_results=100):
     comments = []
+    twelve_weeks_ago = datetime.now(timezone.utc) - timedelta(weeks=12)
+    
     try:
         request = youtube.commentThreads().list(
             part='snippet',
@@ -36,14 +64,21 @@ def fetch_video_comments(youtube, video_id, max_results=50):
         
         for item in response.get('items', []):
             comment_snippet = item['snippet']['topLevelComment']['snippet']
-            comments.append({
-                'videoId': video_id,
-                'commentId': item['id'],
-                'author': comment_snippet['authorDisplayName'],
-                'text': comment_snippet['textDisplay'],
-                'likeCount': comment_snippet['likeCount'],
-                'publishedAt': comment_snippet['publishedAt']
-            })
+            published_at = dateutil.parser.isoparse(comment_snippet['publishedAt'])
+            
+            if published_at < twelve_weeks_ago:
+                continue
+                
+            text = comment_snippet['textDisplay']
+            if is_valid_comment(text):
+                comments.append({
+                    'videoId': video_id,
+                    'commentId': item['id'],
+                    'author': comment_snippet['authorDisplayName'],
+                    'text': text,
+                    'likeCount': comment_snippet['likeCount'],
+                    'publishedAt': comment_snippet['publishedAt']
+                })
     except Exception as e:
         print(f"Error fetching comments for video {video_id}: {e}")
         
@@ -57,7 +92,7 @@ def main():
         print("Error: YOUTUBE_API_KEY not found in .env file")
         return
         
-    print("Starting YouTube data ingestion...")
+    print("Starting YouTube data ingestion (Last 12 weeks)...")
     youtube = build('youtube', 'v3', developerKey=API_KEY)
     
     queries = ["Myntra wishlist haul", "Myntra wishlist", "Myntra shopping cart", "Why I don't buy from Myntra"]
@@ -75,7 +110,7 @@ def main():
     for video in unique_videos:
         safe_title = video['title'].encode('ascii', 'ignore').decode('ascii')
         print(f"Fetching comments for video: {safe_title}")
-        comments = fetch_video_comments(youtube, video['videoId'], max_results=50)
+        comments = fetch_video_comments(youtube, video['videoId'], max_results=100)
         
         # Merge video info into comments
         for comment in comments:
@@ -84,10 +119,10 @@ def main():
         all_comments.extend(comments)
         
     if not all_comments:
-        print("No comments found.")
+        print("No valid comments found matching criteria.")
         return
         
-    print(f"Successfully fetched {len(all_comments)} comments.")
+    print(f"Successfully fetched {len(all_comments)} valid comments.")
     
     df = pd.DataFrame(all_comments)
     

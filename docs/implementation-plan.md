@@ -10,10 +10,15 @@
 ## Phase 2: Data Ingestion Layer Development
 **Objective:** Build scrapers to collect raw unstructured feedback specifically targeting wishlist and purchase hesitation behavior.
 - [ ] **Play Store Scraper Refactor:** 
-  - Update script to fetch a larger volume (e.g., 10,000+ reviews).
+  - Update script to fetch a larger volume covering the last 12 weeks of reviews.
+  - Apply data quality filters during scraping:
+    - Exclude reviews with less than 8 words.
+    - Exclude reviews containing emojis.
+    - Exclude reviews in the Hindi language.
   - Add keyword filtering to only save reviews mentioning `wishlist`, `cart`, `save`, `price drop`, `waiting`, etc.
-- [x] **YouTube Scraper Refactor:**
+- [ ] **YouTube Scraper Refactor:**
   - Update queries to "Myntra wishlist haul", "Myntra wishlist vs reality", "Why I don't buy from Myntra".
+  - Apply the same data quality filters and 12-week time range.
 
 ## Phase 3: Data Processing & Storage Layer
 **Objective:** Clean the raw data to prepare it for LLM analysis.
