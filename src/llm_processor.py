@@ -15,7 +15,9 @@ def get_groq_client():
 def build_prompt(feedback_text):
     return f"""You are a Growth Product Manager at a fashion e-commerce company (like Myntra).
 Your goal is to increase the percentage of users who purchase items from their wishlist within 30 days.
-Crucial Constraint: You CANNOT offer monetary incentives (discounts, coupons, cashbacks).
+Crucial Constraint: You CANNOT oYour workflow should go beyond summarizing reviews or performing sentiment analysis.
+
+It should enable you to identify, quantify where possible, and compare potential opportunity areas that could influence the stated business metric.ffer monetary incentives (discounts, coupons, cashbacks).
 
 Analyze the following user feedback and extract behavioral insights.
 
