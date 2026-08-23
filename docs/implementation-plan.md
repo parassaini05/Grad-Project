@@ -18,18 +18,26 @@
   - Export the final dataset to `data/processed/normalized_reviews.json`.
 
 ## Phase 3: LLM Integration and Prompt Engineering
-**Objective:** Connect to the Groq API and execute the behavioral analysis strategy.
+**Objective:** Connect to the Groq API, execute the behavioral analysis strategy, and assign structured enum tags.
 - [x] **Groq API Connection:** Implement a Python wrapper around the Groq SDK.
 - [x] **Prompt Development & Extraction:** 
   - Instruct the model to act as a Growth Product Manager.
-  - Output strict JSON categorizing the barriers (e.g., Fit Uncertainty, Social Validation) and answering key behavioral questions.
+  - Output strict JSON categorizing the barriers and answering key behavioral questions.
   - Parse responses and merge them back with the original context.
+- [x] **Enum Tag Taxonomy (Enhanced):**
+  - Assign predefined tags across 4 dimensions per review:
+    - **Decision Drivers:** Convenience, Price Sensitivity, Quality Uncertainty, Trust Deficit, Delivery Anxiety, etc.
+    - **Purchase Context:** Routine Replenishment, Occasion Shopping, Impulse Browse, Wishlist Hoarding, etc.
+    - **User Segments:** Habitual Buyer, Hesitant First-Timer, Fit-Anxious Shopper, Trust-Gated Shopper, etc.
+    - **Evidence Types:** Cart Abandonment, Wishlist Stagnation, Return Anxiety, Sizing Complaint, etc.
+  - Extract **verbatim customer quotes** from each review for the Customer Voices section.
 
 ## Phase 4: Discovery Engine Findings & Report (Alignment with Part 1)
-**Objective:** Synthesize the extracted insights to answer the specific research questions and quantify opportunity areas without designing MVP solutions.
-- [x] **Data Aggregation:** Quantify the frequency of different non-monetary barriers and unmet needs.
-- [x] **Dashboard/Visualization:** Generate charts to visually represent the friction points and compare potential opportunity areas.
-- [x] **Rewrite Discovery Report:** Revise `docs/discovery-report.md` to strictly align with "Part 1". 
-  - Remove MVP/feature pitches.
-  - Structure the report to explicitly answer the 10 core research questions (e.g., Why do users add? What causes postponement? Role of fit/size?).
-  - Clearly identify, quantify, and compare the high-potential opportunity areas that influence the business metric.
+**Objective:** Synthesize the extracted insights into a multi-layered report with Insight + Data Proof + Customer Voices.
+- [x] **Data Aggregation:** Quantify the frequency of different non-monetary barriers, decision drivers, and user segments.
+- [x] **Cross-Pattern Analysis:** Generate co-occurrence matrices (Decision Driver × User Segment) to uncover multi-dimensional behavioral patterns.
+- [x] **Dashboard/Visualization:** Generate charts including barrier frequencies, enum tag distributions, user segment pie charts, and cross-pattern heatmaps.
+- [x] **Rewrite Discovery Report:** Revise `docs/discovery-report.md` with the enhanced 3-layer format:
+  - **Insight:** Narrative synthesis of the behavioral pattern.
+  - **Data Proof:** Hard percentages from the tagged dataset.
+  - **Customer Voices:** Verbatim quotes from real users anchoring the insight.

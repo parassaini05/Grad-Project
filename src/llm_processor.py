@@ -4,6 +4,7 @@ import pandas as pd
 from groq import Groq
 from dotenv import load_dotenv
 import time
+import re
 
 def get_groq_client():
     load_dotenv()
@@ -26,16 +27,20 @@ Feedback: "{feedback_text}"
 
 Output a strict JSON object with the following schema, and absolutely no other text:
 {{
-    "is_relevant": true, // false if the feedback doesn't actually contain a purchase barrier
+    "is_relevant": true,
     "reason_for_wishlisting": "string",
     "non_monetary_barrier": "string (e.g., Fit Uncertainty, Need Social Validation, Sizing Issues, Waiting for Occasion, Out of Stock, None)",
     "unmet_need": "string",
-    "suggested_product_feature": "string"
+    "suggested_product_feature": "string",
+    "decision_driver": "one of: Convenience, Price Sensitivity, Quality Uncertainty, Past Experience, Trust Deficit, Visual Appeal, Competitor Superiority, Missing Feature, Delivery Anxiety, Not Mentioned",
+    "purchase_context": "one of: Routine Replenishment, Occasion Shopping, Impulse Browse, Wishlist Hoarding, Gift Purchase, Not Mentioned",
+    "user_segment": "one of: Habitual Buyer, Hesitant First-Timer, Deal Seeker, Fit-Anxious Shopper, Trend Follower, Trust-Gated Shopper, Not Mentioned",
+    "evidence_type": "one of: Repeat Purchase, Cart Abandonment, Wishlist Stagnation, Competitor Comparison, Return Anxiety, Sizing Complaint, Delivery Complaint, Not Mentioned",
+    "verbatim_quote": "Extract the single most insightful phrase or sentence directly from the feedback text (exact words, max 30 words)"
 }}
 """
 
 def analyze_feedback(client, text):
-    import re
     try:
         response = client.chat.completions.create(
             messages=[
@@ -62,7 +67,7 @@ def analyze_feedback(client, text):
         return None
 
 def main():
-    print("Starting LLM Integration (Phase 4 & 5)...")
+    print("Starting LLM Integration (Enhanced Pipeline)...")
     
     input_file = os.path.join("data", "processed", "cleaned_feedback.csv")
     if not os.path.exists(input_file):
@@ -75,7 +80,7 @@ def main():
     client = get_groq_client()
     results = []
     
-    # Process up to 25 rows to ensure a fast turnaround and avoid rate limits
+    # Process up to 25 rows to stay within rate limits
     df_sample = df.head(25).copy()
     
     for idx, row in df_sample.iterrows():
