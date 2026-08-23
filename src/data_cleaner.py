@@ -110,9 +110,14 @@ def main():
     print(f"Rows after strict keyword filtering: {len(df_filtered)}")
     
     # Save to processed
-    output_file = os.path.join(processed_dir, "cleaned_feedback.csv")
-    df_filtered.to_csv(output_file, index=False)
-    print(f"Successfully saved cleaned data to {output_file}")
+    output_csv = os.path.join(processed_dir, "cleaned_feedback.csv")
+    output_json = os.path.join(processed_dir, "normalized_reviews.json")
+    
+    df_filtered.to_csv(output_csv, index=False)
+    # Export to JSON format for LLM Phase
+    df_filtered.to_json(output_json, orient='records', indent=4)
+    
+    print(f"Successfully saved cleaned data to {output_csv} and {output_json}")
 
 if __name__ == "__main__":
     main()

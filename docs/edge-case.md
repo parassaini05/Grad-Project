@@ -1,6 +1,6 @@
-# Edge Cases and Corner Scenarios: Myntra Sentiment Analysis
+# Edge Cases and Corner Scenarios: Wishlist Discovery Engine
 
-When building a real-world data pipeline and utilizing Large Language Models (LLMs), several edge cases can compromise the stability of the system or the accuracy of the insights. This document outlines the potential edge cases for the Myntra sentiment analysis project and proposed handling strategies.
+When building a real-world data pipeline and utilizing Large Language Models (LLMs), several edge cases can compromise the stability of the system or the accuracy of the insights. This document outlines the potential edge cases for the Myntra Wishlist Discovery Engine and proposed handling strategies.
 
 ## 1. Data Ingestion (Scraping & APIs)
 
@@ -15,7 +15,7 @@ When building a real-world data pipeline and utilizing Large Language Models (LL
 - **Scenario:** A YouTube video or comment is deleted between the time it is scraped and processed, or a Play Store review contains only a star rating with no text.
 - **Handling Strategy:** 
   - Ensure the scraper explicitly checks for `None`, `[deleted]`, or empty string text bodies.
-  - Filter out text-less reviews during the initial Pandas preprocessing phase; star ratings without text cannot undergo LLM sentiment analysis.
+  - Filter out text-less reviews during the initial Pandas preprocessing phase; star ratings without text cannot undergo behavioral analysis.
 
 ## 2. Data Processing & Linguistic Variations
 
@@ -26,9 +26,9 @@ When building a real-world data pipeline and utilizing Large Language Models (LL
   - If a review is entirely in a regional script, either filter it out or use a lightweight translation library before sending it to the LLM.
 
 ### 2.2. Sarcasm and Ambiguity
-- **Scenario:** A user writes, "Great job delivering a torn shirt after 2 weeks. Best app ever." Traditional keyword sentiment analysis would label this as positive.
+- **Scenario:** A user writes, "Great job delivering a torn shirt after 2 weeks. Best app ever." Traditional sentiment analysis would label this as positive, missing the actual conversion barrier.
 - **Handling Strategy:** 
-  - Rely on the advanced contextual understanding of the Groq LLM. The prompt must explicitly instruct the LLM to identify sarcasm and label the actual underlying sentiment (Negative) and category (Product Quality/Logistics).
+  - Rely on the advanced contextual understanding of the Groq LLM. The prompt must explicitly instruct the LLM to identify sarcasm and label the actual underlying `non_monetary_barrier` (e.g., "Delivery Delay / Trust Deficit").
 
 ### 2.3. Spam, Bot Reviews, and Promos
 - **Scenario:** Reviews containing promotional links, repeated characters ("wooooooow"), or bot spam.
@@ -45,7 +45,7 @@ When building a real-world data pipeline and utilizing Large Language Models (LL
 ## 3. LLM Integration (Groq API)
 
 ### 3.1. Malformed JSON Responses
-- **Scenario:** The Groq LLM is instructed to return a strict JSON format (e.g., `{"sentiment": "negative", "category": "UI"}`), but instead it returns conversational text before the JSON, or a malformed JSON string (e.g., missing quotes).
+- **Scenario:** The Groq LLM is instructed to return a strict JSON format (e.g., `{"non_monetary_barrier": "Stock Uncertainty"}`), but instead it returns conversational text before the JSON, or a malformed JSON string (e.g., missing quotes).
 - **Handling Strategy:**
   - Use strict system prompts (e.g., "Return ONLY valid JSON. Do not include introductory text.").
   - Use Python's `json.loads()` inside a `try-except` block. If parsing fails, use Regex to extract the JSON payload from the text, or fallback to labeling the review as "Uncategorized".
