@@ -108,20 +108,34 @@ export default function ScraperView() {
         `> [WARNING] Backend connection failed: ${err.message}`,
         `> Using robust fallback data to visualize the analytical pipeline.`
       ]);
-      realData = [
-        { text: "My order was cancelled after 10 days.", category: "Trust Deficit", segment: "Trust-Gated Shopper", evidence: "Delivery Complaint" },
-        { text: "Returns are too complicated.", category: "Trust Deficit", segment: "Trust-Gated Shopper", evidence: "Return Anxiety" },
-        { text: "Customer care is worst.", category: "Trust Deficit", segment: "Trust-Gated Shopper", evidence: "Return Anxiety" },
-        { text: "Delivery boy refused to open package.", category: "Trust Deficit", segment: "Trust-Gated Shopper", evidence: "Delivery Complaint" },
-        { text: "Just give me my refund on time.", category: "Trust Deficit", segment: "Trust-Gated Shopper", evidence: "Return Anxiety" },
-        { text: "They never deliver on time here.", category: "Delivery Anxiety", segment: "Trust-Gated Shopper", evidence: "Delivery Complaint" },
-        { text: "After waiting 20 days, cancelled.", category: "Delivery Anxiety", segment: "Trust-Gated Shopper", evidence: "Delivery Complaint" },
-        { text: "Delivery takes too long to my city.", category: "Delivery Anxiety", segment: "Trust-Gated Shopper", evidence: "Delivery Complaint" },
+      
+      const fallbackPlaystore = [
+        ...Array(7).fill({ text: "My order was cancelled without notice.", category: "Trust Deficit", segment: "Trust-Gated Shopper", evidence: "Delivery Complaint" }),
+        ...Array(4).fill({ text: "Refund not received after return.", category: "Trust Deficit", segment: "Trust-Gated Shopper", evidence: "Return Anxiety" }),
+        ...Array(2).fill({ text: "Delivery taking too long.", category: "Delivery Anxiety", segment: "Trust-Gated Shopper", evidence: "Delivery Complaint" }),
+        { text: "Where is my order?", category: "Delivery Anxiety", segment: "Not Mentioned", evidence: "Delivery Complaint" },
         { text: "Even after gift card they charging 49rs.", category: "Price Sensitivity", segment: "Deal Seeker", evidence: "Cart Abandonment" },
-        { text: "Why is convenience fee added?", category: "Price Sensitivity", segment: "Deal Seeker", evidence: "Cart Abandonment" },
-        { text: "Fabric looks different than the video.", category: "Quality Uncertainty", segment: "Trend Follower", evidence: "Cart Abandonment" },
-        { text: "Size chart is completely wrong.", category: "Quality Uncertainty", segment: "Habitual Buyer", evidence: "Return Anxiety" }
+        { text: "I really love this app... saves my money.", category: "Price Sensitivity", segment: "Deal Seeker", evidence: "Repeat Purchase" },
+        { text: "Best shopping for rakhi great deal.", category: "Convenience", segment: "Habitual Buyer", evidence: "Not Mentioned" },
+        { text: "It's always a joyful experience.", category: "Visual Appeal", segment: "Trend Follower", evidence: "Not Mentioned" }
       ];
+
+      const fallbackYoutube = [
+        ...Array(3).fill({ text: "The color in the video is completely different from the app photos.", category: "Visual Reality Gap", segment: "Trend Follower", evidence: "Return Anxiety" }),
+        ...Array(2).fill({ text: "It looks so good here but bad on the app.", category: "Visual Reality Gap", segment: "Trend Follower", evidence: "Cart Abandonment" }),
+        ...Array(3).fill({ text: "Waiting for my favorite YouTuber to review this haul for fit validation.", category: "Styling Uncertainty", segment: "Habitual Buyer", evidence: "Return Anxiety" }),
+        { text: "Need to see how she styles it.", category: "Styling Uncertainty", segment: "Habitual Buyer", evidence: "Cart Abandonment" },
+        ...Array(2).fill({ text: "I need to see it on a real person before I buy. Fabric looks stiff.", category: "Quality Uncertainty", segment: "Deal Seeker", evidence: "Return Anxiety" }),
+        { text: "Not sure about the quality.", category: "Quality Uncertainty", segment: "Deal Seeker", evidence: "Cart Abandonment" }
+      ];
+
+      if (source === 'playstore') {
+        realData = fallbackPlaystore;
+      } else if (source === 'youtube') {
+        realData = fallbackYoutube;
+      } else {
+        realData = [...fallbackPlaystore, ...fallbackYoutube];
+      }
     }
     
     if (realData.length > 0) {
@@ -129,7 +143,7 @@ export default function ScraperView() {
       
       setLogs(prev => [
         ...prev.filter(l => !l.startsWith('> Processing real-time') && !l.startsWith('> [WARNING]')),
-        ...(realData[0].text === "My order was cancelled after 10 days." 
+        ...(realData[0].text === "My order was cancelled without notice." || realData[0].text === "The color in the video is completely different from the app photos."
             ? [`> [WARNING] Live API failed. Injecting fallback signals for visualization.`]
             : [`> [SUCCESS] Extracted ${realData.length} valid behavioral signals.`])
       ]);
