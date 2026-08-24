@@ -52,27 +52,30 @@ export default function ReportModal({ isOpen, onClose }) {
             </p>
             
             <h3 className="font-bold text-lg mt-4">Decision Drivers</h3>
+            <p className="text-sm text-slate-500 italic">Source: llm_insights.json — 18 LLM-tagged Play Store records (representative sample of 221 high-intent signals)</p>
             <table className="w-full text-left border-collapse">
-              <thead><tr className="bg-slate-100"><th className="border p-2">Driver</th><th className="border p-2">Count (Approx)</th><th className="border p-2">Share</th></tr></thead>
+              <thead><tr className="bg-slate-100"><th className="border p-2">Driver</th><th className="border p-2">Count (n=18)</th><th className="border p-2">Share</th></tr></thead>
               <tbody>
-                <tr><td className="border p-2">Trust Deficit</td><td className="border p-2">122</td><td className="border p-2">55.1%</td></tr>
-                <tr><td className="border p-2">Delivery Anxiety</td><td className="border p-2">50</td><td className="border p-2">22.8%</td></tr>
-                <tr><td className="border p-2">Price Sensitivity</td><td className="border p-2">25</td><td className="border p-2">11.4%</td></tr>
-                <tr><td className="border p-2">Quality Uncertainty</td><td className="border p-2">13</td><td className="border p-2">5.7%</td></tr>
-                <tr><td className="border p-2">Visual Reality Gap</td><td className="border p-2">5</td><td className="border p-2">2.3%</td></tr>
-                <tr><td className="border p-2">Styling Uncertainty</td><td className="border p-2">4</td><td className="border p-2">1.8%</td></tr>
-                <tr><td className="border p-2">Visual Validation</td><td className="border p-2">2</td><td className="border p-2">0.9%</td></tr>
+                <tr className="font-semibold"><td className="border p-2">Trust Deficit</td><td className="border p-2">11</td><td className="border p-2">61.1%</td></tr>
+                <tr><td className="border p-2">Delivery Anxiety</td><td className="border p-2">3</td><td className="border p-2">16.7%</td></tr>
+                <tr><td className="border p-2">Price Sensitivity</td><td className="border p-2">2</td><td className="border p-2">11.1%</td></tr>
+                <tr><td className="border p-2">Convenience</td><td className="border p-2">1</td><td className="border p-2">5.6%</td></tr>
+                <tr><td className="border p-2">Visual Appeal</td><td className="border p-2">1</td><td className="border p-2">5.6%</td></tr>
               </tbody>
             </table>
+            <p className="text-xs text-slate-500 italic mt-1">
+              ⓘ Visual Reality Gap (41.7%), Styling Uncertainty (33.3%), and Quality Uncertainty (25%) are YouTube-only signals tracked separately in 12 manually curated haul videos — not present in the LLM-tagged Play Store JSON.
+            </p>
 
             <h3 className="font-bold text-lg mt-4">User Segments</h3>
             <table className="w-full text-left border-collapse">
               <thead><tr className="bg-slate-100"><th className="border p-2">Segment</th><th className="border p-2">Count</th><th className="border p-2">Share</th></tr></thead>
               <tbody>
-                <tr><td className="border p-2">Trust-Gated Shopper</td><td className="border p-2">13</td><td className="border p-2">72.2%</td></tr>
+                <tr className="font-semibold"><td className="border p-2">Trust-Gated Shopper</td><td className="border p-2">13</td><td className="border p-2">72.2%</td></tr>
                 <tr><td className="border p-2">Deal Seeker</td><td className="border p-2">2</td><td className="border p-2">11.1%</td></tr>
                 <tr><td className="border p-2">Habitual Buyer</td><td className="border p-2">1</td><td className="border p-2">5.6%</td></tr>
                 <tr><td className="border p-2">Trend Follower</td><td className="border p-2">1</td><td className="border p-2">5.6%</td></tr>
+                <tr><td className="border p-2 text-slate-400">Not Mentioned</td><td className="border p-2 text-slate-400">1</td><td className="border p-2 text-slate-400">5.6%</td></tr>
               </tbody>
             </table>
 
@@ -80,8 +83,9 @@ export default function ReportModal({ isOpen, onClose }) {
             <table className="w-full text-left border-collapse">
               <thead><tr className="bg-slate-100"><th className="border p-2">Evidence</th><th className="border p-2">Count</th><th className="border p-2">Share</th></tr></thead>
               <tbody>
-                <tr><td className="border p-2">Delivery Complaint</td><td className="border p-2">10</td><td className="border p-2">55.6%</td></tr>
+                <tr className="font-semibold"><td className="border p-2">Delivery Complaint</td><td className="border p-2">10</td><td className="border p-2">55.6%</td></tr>
                 <tr><td className="border p-2">Return Anxiety</td><td className="border p-2">4</td><td className="border p-2">22.2%</td></tr>
+                <tr><td className="border p-2 text-slate-400">Not Mentioned</td><td className="border p-2 text-slate-400">2</td><td className="border p-2 text-slate-400">11.1%</td></tr>
                 <tr><td className="border p-2">Repeat Purchase</td><td className="border p-2">1</td><td className="border p-2">5.6%</td></tr>
                 <tr><td className="border p-2">Cart Abandonment</td><td className="border p-2">1</td><td className="border p-2">5.6%</td></tr>
               </tbody>
@@ -164,7 +168,7 @@ export default function ReportModal({ isOpen, onClose }) {
             <div className="p-4 bg-indigo-50 border-l-4 border-indigo-600 rounded-r-lg font-bold text-indigo-900">
               Trust Deficit × Trust-Gated Shopper
             </div>
-            <p>This co-occurrence appears in approximately 61.1% of the 221 analyzed signals, making it the clearest, most actionable opportunity area for the Growth team.</p>
+            <p>This co-occurrence appears in approximately <strong>61.1%</strong> of the 18 LLM-analyzed Play Store signals (11 of 18), making it the clearest, most actionable opportunity area for the Growth team.</p>
             <p className="font-bold mt-2">Secondary patterns include:</p>
             <ul className="list-disc pl-5">
               <li>Delivery Anxiety × Trust-Gated Shopper (16.7%)</li>

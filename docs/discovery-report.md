@@ -20,31 +20,33 @@ To understand the behavioral psychology behind wishlist-to-purchase conversion w
 Each review was tagged across 4 behavioral dimensions:
 
 ### Decision Drivers
-| Driver | Count (Approx) | Share |
+| Driver | Count (from LLM-tagged sample, n=18) | Share |
 |---|---|---|
-| Trust Deficit | 122 | 55.1% |
-| Delivery Anxiety | 50 | 22.8% |
-| Price Sensitivity | 25 | 11.4% |
-| Quality Uncertainty | 13 | 5.7% |
-| Visual Reality Gap | 5 | 2.3% |
-| Styling Uncertainty | 4 | 1.8% |
-| Visual Validation | 2 | 0.9% |
+| Trust Deficit | 11 | **61.1%** |
+| Delivery Anxiety | 3 | **16.7%** |
+| Price Sensitivity | 2 | **11.1%** |
+| Convenience | 1 | **5.6%** |
+| Visual Appeal | 1 | **5.6%** |
+
+> **Note:** Visual Reality Gap, Styling Uncertainty, and Quality Uncertainty are YouTube-only signals tracked in the YouTube data source (12 manually curated haul videos, not in the LLM-tagged Play Store JSON).
 
 ### User Segments
 | Segment | Count | Share |
 |---|---|---|
-| Trust-Gated Shopper | 13 | 72.2% |
-| Deal Seeker | 2 | 11.1% |
-| Habitual Buyer | 1 | 5.6% |
-| Trend Follower | 1 | 5.6% |
+| Trust-Gated Shopper | 13 | **72.2%** |
+| Deal Seeker | 2 | **11.1%** |
+| Habitual Buyer | 1 | **5.6%** |
+| Trend Follower | 1 | **5.6%** |
+| Not Mentioned | 1 | **5.6%** |
 
 ### Evidence Types
 | Evidence | Count | Share |
 |---|---|---|
-| Delivery Complaint | 10 | 55.6% |
-| Return Anxiety | 4 | 22.2% |
-| Repeat Purchase | 1 | 5.6% |
-| Cart Abandonment | 1 | 5.6% |
+| Delivery Complaint | 10 | **55.6%** |
+| Return Anxiety | 4 | **22.2%** |
+| Not Mentioned | 2 | **11.1%** |
+| Repeat Purchase | 1 | **5.6%** |
+| Cart Abandonment | 1 | **5.6%** |
 
 ---
 
@@ -150,7 +152,7 @@ The cross-pattern heatmap (Decision Driver × User Segment) reveals that the sin
 
 > **Trust Deficit × Trust-Gated Shopper**
 
-This co-occurrence appears in approximately 61.1% of the 221 analyzed signals, making it the clearest, most actionable opportunity area for the Growth team.
+This co-occurrence appears in approximately **61.1%** of the 18 LLM-analyzed signals (11 of 18), making it the clearest, most actionable opportunity area for the Growth team.
 
 Secondary patterns include:
 - Delivery Anxiety × Trust-Gated Shopper (16.7%)
