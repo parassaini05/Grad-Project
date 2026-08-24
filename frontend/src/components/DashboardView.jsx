@@ -1,17 +1,42 @@
-import React, { useState } from 'react';
-import { dashboardData, RAW_REVIEWS, questionTitles } from '../data/discoveryData';
+import React, { useState, useEffect } from 'react';
+import { questionTitles } from '../data/discoveryData';
 import ReportModal from './ReportModal';
 
 export default function DashboardView() {
+  const [dashboardData, setDashboardData] = useState(null);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
+
   const [selectedSource, setSelectedSource] = useState('playstore');
   const [selectedCategory, setSelectedCategory] = useState('All');
   const [isReportOpen, setIsReportOpen] = useState(false);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const apiUrl = import.meta.env.VITE_API_URL || 'http://localhost:8000';
+        const res = await fetch(`${apiUrl}/api/dashboard`);
+        if (!res.ok) throw new Error("Failed to fetch live dashboard data.");
+        const data = await res.json();
+        setDashboardData(data);
+      } catch (err) {
+        setError(err.message);
+      } finally {
+        setLoading(false);
+      }
+    };
+    fetchData();
+  }, []);
 
   const sources = [
     { id: 'playstore', label: 'Play Store', icon: 'shop' },
     { id: 'youtube', label: 'YouTube', icon: 'video_library' },
     { id: 'combined', label: 'Combined Data', icon: 'hub' }
   ];
+
+  if (loading) return <div className="p-10 text-center text-primary font-bold animate-pulse">Loading genuine data from LLM pipeline...</div>;
+  if (error) return <div className="p-10 text-center text-red-500 font-bold">Error: {error}</div>;
+  if (!dashboardData) return null;
 
   const currentData = dashboardData[selectedSource];
   const categories = ['All', ...Object.keys(currentData.categoryDist)];
@@ -68,12 +93,12 @@ export default function DashboardView() {
       <section className="glass-card rounded-xl p-6 flex flex-col gap-4">
         <h3 className="text-xl font-bold text-slate-800">
           Category Distribution 
-          <span className="text-sm font-normal text-slate-500 ml-2">(Share of {currentData.kpis.filtered.split(' ')[0]} signals)</span>
+          <span className="text-sm font-normal text-slate-500 ml-2">(Share of signals)</span>
         </h3>
         <div className="flex flex-col gap-3">
           {Object.entries(currentData.categoryDist).map(([category, value]) => (
             <div key={category} className="flex items-center gap-4">
-              <span className="w-32 text-sm font-medium text-slate-600 truncate" title={category}>{category}</span>
+              <span className="w-48 text-sm font-medium text-slate-600 truncate" title={category}>{category}</span>
               <div className="flex-1 bg-slate-200 rounded-full h-4 overflow-hidden">
                 <div className="bg-primary h-full rounded-full" style={{ width: `${value}%` }}></div>
               </div>
@@ -95,13 +120,12 @@ export default function DashboardView() {
       </div>
 
       <div className="flex flex-col lg:flex-row gap-6 items-start">
-        {/* Left Side: Core Findings */}
         <div className="flex-1 flex flex-col gap-4 w-full">
           <h3 className="text-xl text-primary font-bold">Core Findings</h3>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             {questionTitles.map((q) => {
               const answer = currentData.answers[q.key];
-              if (selectedCategory !== 'All' && answer.category !== selectedCategory) return null;
+              if (!answer || (selectedCategory !== 'All' && answer.category !== selectedCategory)) return null;
               
               return (
                 <div key={q.key} className="glass-card bg-white/60 border border-white/80 rounded-2xl p-5 shadow-sm flex flex-col gap-3 hover:shadow-md transition-shadow">
@@ -112,6 +136,7 @@ export default function DashboardView() {
                   <div className="flex flex-col gap-2 text-sm text-slate-700">
                     <p><span className="font-semibold text-slate-800">Insight:</span> {answer.insight}</p>
                     <p><span className="font-semibold text-primary">Data Proof:</span> {answer.dataProof}</p>
+                    <p className="italic bg-white/50 p-2 rounded-lg mt-1 border border-white">"{answer.voice}"</p>
                   </div>
                 </div>
               );
@@ -119,13 +144,11 @@ export default function DashboardView() {
           </div>
         </div>
         
-        {/* Right Side: Raw Data Snippets */}
         <div className="w-full lg:w-80 flex flex-col gap-4 sticky top-4">
           <h3 className="text-xl text-primary font-bold">Raw Quotes</h3>
           <div className="glass-card rounded-2xl p-4 flex flex-col gap-3 max-h-[600px] overflow-y-auto">
-            {RAW_REVIEWS.filter(r => 
-              (selectedSource === 'combined' || r.source === selectedSource) &&
-              (selectedCategory === 'All' || r.category === selectedCategory || (selectedSource === 'youtube' && selectedCategory === 'All'))
+            {currentData.rawQuotes?.filter(r => 
+              selectedCategory === 'All' || r.category === selectedCategory
             ).map((review, idx) => (
               <div key={idx} className="bg-white/80 border border-white rounded-xl p-3 shadow-sm text-sm">
                 <div className="flex items-center gap-2 mb-2">
