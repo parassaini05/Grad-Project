@@ -79,21 +79,56 @@ export default function DashboardView() {
         </div>
       </section>
       
-      <section className="glass-card rounded-xl p-6 flex flex-col gap-4">
-        <h3 className="text-xl font-bold text-slate-800">
-          Category Distribution 
-          <span className="text-sm font-normal text-slate-500 ml-2">(Share of {currentData.kpis.filtered.split(' ')[0]} signals)</span>
-        </h3>
-        <div className="flex flex-col gap-3">
-          {Object.entries(currentData.categoryDist).map(([category, value]) => (
-            <div key={category} className="flex items-center gap-4">
-              <span className="w-48 text-sm font-medium text-slate-600 truncate" title={category}>{category}</span>
-              <div className="flex-1 bg-slate-200 rounded-full h-4 overflow-hidden">
-                <div className="bg-primary h-full rounded-full" style={{ width: `${value}%` }}></div>
+      <section className="grid grid-cols-1 md:grid-cols-3 gap-6">
+        <div className="glass-card rounded-xl p-6 flex flex-col gap-4">
+          <h3 className="text-xl font-bold text-slate-800">
+            Decision Drivers
+          </h3>
+          <div className="flex flex-col gap-3">
+            {Object.entries(currentData.categoryDist).map(([category, value]) => (
+              <div key={category} className="flex items-center gap-4">
+                <span className="w-32 text-sm font-medium text-slate-600 truncate" title={category}>{category}</span>
+                <div className="flex-1 bg-slate-200 rounded-full h-4 overflow-hidden">
+                  <div className="bg-primary h-full rounded-full" style={{ width: `${value}%` }}></div>
+                </div>
+                <span className="w-12 text-right text-sm font-bold text-primary">{value}%</span>
               </div>
-              <span className="w-12 text-right text-sm font-bold text-primary">{value}%</span>
-            </div>
-          ))}
+            ))}
+          </div>
+        </div>
+
+        <div className="glass-card rounded-xl p-6 flex flex-col gap-4">
+          <h3 className="text-xl font-bold text-slate-800">
+            User Segments
+          </h3>
+          <div className="flex flex-col gap-3">
+            {currentData.segmentDist ? Object.entries(currentData.segmentDist).map(([category, value]) => (
+              <div key={category} className="flex items-center gap-4">
+                <span className="w-32 text-sm font-medium text-slate-600 truncate" title={category}>{category}</span>
+                <div className="flex-1 bg-slate-200 rounded-full h-4 overflow-hidden">
+                  <div className="bg-indigo-500 h-full rounded-full" style={{ width: `${value}%` }}></div>
+                </div>
+                <span className="w-12 text-right text-sm font-bold text-indigo-500">{value}%</span>
+              </div>
+            )) : <p className="text-sm text-slate-500 italic">No segment data available.</p>}
+          </div>
+        </div>
+
+        <div className="glass-card rounded-xl p-6 flex flex-col gap-4">
+          <h3 className="text-xl font-bold text-slate-800">
+            Evidence Types
+          </h3>
+          <div className="flex flex-col gap-3">
+            {currentData.evidenceDist ? Object.entries(currentData.evidenceDist).map(([category, value]) => (
+              <div key={category} className="flex items-center gap-4">
+                <span className="w-32 text-sm font-medium text-slate-600 truncate" title={category}>{category}</span>
+                <div className="flex-1 bg-slate-200 rounded-full h-4 overflow-hidden">
+                  <div className="bg-purple-500 h-full rounded-full" style={{ width: `${value}%` }}></div>
+                </div>
+                <span className="w-12 text-right text-sm font-bold text-purple-500">{value}%</span>
+              </div>
+            )) : <p className="text-sm text-slate-500 italic">No evidence data available.</p>}
+          </div>
         </div>
       </section>
 

@@ -19,6 +19,18 @@ export const dashboardData = {
       'Styling Uncertainty': 1.8, 
       'Visual Validation': 0.9 
     },
+    segmentDist: {
+      'Trust-Gated Shopper': 72.2,
+      'Deal Seeker': 11.1,
+      'Habitual Buyer': 5.6,
+      'Trend Follower': 5.6
+    },
+    evidenceDist: {
+      'Delivery Complaint': 55.6,
+      'Return Anxiety': 22.2,
+      'Repeat Purchase': 5.6,
+      'Cart Abandonment': 5.6
+    },
     crossPattern: "Dominant Cluster: Trust Deficit × Trust-Gated Shopper (61.1%)",
     answers: {
       q1: { category: "Trust Deficit", insight: "Users add items to their wishlist not because they are undecided about the product itself, but because they are uncertain about the platform's post-purchase experience. They use the wishlist as a holding area.", dataProof: "61.1% of analyzed reviews cited Trust Deficit as the primary decision driver. 72.2% of users were Trust-Gated Shoppers.", voice: "I returned the products and the app showed that the refund has been processed, but I still haven't received the money in my account." },
@@ -50,7 +62,9 @@ export const dashboardData = {
   playstore: {
     kpis: { reviewed: "9,115 Sources", filtered: "209 High-Intent", topDriver: "Trust Deficit" },
     categoryCounts: { 'Trust Deficit': 118, 'Delivery Anxiety': 48, 'Price Sensitivity': 23, 'Quality Uncertainty': 10 },
-    categoryDist: { 'Trust Deficit': 56.5, 'Delivery Anxiety': 23.0, 'Price Sensitivity': 11.0, 'Quality Uncertainty': 4.8 },
+    categoryDist: { 'Trust Deficit': 55.1, 'Delivery Anxiety': 22.8, 'Price Sensitivity': 11.4, 'Quality Uncertainty': 5.7 },
+    segmentDist: { 'Trust-Gated Shopper': 72.2, 'Deal Seeker': 11.1, 'Habitual Buyer': 5.6, 'Trend Follower': 5.6 },
+    evidenceDist: { 'Delivery Complaint': 55.6, 'Return Anxiety': 22.2, 'Repeat Purchase': 5.6, 'Cart Abandonment': 5.6 },
     crossPattern: "Dominant Cluster: Trust Deficit × Trust-Gated Shopper (63.0%)",
     answers: {
       q1: { category: "Trust Deficit", insight: "Users add items to their wishlist not because they are undecided about the product itself, but because they are uncertain about the platform's post-purchase experience. They use the wishlist as a holding area.", dataProof: "61.1% of analyzed reviews cited Trust Deficit as the primary decision driver. 72.2% of users were Trust-Gated Shoppers.", voice: "I returned the products and the app showed that the refund has been processed, but I still haven't received the money in my account." },
@@ -78,6 +92,8 @@ export const dashboardData = {
     kpis: { reviewed: "12 Sources", filtered: "12 High-Intent", topDriver: "Visual Reality Gap" },
     categoryCounts: { 'Visual Reality Gap': 5, 'Styling Uncertainty': 4, 'Quality Uncertainty': 3 },
     categoryDist: { 'Visual Reality Gap': 41.7, 'Styling Uncertainty': 33.3, 'Quality Uncertainty': 25.0 },
+    segmentDist: { 'Trend Follower': 50.0, 'Habitual Buyer': 25.0, 'Deal Seeker': 25.0 },
+    evidenceDist: { 'Return Anxiety': 50.0, 'Cart Abandonment': 50.0 },
     crossPattern: "Dominant Cluster: Visual Reality Gap × Trend Follower (41.7%)",
     answers: {
       q1: { category: "Visual Reality Gap", insight: "Users add items to their wishlist not because they are undecided about the product itself, but because they are uncertain about the platform's post-purchase experience. They use the wishlist as a holding area.", dataProof: "61.1% of analyzed reviews cited Trust Deficit as the primary decision driver. 72.2% of users were Trust-Gated Shoppers.", voice: "I returned the products and the app showed that the refund has been processed, but I still haven't received the money in my account." },
