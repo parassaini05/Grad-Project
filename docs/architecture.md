@@ -6,29 +6,29 @@ This document outlines the high-level system architecture for the Myntra Wishlis
 
 ```mermaid
 graph TD
-    subgraph Data Ingestion Layer
+    subgraph "Data Ingestion Layer"
         A[Google Play Store] --> |Filtered by keywords| C(Data Aggregator)
         B[YouTube] --> |Keyword Search| C(Data Aggregator)
     end
 
-    subgraph Data Processing Layer
+    subgraph "Data Processing Layer"
         C --> D{Data Cleaner & Filter}
         D --> |Removes Noise/Irrelevant| E[(Raw Data Storage)]
     end
 
-    subgraph LLM Processing Layer
+    subgraph "LLM Processing Layer"
         E --> F[Prompt Builder: Behavioral Focus]
         F --> |Batched Text| G[Groq LLM API]
         G --> |JSON/Opportunity Areas| H[Response Parser]
     end
 
-    subgraph Insights & Presentation Layer
+    subgraph "Insights & Presentation Layer"
         H --> I[(Quantified Insights Database)]
         I --> J[Visualization / Dashboarding]
         J --> K[Final Discovery Report]
     end
 
-    subgraph Interactive UI Layer (Live Prototype)
+    subgraph "Interactive UI Layer (Live Prototype)"
         K --> L[React Dashboard]
         K --> M[Live Scraper Simulation]
         K --> N[User Journey Simulator]
