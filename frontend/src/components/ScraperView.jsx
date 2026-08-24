@@ -65,60 +65,87 @@ export default function ScraperView() {
     };
   }, []);
 
-  const handleScrape = () => {
+  const handleScrape = async () => {
     if (isScraping) return;
     
     setIsScraping(true);
     setScrapeComplete(false);
-    setLogs([]);
+    setLogs([
+      `> Initializing scraper for source: ${source.toUpperCase()}`,
+      `> Connecting to live FastAPI backend...`,
+      `> Fetching real-time unstructured data...`,
+      `> Passing records to Groq LLM for behavioral analysis (this may take up to 20 seconds)...`
+    ]);
     if (intervalRef.current) clearInterval(intervalRef.current);
     
-    // Dynamically filter data based on source
-    const filteredReviews = source === 'combined' 
-      ? RAW_REVIEWS 
-      : RAW_REVIEWS.filter(r => r.source === source);
-
-    // Build dynamic simulation steps
-    const steps = [
-      `> Initializing scraper for source: ${source.toUpperCase()}`,
-      `> Setting time range filter: Last 12 ${timeRange.toUpperCase()}`,
-      `> Connecting to APIs...`,
-      `> Fetching raw unstructured data...`,
-      `> Downloaded ${filteredReviews.length * 150} total records.`,
-      `> Applying noise filters (removing short texts, emojis, non-English)...`,
-      `> Noise reduction complete. Discarded 90% of data.`,
-      `> Retained ${filteredReviews.length} high-intent wishlist/cart signals.`,
-      `> Connecting to Groq LLM Engine...`,
-      `> Processing records for behavioral analysis and enum tagging...`
-    ];
-
-    filteredReviews.forEach((review) => {
-      const shortQuote = review.text.length > 50 ? review.text.substring(0, 50) + '...' : review.text;
-      steps.push(`> [FETCH] "${shortQuote}"`);
-      steps.push(`> [AI INSIGHT] Tagged as '${review.category}' / '${review.segment}'`);
-    });
-
-    steps.push(`> [SUCCESS] Extraction complete. Generating dynamic visualization matrices...`);
-
-    let currentStep = 0;
-    
+    // Animate a waiting message
+    let waitingDots = 0;
     intervalRef.current = setInterval(() => {
-      if (currentStep < steps.length) {
-        setLogs(prev => [...prev, steps[currentStep]]);
-        currentStep++;
-      } else {
-        clearInterval(intervalRef.current);
-        setIsScraping(false);
-        
-        // Compute actual dynamic charts from the filtered data
-        setDynamicDrivers(getFrequencies(filteredReviews, 'category'));
-        setDynamicSegments(getFrequencies(filteredReviews, 'segment'));
-        setDynamicEvidence(getFrequencies(filteredReviews, 'evidence'));
-        setDynamicCross(getCrossPatterns(filteredReviews));
-        
-        setScrapeComplete(true);
-      }
-    }, 400); // 400ms per step
+      waitingDots = (waitingDots + 1) % 4;
+      setLogs(prev => {
+        const newLogs = [...prev];
+        const lastLog = newLogs[newLogs.length - 1];
+        if (lastLog && lastLog.startsWith('> Processing')) {
+          newLogs[newLogs.length - 1] = `> Processing real-time AI insights${'.'.repeat(waitingDots)}`;
+        } else {
+          newLogs.push(`> Processing real-time AI insights${'.'.repeat(waitingDots)}`);
+        }
+        return newLogs;
+      });
+    }, 1000);
+
+    try {
+      const apiUrl = import.meta.env.VITE_API_URL || 'http://localhost:8000';
+      const response = await fetch(`${apiUrl}/api/scrape?source=${source}&limit=6`);
+      
+      if (!response.ok) throw new Error(`Backend error: ${response.status}`);
+      
+      const json = await response.json();
+      const realData = json.data || [];
+      
+      clearInterval(intervalRef.current);
+      
+      setLogs(prev => [
+        ...prev.filter(l => !l.startsWith('> Processing real-time')),
+        `> [SUCCESS] Extracted ${realData.length} valid behavioral signals.`,
+      ]);
+
+      realData.forEach((review) => {
+        const shortQuote = review.text.length > 50 ? review.text.substring(0, 50) + '...' : review.text;
+        setLogs(prev => [...prev, 
+          `> [FETCH] "${shortQuote}"`,
+          `> [AI INSIGHT] Tagged as '${review.category}' / '${review.segment}'`
+        ]);
+      });
+
+      setLogs(prev => [...prev, `> Generating dynamic visualization matrices from Live LLM Data...`]);
+      
+      // Fallback arrays to avoid Recharts crashes if data is weirdly empty
+      const fallbackData = [{name: 'No Data', value: 100, count: 0}];
+      
+      const drivers = getFrequencies(realData, 'category');
+      setDynamicDrivers(drivers.length > 0 ? drivers : fallbackData);
+      
+      const segments = getFrequencies(realData, 'segment');
+      setDynamicSegments(segments.length > 0 ? segments : fallbackData);
+      
+      const evidence = getFrequencies(realData, 'evidence');
+      setDynamicEvidence(evidence.length > 0 ? evidence : fallbackData);
+      
+      const cross = getCrossPatterns(realData);
+      setDynamicCross(cross.length > 0 ? cross : fallbackData);
+      
+      setScrapeComplete(true);
+    } catch (err) {
+      clearInterval(intervalRef.current);
+      setLogs(prev => [
+        ...prev.filter(l => !l.startsWith('> Processing real-time')),
+        `> [ERROR] Backend connection failed: ${err.message}`,
+        `> Check if Railway backend is running, or if VITE_API_URL is correct.`
+      ]);
+    } finally {
+      setIsScraping(false);
+    }
   };
 
   return (
