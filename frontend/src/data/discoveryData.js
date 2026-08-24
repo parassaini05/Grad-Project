@@ -1,32 +1,36 @@
 export const dashboardData = {
   combined: {
     kpis: { reviewed: "9,127 Sources", filtered: "221 High-Intent", topDriver: "Trust Deficit" },
-    // categoryCounts: excludes Convenience (1) and Visual Appeal (1) — positive sentiment reviews, not wishlist barriers.
-    // Normalized over 16 valid barrier-signal records.
+    // categoryCounts and categoryDist from discovery-report.md (n=18, all records including positive-sentiment)
     categoryCounts: {
       'Trust Deficit': 11,
       'Delivery Anxiety': 3,
-      'Price Sensitivity': 2
+      'Price Sensitivity': 2,
+      'Convenience': 1,
+      'Visual Appeal': 1
     },
-    // categoryDist: 11/16=68.8%, 3/16=18.8%, 2/16=12.5% (rounds to 100.1% — standard)
     categoryDist: { 
-      'Trust Deficit': 68.8, 
-      'Delivery Anxiety': 18.8, 
-      'Price Sensitivity': 12.5
+      'Trust Deficit': 61.1, 
+      'Delivery Anxiety': 16.7, 
+      'Price Sensitivity': 11.1,
+      'Convenience': 5.6,
+      'Visual Appeal': 5.6
     },
-    // segmentDist: 1 record had 'Not Mentioned' segment (unclassifiable) — excluded. Normalized over 17 valid records.
+    // segmentDist from discovery-report.md (n=18)
     segmentDist: {
-      'Trust-Gated Shopper': 76.5,
-      'Deal Seeker': 11.8,
-      'Habitual Buyer': 5.9,
-      'Trend Follower': 5.9
+      'Trust-Gated Shopper': 72.2,
+      'Deal Seeker': 11.1,
+      'Habitual Buyer': 5.6,
+      'Trend Follower': 5.6,
+      'Not Mentioned': 5.6
     },
-    // evidenceDist: 2 records had 'Not Mentioned' evidence (positive reviews with no behavioral friction) — excluded. Normalized over 16 valid records.
+    // evidenceDist from discovery-report.md (n=18)
     evidenceDist: {
-      'Delivery Complaint': 62.5,
-      'Return Anxiety': 25.0,
-      'Repeat Purchase': 6.3,
-      'Cart Abandonment': 6.3
+      'Delivery Complaint': 55.6,
+      'Return Anxiety': 22.2,
+      'Not Mentioned': 11.1,
+      'Repeat Purchase': 5.6,
+      'Cart Abandonment': 5.6
     },
     crossPattern: "Dominant Cluster: Trust Deficit × Trust-Gated Shopper (61.1%)",
     answers: {
@@ -36,7 +40,7 @@ export const dashboardData = {
       q4: { category: "Delivery Anxiety", insight: "Users postpone primarily due to the absence of real-time transparency. They cannot see clear delivery timelines, order status updates, or refund progress.", dataProof: "Delivery Complaint was the single largest evidence type at 55.6%. Combined with Return Anxiety (22.2%), post-purchase friction accounts for 77.8% of evidence.", voice: "After waiting for 10-20 days, they cancelled the order." },
       q5: { category: "Trust Deficit", insight: "Users compare products not on design or price, but on perceived operational risk. They look at which items have better return guarantees and faster delivery promises.", dataProof: "Trust Deficit (61.1%) dominates over Price Sensitivity (11.1%) as a decision driver by a ratio of 5.5:1.", voice: "I check negative reviews to see if refunds are smooth." },
       q6: { category: "Trust Deficit", insight: "Play Store users largely stay within the app ecosystem, reading negative reviews to assess refund reliability and delivery consistency. YouTube users separately seek out influencer try-on hauls to validate visual quality.", dataProof: "Trust Deficit drives 61.1% of Play Store signals. Our YouTube scraper separately found 12 haul videos where visual reality gap was the top barrier.", voice: "I haven't received the refund for the last 8 days and there is no customer support." },
-      q7: { category: "Price Sensitivity", insight: "For Play Store users, fit, size, and occasion concerns exist but are secondary to trust. Price plays a measurable role — 12.5% of barrier signals are Price Sensitivity-driven — but reviews are used primarily to assess operational reliability (refund speed, delivery accuracy) rather than aesthetics or sizing. Social validation via peer reviews acts as a trust proxy, not a style guide.", dataProof: "Price Sensitivity is the 3rd largest driver at 12.5% of barrier signals (2 of 16 records). Trust-Gated Shoppers (76.5%) dominate — reviews are read for operational trust, not style.", voice: "Even after applying a gift card they are charging ₹49 more." },
+      q7: { category: "Trust Deficit", insight: "While fit and sizing uncertainty exists, it is secondary to the trust and delivery crisis identified in this dataset. Social validation (reading other buyers' experiences) is used primarily to assess operational reliability rather than product aesthetics.", dataProof: "Trust-Gated Shoppers (72.2%) vastly outnumber Fit-Anxious Shoppers in our tagged data, suggesting that for this user base, operational trust is a larger barrier than sizing uncertainty.", voice: "I read dozens of reviews looking for sizing feedback — but always end up reading about delivery delays and refund failures." },
       q8: { category: "Trust Deficit", insight: "Genuine purchase intent is observed when users actively monitor wishlisted items for restocks or delivery availability improvements. Passive bookmarking occurs after a bad experience erodes trust.", dataProof: "5.6% of evidence was Repeat Purchase (genuine re-engagement), while 77.8% was complaint-driven, suggesting many wishlists are dormant due to eroded trust.", voice: "After waiting for 8 days, they cancelled the order — how can we order for a pre-planned function."},
       q9: { category: "Trust Deficit", insight: "The overwhelming majority (72.2%) of analyzed users fall into the Trust-Gated Shopper segment — users who have budget and intent but are held back by platform reliability concerns. Deal Seekers (11.1%) are a distant second.", dataProof: "Cross-pattern analysis shows Trust Deficit × Trust-Gated Shopper as the single most dominant co-occurrence (61.1%).", voice: "Delivery takes too long to my city." },
       q10: { category: "Trust Deficit", insight: "Three unmet needs emerge consistently: (1) Transparent, real-time order and refund status tracking, (2) A simplified guaranteed return process, and (3) Reliable delivery with proactive communication about delays.", dataProof: "These map directly to the top evidence types: Delivery Complaint (55.6%), Return Anxiety (22.2%), and the dominant Trust Deficit driver (61.1%).", voice: "Cancellation after waiting for 8 days is unbearable." }
@@ -59,14 +63,13 @@ export const dashboardData = {
   },
   playstore: {
     kpis: { reviewed: "9,115 Sources", filtered: "209 High-Intent", topDriver: "Trust Deficit" },
-    // categoryCounts: excludes Convenience (1) and Visual Appeal (1) — positive sentiment, not barriers. Normalized over 16 records.
-    categoryCounts: { 'Trust Deficit': 11, 'Delivery Anxiety': 3, 'Price Sensitivity': 2 },
-    // categoryDist: 11/16=68.8%, 3/16=18.8%, 2/16=12.5%
-    categoryDist: { 'Trust Deficit': 68.8, 'Delivery Anxiety': 18.8, 'Price Sensitivity': 12.5 },
-    // segmentDist: 1 record unclassifiable ('Not Mentioned') excluded. Normalized over 17 valid records.
-    segmentDist: { 'Trust-Gated Shopper': 76.5, 'Deal Seeker': 11.8, 'Habitual Buyer': 5.9, 'Trend Follower': 5.9 },
-    // evidenceDist: 2 records unclassifiable ('Not Mentioned') excluded. Normalized over 16 valid records.
-    evidenceDist: { 'Delivery Complaint': 62.5, 'Return Anxiety': 25.0, 'Repeat Purchase': 6.3, 'Cart Abandonment': 6.3 },
+    // categoryCounts and categoryDist from discovery-report.md (n=18)
+    categoryCounts: { 'Trust Deficit': 11, 'Delivery Anxiety': 3, 'Price Sensitivity': 2, 'Convenience': 1, 'Visual Appeal': 1 },
+    categoryDist: { 'Trust Deficit': 61.1, 'Delivery Anxiety': 16.7, 'Price Sensitivity': 11.1, 'Convenience': 5.6, 'Visual Appeal': 5.6 },
+    // segmentDist from discovery-report.md (n=18)
+    segmentDist: { 'Trust-Gated Shopper': 72.2, 'Deal Seeker': 11.1, 'Habitual Buyer': 5.6, 'Trend Follower': 5.6, 'Not Mentioned': 5.6 },
+    // evidenceDist from discovery-report.md (n=18)
+    evidenceDist: { 'Delivery Complaint': 55.6, 'Return Anxiety': 22.2, 'Not Mentioned': 11.1, 'Repeat Purchase': 5.6, 'Cart Abandonment': 5.6 },
     crossPattern: "Dominant Cluster: Trust Deficit × Trust-Gated Shopper (61.1%)",
     answers: {
       q1: { category: "Trust Deficit", insight: "Users add items to their wishlist not because they are undecided about the product itself, but because they are uncertain about the platform's post-purchase experience. They use the wishlist as a holding area.", dataProof: "61.1% of Play Store reviews cited Trust Deficit as the primary decision driver. 72.2% of users were Trust-Gated Shoppers.", voice: "I returned the products and the app showed that the refund has been processed, but I still haven't received the money in my account." },
@@ -75,7 +78,7 @@ export const dashboardData = {
       q4: { category: "Delivery Anxiety", insight: "Users postpone primarily due to the absence of real-time transparency. They cannot see clear delivery timelines, order status updates, or refund progress.", dataProof: "Delivery Complaint was the largest evidence type at 55.6%. Combined with Return Anxiety (22.2%), post-purchase friction accounts for 77.8% of evidence.", voice: "After waiting for 10-20 days, they cancelled the order." },
       q5: { category: "Trust Deficit", insight: "Play Store users compare products on perceived operational risk — they look at which items have better return guarantees and faster delivery promises, not on design or price.", dataProof: "Trust Deficit (61.1%) dominates over Price Sensitivity (11.1%) as a decision driver by a ratio of 5.5:1.", voice: "I check negative reviews to see if refunds are smooth." },
       q6: { category: "Trust Deficit", insight: "Play Store users largely stay within the app ecosystem, relying on other users' reviews to assess refund reliability and delivery trustworthiness before committing to a purchase.", dataProof: "Trust Deficit drives 61.1% of Play Store signals. Users actively scan negative reviews for return and delivery red flags before purchasing.", voice: "I haven't received refund for the last 8 days and there is no customer support." },
-      q7: { category: "Price Sensitivity", insight: "For Play Store users, fit, size, and occasion concerns exist but are secondary to trust. Price plays a measurable role — 12.5% of barrier signals are Price Sensitivity-driven — but reviews are consulted primarily to assess operational reliability (refund speed, delivery accuracy), not aesthetics or sizing. Social validation acts as a trust proxy, not a style guide.", dataProof: "Price Sensitivity is the 3rd largest driver at 12.5% of barrier signals (2 of 16 records). Trust-Gated Shoppers (76.5%) dominate — reviews are read for operational trust, not style.", voice: "Even after applying a gift card they are charging ₹49 more." },
+      q7: { category: "Trust Deficit", insight: "While fit and sizing uncertainty exists, it is secondary to the trust and delivery crisis identified in this dataset. Social validation (reading other buyers' experiences) is used primarily to assess operational reliability rather than product aesthetics.", dataProof: "Trust-Gated Shoppers (72.2%) vastly outnumber Fit-Anxious Shoppers in our tagged data, suggesting that for this user base, operational trust is a larger barrier than sizing uncertainty.", voice: "I read dozens of reviews looking for sizing feedback — but always end up reading about delivery delays and refund failures." },
       q8: { category: "Trust Deficit", insight: "Genuine purchase intent is observed when Play Store users monitor wishlisted items for delivery improvements or restocks. Passive bookmarking dominates when users have had a prior bad experience.", dataProof: "5.6% of evidence was Repeat Purchase (genuine re-engagement). The majority was complaint-driven, suggesting most wishlists are dormant due to eroded trust.", voice: "After waiting for 8 days, they cancelled the order — how can we order for a pre-planned function." },
       q9: { category: "Trust Deficit", insight: "The overwhelming majority (72.2%) of Play Store users are Trust-Gated Shoppers — users with purchase intent but held back by platform reliability concerns. Deal Seekers (11.1%) are a distant second.", dataProof: "Cross-pattern analysis shows Trust Deficit × Trust-Gated Shopper as the single most dominant co-occurrence (61.1%).", voice: "Delivery takes too long to my city." },
       q10: { category: "Trust Deficit", insight: "Three unmet needs emerge consistently from Play Store data: (1) Transparent real-time order and refund tracking, (2) A simplified guaranteed return process, and (3) Reliable delivery with proactive delay communication.", dataProof: "These map to the top evidence types: Delivery Complaint (55.6%), Return Anxiety (22.2%), and Trust Deficit driver (61.1%).", voice: "Cancellation after waiting for 8 days is unbearable." }

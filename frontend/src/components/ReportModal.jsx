@@ -68,26 +68,28 @@ export default function ReportModal({ isOpen, onClose }) {
             </p>
 
             <h3 className="font-bold text-lg mt-4">User Segments</h3>
-            <p className="text-sm text-slate-500 italic">1 record had unclassifiable segment (excluded). Normalized over 17 valid records.</p>
+            <p className="text-sm text-slate-500 italic">Source: llm_insights.json — 18 LLM-tagged Play Store records (n=18)</p>
             <table className="w-full text-left border-collapse">
               <thead><tr className="bg-slate-100"><th className="border p-2">Segment</th><th className="border p-2">Count</th><th className="border p-2">Share</th></tr></thead>
               <tbody>
-                <tr className="font-semibold"><td className="border p-2">Trust-Gated Shopper</td><td className="border p-2">13</td><td className="border p-2">76.5%</td></tr>
-                <tr><td className="border p-2">Deal Seeker</td><td className="border p-2">2</td><td className="border p-2">11.8%</td></tr>
-                <tr><td className="border p-2">Habitual Buyer</td><td className="border p-2">1</td><td className="border p-2">5.9%</td></tr>
-                <tr><td className="border p-2">Trend Follower</td><td className="border p-2">1</td><td className="border p-2">5.9%</td></tr>
+                <tr className="font-semibold"><td className="border p-2">Trust-Gated Shopper</td><td className="border p-2">13</td><td className="border p-2">72.2%</td></tr>
+                <tr><td className="border p-2">Deal Seeker</td><td className="border p-2">2</td><td className="border p-2">11.1%</td></tr>
+                <tr><td className="border p-2">Habitual Buyer</td><td className="border p-2">1</td><td className="border p-2">5.6%</td></tr>
+                <tr><td className="border p-2">Trend Follower</td><td className="border p-2">1</td><td className="border p-2">5.6%</td></tr>
+                <tr><td className="border p-2">Not Mentioned</td><td className="border p-2">1</td><td className="border p-2">5.6%</td></tr>
               </tbody>
             </table>
 
             <h3 className="font-bold text-lg mt-4">Evidence Types</h3>
-            <p className="text-sm text-slate-500 italic">2 records had no classifiable evidence type (positive reviews — excluded). Normalized over 16 valid records.</p>
+            <p className="text-sm text-slate-500 italic">Source: llm_insights.json (n=18)</p>
             <table className="w-full text-left border-collapse">
               <thead><tr className="bg-slate-100"><th className="border p-2">Evidence</th><th className="border p-2">Count</th><th className="border p-2">Share</th></tr></thead>
               <tbody>
-                <tr className="font-semibold"><td className="border p-2">Delivery Complaint</td><td className="border p-2">10</td><td className="border p-2">62.5%</td></tr>
-                <tr><td className="border p-2">Return Anxiety</td><td className="border p-2">4</td><td className="border p-2">25.0%</td></tr>
-                <tr><td className="border p-2">Repeat Purchase</td><td className="border p-2">1</td><td className="border p-2">6.3%</td></tr>
-                <tr><td className="border p-2">Cart Abandonment</td><td className="border p-2">1</td><td className="border p-2">6.3%</td></tr>
+                <tr className="font-semibold"><td className="border p-2">Delivery Complaint</td><td className="border p-2">10</td><td className="border p-2">55.6%</td></tr>
+                <tr><td className="border p-2">Return Anxiety</td><td className="border p-2">4</td><td className="border p-2">22.2%</td></tr>
+                <tr><td className="border p-2">Not Mentioned</td><td className="border p-2">2</td><td className="border p-2">11.1%</td></tr>
+                <tr><td className="border p-2">Repeat Purchase</td><td className="border p-2">1</td><td className="border p-2">5.6%</td></tr>
+                <tr><td className="border p-2">Cart Abandonment</td><td className="border p-2">1</td><td className="border p-2">5.6%</td></tr>
               </tbody>
             </table>
           </section>
