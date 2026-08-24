@@ -92,8 +92,8 @@ export const dashboardData = {
     kpis: { reviewed: "12 Sources", filtered: "12 High-Intent", topDriver: "Visual Reality Gap" },
     categoryCounts: { 'Visual Reality Gap': 5, 'Styling Uncertainty': 4, 'Quality Uncertainty': 3 },
     categoryDist: { 'Visual Reality Gap': 41.7, 'Styling Uncertainty': 33.3, 'Quality Uncertainty': 25.0 },
-    segmentDist: { 'Trend Follower': 50.0, 'Habitual Buyer': 25.0, 'Deal Seeker': 25.0 },
-    evidenceDist: { 'Return Anxiety': 50.0, 'Cart Abandonment': 50.0 },
+    segmentDist: { 'Trend Follower': 41.7, 'Habitual Buyer': 33.3, 'Deal Seeker': 25.0 },
+    evidenceDist: { 'Return Anxiety': 66.7, 'Cart Abandonment': 33.3 },
     crossPattern: "Dominant Cluster: Visual Reality Gap × Trend Follower (41.7%)",
     answers: {
       q1: { category: "Visual Reality Gap", insight: "Users add items to their wishlist not because they are undecided about the product itself, but because they are uncertain about the platform's post-purchase experience. They use the wishlist as a holding area.", dataProof: "61.1% of analyzed reviews cited Trust Deficit as the primary decision driver. 72.2% of users were Trust-Gated Shoppers.", voice: "I returned the products and the app showed that the refund has been processed, but I still haven't received the money in my account." },
