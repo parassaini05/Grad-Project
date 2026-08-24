@@ -40,6 +40,16 @@ export default function DashboardView() {
 
   const currentData = dashboardData[selectedSource];
   const categories = ['All', ...Object.keys(currentData.categoryDist)];
+  
+  const displayKpis = (() => {
+    if (selectedCategory === 'All') return currentData.kpis;
+    const count = currentData.categoryCounts?.[selectedCategory] || 0;
+    return {
+      reviewed: currentData.kpis.reviewed,
+      filtered: `${count} High-Intent`,
+      topDriver: `${selectedCategory} (100%)`
+    };
+  })();
 
   return (
     <div className="flex flex-col gap-8 animate-fade-in pb-10">
@@ -78,22 +88,22 @@ export default function DashboardView() {
       <section className="grid grid-cols-1 md:grid-cols-3 gap-6">
         <div className="flex flex-col justify-center p-6 glass-card rounded-xl shadow-sm h-28">
           <div className="text-xs font-bold text-slate-500 uppercase tracking-wider">SOURCES SCRAPED</div>
-          <div className="text-2xl font-extrabold text-indigo-600 mt-1 truncate">{currentData.kpis.reviewed}</div>
+          <div className="text-2xl font-extrabold text-indigo-600 mt-1 truncate">{displayKpis.reviewed}</div>
         </div>
         <div className="flex flex-col justify-center p-6 glass-card rounded-xl shadow-sm h-28">
           <div className="text-xs font-bold text-slate-500 uppercase tracking-wider">HIGH-INTENT SIGNALS</div>
-          <div className="text-2xl font-extrabold text-indigo-600 mt-1 truncate">{currentData.kpis.filtered}</div>
+          <div className="text-2xl font-extrabold text-indigo-600 mt-1 truncate">{displayKpis.filtered}</div>
         </div>
         <div className="flex flex-col justify-center p-6 glass-card rounded-xl shadow-sm h-28">
-          <div className="text-xs font-bold text-slate-500 uppercase tracking-wider">TOP DRIVER</div>
-          <div className="text-2xl font-extrabold text-indigo-600 mt-1 truncate">{currentData.kpis.topDriver}</div>
+          <div className="text-xs font-bold text-slate-500 uppercase tracking-wider">{selectedCategory === 'All' ? 'TOP DRIVER' : 'FILTERED DRIVER'}</div>
+          <div className="text-2xl font-extrabold text-indigo-600 mt-1 truncate">{displayKpis.topDriver}</div>
         </div>
       </section>
       
       <section className="glass-card rounded-xl p-6 flex flex-col gap-4">
         <h3 className="text-xl font-bold text-slate-800">
           Category Distribution 
-          <span className="text-sm font-normal text-slate-500 ml-2">(Share of signals)</span>
+          <span className="text-sm font-normal text-slate-500 ml-2">(Share of {currentData.kpis.filtered.split(' ')[0]} signals)</span>
         </h3>
         <div className="flex flex-col gap-3">
           {Object.entries(currentData.categoryDist).map(([category, value]) => (

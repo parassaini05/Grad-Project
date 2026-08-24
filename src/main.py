@@ -184,6 +184,7 @@ def get_dashboard_data():
                 "kpis": kpis,
                 "crossPattern": f"Dominant Cluster: {top_pattern} ({top_pattern_pct}%)",
                 "categoryDist": category_dist,
+                "categoryCounts": dict(driver_counts),
                 "answers": answers,
                 "rawQuotes": raw_quotes
             }
