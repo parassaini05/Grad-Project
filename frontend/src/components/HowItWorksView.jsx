@@ -1,264 +1,292 @@
 import React, { useState } from 'react';
 
-const steps = [
+// Exact 5-layer architecture from docs/architecture.md
+const layers = [
   {
     id: 1,
     label: 'Data Ingestion',
     icon: 'cloud_download',
     iconBg: 'bg-emerald-100',
     iconColor: 'text-emerald-600',
-    accentColor: 'border-emerald-400',
-    badgeColor: 'bg-emerald-50 text-emerald-700 border-emerald-200',
-    title: '1. Data Ingestion Layer',
-    subtitle: 'Multi-source raw data collection',
+    accentBorder: 'border-l-emerald-400',
+    badgeClass: 'bg-emerald-50 text-emerald-700 border-emerald-200',
+    dotClass: 'bg-emerald-400',
+    title: 'Data Ingestion Layer',
+    nodes: ['Google Play Store', 'YouTube', 'Data Aggregator'],
     description:
-      'Two parallel scrapers ingest unstructured qualitative data from real users — Play Store reviews and YouTube haul video comments — using keyword-targeted queries to maximise signal density.',
-    details: [
-      { icon: 'shop',          label: 'Play Store', value: '9,115 reviews scraped' },
-      { icon: 'video_library', label: 'YouTube',    value: '12 haul videos scraped' },
+      'Raw feedback is gathered from two platforms, both filtered at source by wishlist and cart-related keywords before aggregation.',
+    bullets: [
+      {
+        icon: 'shop',
+        title: 'Play Store Scraper',
+        body: 'Uses google-play-scraper to fetch large volumes of Myntra reviews, filtering locally for keywords like wishlist, cart, hesitate, price drop, and size.',
+      },
+      {
+        icon: 'video_library',
+        title: 'YouTube API Module',
+        body: 'Uses google-api-python-client to search "Myntra wishlist haul" and "Myntra wishlist vs reality", extracting video titles and comment threads.',
+      },
     ],
-    tech: ['google-play-scraper', 'yt-dlp', 'Python'],
-    keywords: ['wishlist', 'cart', 'hesitate', 'save', 'price drop', 'waiting'],
+    tech: ['google-play-scraper', 'google-api-python-client', 'Python'],
   },
   {
     id: 2,
-    label: 'Noise Filtering',
+    label: 'Data Processing',
     icon: 'filter_alt',
     iconBg: 'bg-blue-100',
     iconColor: 'text-blue-600',
-    accentColor: 'border-blue-400',
-    badgeColor: 'bg-blue-50 text-blue-700 border-blue-200',
-    title: '2. Noise Filtering Layer',
-    subtitle: 'Signal isolation from raw noise',
+    accentBorder: 'border-l-blue-400',
+    badgeClass: 'bg-blue-50 text-blue-700 border-blue-200',
+    dotClass: 'bg-blue-400',
+    title: 'Data Processing & Storage Layer',
+    nodes: ['Data Cleaner & Filter', 'Raw Data Storage'],
     description:
-      'A multi-rule quality filter discards 90%+ of noise. Rules remove reviews under 8 words, emoji-only responses, Hindi-language text, and generic praise with no behavioral signal.',
-    details: [
-      { icon: 'delete_sweep', label: 'Removed',  value: '~8,906 low-quality records' },
-      { icon: 'verified',     label: 'Retained', value: '221 high-intent signals' },
+      'The aggregated data passes through a strict multi-rule cleaner before being stored. Only texts containing genuine save, wishlist, hesitate, or compare signals reach the LLM.',
+    bullets: [
+      {
+        icon: 'cleaning_services',
+        title: 'Data Cleaner & Filter',
+        body: 'Standard text cleaning followed by strict keyword filtering. Removes noise: reviews under 8 words, emoji-only posts, non-English text, and generic praise with no behavioral signal.',
+      },
+      {
+        icon: 'database',
+        title: 'Raw Data Storage',
+        body: 'Filtered records are persisted locally as structured JSON (normalized_reviews.json) ready for batched LLM processing.',
+      },
     ],
-    tech: ['Pandas', 'Regex', 'LangDetect'],
-    keywords: ['< 8 words → drop', 'Emoji-only → drop', 'Hindi → drop', 'Generic praise → drop'],
+    tech: ['Pandas', 'Regex', 'LangDetect', 'JSON'],
   },
   {
     id: 3,
-    label: 'Groq LLM Engine',
+    label: 'LLM Processing',
     icon: 'psychology',
     iconBg: 'bg-white/20',
     iconColor: 'text-white',
-    accentColor: 'border-indigo-300',
-    badgeColor: 'bg-white/20 text-indigo-100 border-white/30',
-    title: '3. Groq LLM Engine',
-    subtitle: 'Structured behavioral tagging via prompt engineering',
-    description:
-      'Each filtered signal is passed to Groq (Llama 3) with a Growth PM persona prompt. The LLM extracts 6 structured enum tags per record — going far beyond simple positive/negative sentiment.',
-    details: [
-      { icon: 'label',     label: 'Tags per record', value: '6 behavioral dimensions' },
-      { icon: 'bolt',      label: 'Inference speed', value: '< 2s per record (Groq)' },
-    ],
-    tech: ['Groq API', 'Llama 3', 'FastAPI', 'Prompt Engineering'],
-    keywords: ['decision_driver', 'user_segment', 'evidence_type', 'unmet_need', 'suggested_feature', 'non_monetary_barrier'],
+    accentBorder: 'border-l-indigo-400',
+    badgeClass: 'bg-white/20 text-indigo-100 border-white/30',
+    dotClass: 'bg-indigo-300',
+    title: 'LLM Processing Layer',
+    nodes: ['Prompt Builder', 'Groq LLM API', 'Response Parser'],
     highlight: true,
+    description:
+      'The core intelligence engine. Each filtered record is passed through a behavioral PM prompt to Groq (Llama 3), which extracts structured JSON tags instead of simple sentiment scores.',
+    bullets: [
+      {
+        icon: 'edit_note',
+        title: 'Prompt Builder: Behavioral Focus',
+        body: 'Constructs prompts instructing Groq to act as a behavioral product manager — identifying the specific friction point, the user\'s underlying need, and categorising the non-monetary barrier.',
+      },
+      {
+        icon: 'bolt',
+        title: 'Groq LLM API',
+        body: 'Handles batched inference endpoints. Groq\'s low-latency inference (< 2s per record) makes large-volume tagging feasible without rate-limit bottlenecks.',
+      },
+      {
+        icon: 'data_object',
+        title: 'Response Parser',
+        body: 'Validates and extracts the JSON output — pulling out decision_driver, user_segment, evidence_type, unmet_need, suggested_feature, and non_monetary_barrier per record.',
+      },
+    ],
+    tech: ['Groq API', 'Llama 3', 'FastAPI', 'JSON Parsing'],
   },
   {
     id: 4,
-    label: 'Storage & Serving',
-    icon: 'database',
-    iconBg: 'bg-amber-100',
-    iconColor: 'text-amber-600',
-    accentColor: 'border-amber-400',
-    badgeColor: 'bg-amber-50 text-amber-700 border-amber-200',
-    title: '4. Storage & Serving',
-    subtitle: 'Structured persistence and API layer',
-    description:
-      'Tagged records are normalised and stored as structured JSON. A FastAPI backend exposes REST endpoints — enabling the frontend to fetch live scrapes, pre-processed insights, and cross-pattern data on demand.',
-    details: [
-      { icon: 'storage',      label: 'Format',   value: 'JSON (normalised_reviews.json)' },
-      { icon: 'api',          label: 'Backend',  value: 'FastAPI on Railway' },
-    ],
-    tech: ['FastAPI', 'JSON', 'Railway', 'REST API'],
-    keywords: ['/api/scrape', '/api/insights', '/api/patterns'],
-  },
-  {
-    id: 5,
-    label: 'Opportunity Synthesis',
+    label: 'Insights & Presentation',
     icon: 'bar_chart',
     iconBg: 'bg-purple-100',
     iconColor: 'text-purple-600',
-    accentColor: 'border-purple-400',
-    badgeColor: 'bg-purple-50 text-purple-700 border-purple-200',
-    title: '5. Opportunity Synthesis',
-    subtitle: 'Quantified insight presentation',
+    accentBorder: 'border-l-purple-400',
+    badgeClass: 'bg-purple-50 text-purple-700 border-purple-200',
+    dotClass: 'bg-purple-400',
+    title: 'Insights & Presentation Layer',
+    nodes: ['Quantified Insights Database', 'Visualization / Dashboarding', 'Final Discovery Report'],
     description:
-      'Cross-pattern analysis surfaces the dominant behavioral clusters. The interactive dashboard lets researchers filter by category, source, and segment to explore which non-monetary barriers most block the 30-day wishlist conversion metric.',
-    details: [
-      { icon: 'trending_up', label: 'Top cluster',  value: 'Trust Deficit × Trust-Gated Shopper (61.1%)' },
-      { icon: 'target',      label: 'North Star',   value: '30-day wishlist conversion rate' },
+      'LLM-tagged records are aggregated into a quantified insights database. Cross-pattern analysis surfaces dominant behavioral clusters, visualised across Decision Drivers, User Segments, and Evidence Types.',
+    bullets: [
+      {
+        icon: 'storage',
+        title: 'Quantified Insights Database',
+        body: 'Stores final LLM-evaluated records. Distributions are computed across decision drivers, user segments, and evidence types — giving numerical backing to each behavioral claim.',
+      },
+      {
+        icon: 'monitoring',
+        title: 'Visualization / Dashboarding',
+        body: 'Charts showing the most common non-monetary barriers preventing 30-day wishlist conversion. Filterable by source (Play Store / YouTube) and by category.',
+      },
+      {
+        icon: 'description',
+        title: 'Final Discovery Report',
+        body: 'A structured breakdown of findings highlighting non-monetary opportunity areas — Trust Deficit (61.1%), Delivery Anxiety (16.7%), and Price Sensitivity (11.1%) — for the Growth team.',
+      },
     ],
-    tech: ['React', 'Vite', 'Recharts', 'Vercel'],
-    keywords: ['categoryDist', 'segmentDist', 'evidenceDist', 'crossPattern'],
+    tech: ['Python', 'JSON', 'Cross-pattern Analysis'],
+  },
+  {
+    id: 5,
+    label: 'Interactive UI',
+    icon: 'devices',
+    iconBg: 'bg-rose-100',
+    iconColor: 'text-rose-600',
+    accentBorder: 'border-l-rose-400',
+    badgeClass: 'bg-rose-50 text-rose-700 border-rose-200',
+    dotClass: 'bg-rose-400',
+    title: 'Interactive UI Layer (Live Prototype)',
+    nodes: ['React Dashboard', 'Live Scraper Simulation'],
+    description:
+      'The final layer is this dashboard — a live, clickable prototype built on top of the discovery findings. It serves as the artefact for stakeholder review.',
+    bullets: [
+      {
+        icon: 'dashboard',
+        title: 'React Dashboard',
+        body: 'A live, clickable interface to explore discovery findings dynamically — viewing Trust Deficit percentages by source, filtering Core Findings by category, and reading verbatim user quotes.',
+      },
+      {
+        icon: 'terminal',
+        title: 'Live Scraper Simulation',
+        body: 'A visual terminal demonstrating the ingestion pipeline actively filtering noise and categorising high-intent wishlist behaviours, with real-time dynamic graphing based on data source.',
+      },
+    ],
+    tech: ['React', 'Vite', 'Recharts', 'FastAPI', 'Vercel', 'Railway'],
   },
 ];
 
-const FlowArrow = ({ highlight }) => (
+const FlowArrow = () => (
   <>
-    {/* Horizontal arrow (desktop) */}
-    <div className="hidden lg:flex items-center justify-center w-10 shrink-0">
-      <svg className={`flowing-arrow w-full h-6 ${highlight ? 'text-white/60' : 'text-primary/50'}`} viewBox="0 0 100 20" fill="none">
-        <path className="dashed-line" d="M0,10 L88,10" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" />
-        <path d="M82,4 L92,10 L82,16" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" />
+    <div className="hidden lg:flex items-center justify-center w-8 shrink-0">
+      <svg className="flowing-arrow w-full h-5 text-primary/40" viewBox="0 0 80 20" fill="none">
+        <path className="dashed-line" d="M0,10 L68,10" stroke="currentColor" strokeWidth="2" strokeLinecap="round" />
+        <path d="M63,5 L71,10 L63,15" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
       </svg>
     </div>
-    {/* Vertical arrow (mobile) */}
-    <div className="flex lg:hidden items-center justify-center h-10 shrink-0">
-      <svg className="flowing-arrow h-full w-6 text-primary/50" viewBox="0 0 20 100" fill="none">
-        <path className="dashed-line" d="M10,0 L10,88" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" />
-        <path d="M4,82 L10,92 L16,82" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" />
+    <div className="flex lg:hidden items-center justify-center h-8 shrink-0">
+      <svg className="flowing-arrow h-full w-5 text-primary/40" viewBox="0 0 20 80" fill="none">
+        <path className="dashed-line" d="M10,0 L10,68" stroke="currentColor" strokeWidth="2" strokeLinecap="round" />
+        <path d="M5,63 L10,71 L15,63" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
       </svg>
     </div>
   </>
 );
 
-function StepCard({ step, isActive, onClick }) {
-  const isHighlight = step.highlight;
-
-  return (
-    <div
-      onClick={onClick}
-      className={`
-        relative flex flex-col items-center text-center gap-3 p-5 rounded-2xl cursor-pointer
-        transition-all duration-300 select-none shrink-0
-        ${isHighlight
-          ? 'bg-gradient-to-br from-primary to-indigo-800 text-white shadow-2xl border border-white/20'
-          : 'glass-card hover:shadow-lg'
-        }
-        ${isActive && !isHighlight ? 'ring-2 ring-primary/60 shadow-lg -translate-y-1' : ''}
-        ${isActive && isHighlight ? 'ring-2 ring-white/60 shadow-2xl -translate-y-1' : ''}
-        ${!isActive ? 'hover:-translate-y-1' : ''}
-        w-full lg:w-44
-      `}
-    >
-      {/* Step number */}
-      <span className={`absolute top-2 right-3 text-[10px] font-black tracking-wider opacity-40 ${isHighlight ? 'text-white' : 'text-slate-400'}`}>
-        0{step.id}
-      </span>
-
-      {/* Icon */}
-      <div className={`w-12 h-12 rounded-full flex items-center justify-center shadow-inner shrink-0 ${isHighlight ? 'bg-white/20 backdrop-blur-sm' : step.iconBg}`}>
-        <span className={`material-symbols-outlined text-2xl ${isHighlight ? 'text-white' : step.iconColor}`}>
-          {step.icon}
-        </span>
-      </div>
-
-      {/* Label */}
-      <div>
-        <p className={`text-xs font-black uppercase tracking-wider mb-0.5 ${isHighlight ? 'text-indigo-200' : 'text-slate-400'}`}>
-          Layer {step.id}
-        </p>
-        <h3 className={`text-sm font-extrabold leading-tight ${isHighlight ? 'text-white' : 'text-slate-800'}`}>
-          {step.label}
-        </h3>
-      </div>
-
-      {/* Active indicator dot */}
-      {isActive && (
-        <span className={`w-1.5 h-1.5 rounded-full ${isHighlight ? 'bg-white' : 'bg-primary'}`} />
-      )}
-    </div>
-  );
-}
-
 export default function HowItWorksView() {
-  const [activeStep, setActiveStep] = useState(0);
-  const step = steps[activeStep];
+  const [active, setActive] = useState(0);
+  const layer = layers[active];
 
   return (
     <div className="flex flex-col gap-6 animate-fade-in pb-10">
 
       {/* Header */}
-      <div className="flex flex-col gap-1">
+      <div>
         <h2 className="text-2xl font-extrabold text-primary">How It Works</h2>
-        <p className="text-sm text-slate-500">
-          A 5-layer AI pipeline converting raw user noise into quantified behavioral insights.
+        <p className="text-sm text-slate-500 mt-1">
+          A 5-layer AI pipeline — from raw Play Store &amp; YouTube data to quantified behavioral insights.
           Click any layer to explore.
         </p>
       </div>
 
-      {/* Pipeline flow (top) */}
-      <div className="flex flex-col lg:flex-row items-center lg:items-stretch justify-center gap-2 lg:gap-0 w-full overflow-x-auto py-2">
-        {steps.map((s, i) => (
-          <React.Fragment key={s.id}>
-            <StepCard
-              step={s}
-              isActive={activeStep === i}
-              onClick={() => setActiveStep(i)}
-            />
-            {i < steps.length - 1 && <FlowArrow highlight={activeStep === i && s.highlight} />}
-          </React.Fragment>
-        ))}
+      {/* Pipeline flow strip */}
+      <div className="flex flex-col lg:flex-row items-center justify-center gap-1 lg:gap-0 w-full overflow-x-auto py-1">
+        {layers.map((l, i) => {
+          const isActive = active === i;
+          const isHighlight = l.highlight;
+          return (
+            <React.Fragment key={l.id}>
+              <button
+                onClick={() => setActive(i)}
+                className={`
+                  relative flex flex-col items-center gap-2 px-4 py-3 rounded-2xl text-center
+                  transition-all duration-250 cursor-pointer select-none shrink-0 w-full lg:w-36
+                  ${isHighlight
+                    ? 'bg-gradient-to-br from-primary to-indigo-800 text-white shadow-xl border border-white/20'
+                    : 'glass-card hover:shadow-md'}
+                  ${isActive && !isHighlight ? 'ring-2 ring-primary/60 -translate-y-1 shadow-lg' : ''}
+                  ${isActive && isHighlight ? 'ring-2 ring-white/50 -translate-y-1' : ''}
+                  ${!isActive ? 'hover:-translate-y-0.5' : ''}
+                `}
+              >
+                <span className={`text-[10px] font-black tracking-widest uppercase opacity-40 ${isHighlight ? 'text-white' : 'text-slate-400'}`}>
+                  Layer {l.id}
+                </span>
+                <div className={`w-9 h-9 rounded-full flex items-center justify-center ${isHighlight ? 'bg-white/20' : l.iconBg}`}>
+                  <span className={`material-symbols-outlined text-[18px] ${isHighlight ? 'text-white' : l.iconColor}`}>{l.icon}</span>
+                </div>
+                <span className={`text-xs font-bold leading-tight ${isHighlight ? 'text-white' : 'text-slate-700'}`}>{l.label}</span>
+                {isActive && (
+                  <span className={`w-1.5 h-1.5 rounded-full ${isHighlight ? 'bg-white' : 'bg-primary'}`} />
+                )}
+              </button>
+              {i < layers.length - 1 && <FlowArrow />}
+            </React.Fragment>
+          );
+        })}
       </div>
 
       {/* Detail panel */}
       <div
-        key={step.id}
-        className={`animate-fade-in glass-card rounded-2xl overflow-hidden border-l-4 ${step.accentColor}`}
+        key={layer.id}
+        className={`animate-fade-in glass-card rounded-2xl overflow-hidden border-l-4 ${layer.accentBorder}`}
       >
-        <div className={`flex flex-col md:flex-row gap-0 ${step.highlight ? 'bg-gradient-to-r from-indigo-50 to-white' : ''}`}>
+        <div className="flex flex-col md:flex-row">
 
-          {/* Left — main info */}
-          <div className="flex-1 p-6 flex flex-col gap-4">
+          {/* Left — description + bullets */}
+          <div className="flex-1 p-6 flex flex-col gap-5">
+
+            {/* Title row */}
             <div className="flex items-start gap-3">
-              <div className={`w-10 h-10 rounded-xl flex items-center justify-center shrink-0 ${step.iconBg}`}>
-                <span className={`material-symbols-outlined text-xl ${step.iconColor}`}>{step.icon}</span>
+              <div className={`w-10 h-10 rounded-xl flex items-center justify-center shrink-0 ${layer.highlight ? 'bg-indigo-100' : layer.iconBg}`}>
+                <span className={`material-symbols-outlined text-xl ${layer.highlight ? 'text-indigo-600' : layer.iconColor}`}>{layer.icon}</span>
               </div>
               <div>
-                <h3 className="text-lg font-extrabold text-slate-900">{step.title}</h3>
-                <p className="text-xs font-semibold text-slate-400 uppercase tracking-wide">{step.subtitle}</p>
+                <h3 className="text-lg font-extrabold text-slate-900">{layer.title}</h3>
+                {/* Architecture nodes */}
+                <div className="flex flex-wrap gap-1 mt-1">
+                  {layer.nodes.map((n) => (
+                    <span key={n} className={`text-[10px] font-bold px-2 py-0.5 rounded-full border ${layer.badgeClass}`}>
+                      {n}
+                    </span>
+                  ))}
+                </div>
               </div>
             </div>
 
-            <p className="text-sm text-slate-600 leading-relaxed">{step.description}</p>
+            <p className="text-sm text-slate-600 leading-relaxed">{layer.description}</p>
 
-            {/* Stats */}
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
-              {step.details.map((d, i) => (
-                <div key={i} className="flex items-start gap-3 bg-white/60 rounded-xl p-3 border border-white">
-                  <div className={`w-8 h-8 rounded-lg flex items-center justify-center shrink-0 ${step.iconBg}`}>
-                    <span className={`material-symbols-outlined text-base ${step.iconColor}`}>{d.icon}</span>
+            {/* Component bullets */}
+            <div className="flex flex-col gap-3">
+              {layer.bullets.map((b) => (
+                <div key={b.title} className="flex gap-3 bg-white/60 rounded-xl p-3 border border-white">
+                  <div className={`w-8 h-8 rounded-lg flex items-center justify-center shrink-0 ${layer.highlight ? 'bg-indigo-100' : layer.iconBg}`}>
+                    <span className={`material-symbols-outlined text-base ${layer.highlight ? 'text-indigo-600' : layer.iconColor}`}>{b.icon}</span>
                   </div>
                   <div>
-                    <p className="text-[10px] font-bold text-slate-400 uppercase tracking-wider">{d.label}</p>
-                    <p className="text-sm font-bold text-slate-800 leading-tight">{d.value}</p>
+                    <p className="text-xs font-extrabold text-slate-800">{b.title}</p>
+                    <p className="text-xs text-slate-500 mt-0.5 leading-relaxed">{b.body}</p>
                   </div>
                 </div>
               ))}
             </div>
           </div>
 
-          {/* Right — tech + tags */}
-          <div className="md:w-64 p-6 bg-slate-50/60 border-t md:border-t-0 md:border-l border-white/60 flex flex-col gap-4">
-
-            {/* Tech stack */}
+          {/* Right — tech stack */}
+          <div className="md:w-52 p-6 bg-slate-50/60 border-t md:border-t-0 md:border-l border-white/60 flex flex-col gap-4 shrink-0">
             <div>
               <p className="text-[10px] font-black text-slate-400 uppercase tracking-widest mb-2">Tech Stack</p>
               <div className="flex flex-wrap gap-1.5">
-                {step.tech.map((t) => (
-                  <span key={t} className={`text-[10px] font-bold px-2 py-0.5 rounded-full border ${step.badgeColor}`}>
+                {layer.tech.map((t) => (
+                  <span key={t} className={`text-[10px] font-bold px-2 py-0.5 rounded-full border ${layer.badgeClass}`}>
                     {t}
                   </span>
                 ))}
               </div>
             </div>
 
-            {/* Keywords / enum tags */}
+            {/* Mermaid node reference */}
             <div>
-              <p className="text-[10px] font-black text-slate-400 uppercase tracking-widest mb-2">
-                {step.id === 3 ? 'Enum Tags Extracted' : step.id === 2 ? 'Filter Rules' : step.id === 4 ? 'API Endpoints' : 'Keywords Used'}
-              </p>
-              <div className="flex flex-col gap-1">
-                {step.keywords.map((k) => (
-                  <div key={k} className="flex items-center gap-2">
-                    <span className={`w-1.5 h-1.5 rounded-full shrink-0 ${step.iconBg.replace('bg-', 'bg-').replace('-100', '-400')}`} />
-                    <code className="text-[11px] text-slate-600 font-mono">{k}</code>
+              <p className="text-[10px] font-black text-slate-400 uppercase tracking-widest mb-2">Architecture Nodes</p>
+              <div className="flex flex-col gap-1.5">
+                {layer.nodes.map((n) => (
+                  <div key={n} className="flex items-center gap-2">
+                    <span className={`w-1.5 h-1.5 rounded-full shrink-0 ${layer.dotClass}`} />
+                    <code className="text-[11px] text-slate-600 font-mono leading-tight">{n}</code>
                   </div>
                 ))}
               </div>
@@ -267,37 +295,34 @@ export default function HowItWorksView() {
         </div>
       </div>
 
-      {/* Step nav dots */}
-      <div className="flex items-center justify-center gap-2 pt-1">
-        {steps.map((s, i) => (
+      {/* Nav dots */}
+      <div className="flex items-center justify-center gap-2">
+        {layers.map((_, i) => (
           <button
             key={i}
-            onClick={() => setActiveStep(i)}
+            onClick={() => setActive(i)}
             className={`rounded-full transition-all duration-200 ${
-              activeStep === i
-                ? 'w-6 h-2 bg-primary'
-                : 'w-2 h-2 bg-slate-300 hover:bg-slate-400'
+              active === i ? 'w-6 h-2 bg-primary' : 'w-2 h-2 bg-slate-300 hover:bg-slate-400'
             }`}
-            title={s.label}
           />
         ))}
       </div>
 
-      {/* Pipeline stats bar */}
-      <div className="glass-card rounded-2xl p-5 grid grid-cols-2 md:grid-cols-4 gap-4">
-        {[
-          { label: 'Sources Scraped',     value: '9,127',  icon: 'download',      color: 'text-emerald-600' },
-          { label: 'Noise Filtered Out',  value: '97.6%',  icon: 'delete_sweep',  color: 'text-red-500' },
-          { label: 'LLM-Tagged Signals',  value: '221',    icon: 'psychology',    color: 'text-indigo-600' },
-          { label: 'Enum Tags / Record',  value: '6',      icon: 'label',         color: 'text-purple-600' },
-        ].map((stat) => (
-          <div key={stat.label} className="flex items-center gap-3">
-            <span className={`material-symbols-outlined text-2xl ${stat.color}`}>{stat.icon}</span>
-            <div>
-              <p className="text-xl font-extrabold text-slate-800">{stat.value}</p>
-              <p className="text-[11px] text-slate-500 font-semibold">{stat.label}</p>
+      {/* Bottom pipeline summary */}
+      <div className="glass-card rounded-2xl p-5 grid grid-cols-2 md:grid-cols-5 gap-4">
+        {layers.map((l) => (
+          <button
+            key={l.id}
+            onClick={() => setActive(l.id - 1)}
+            className={`flex flex-col items-center gap-1.5 rounded-xl p-2 transition-all ${
+              active === l.id - 1 ? 'bg-white/80 shadow-sm ring-1 ring-primary/30' : 'hover:bg-white/40'
+            }`}
+          >
+            <div className={`w-8 h-8 rounded-full flex items-center justify-center ${l.iconBg}`}>
+              <span className={`material-symbols-outlined text-[16px] ${l.iconColor}`}>{l.icon}</span>
             </div>
-          </div>
+            <span className="text-[10px] font-bold text-slate-600 text-center leading-tight">{l.label}</span>
+          </button>
         ))}
       </div>
     </div>
