@@ -1,9 +1,11 @@
 import React, { useState } from 'react';
 import { dashboardData, RAW_REVIEWS, questionTitles } from '../data/discoveryData';
+import ReportModal from './ReportModal';
 
 export default function DashboardView() {
   const [selectedSource, setSelectedSource] = useState('playstore');
   const [selectedCategory, setSelectedCategory] = useState('All');
+  const [isReportOpen, setIsReportOpen] = useState(false);
 
   const sources = [
     { id: 'playstore', label: 'Play Store', icon: 'shop' },
@@ -15,18 +17,17 @@ export default function DashboardView() {
   const categories = ['All', ...Object.keys(currentData.categoryDist)];
 
   return (
-    <div className="flex flex-col gap-lg md:gap-xl animate-fade-in pb-10">
-      <header className="flex flex-col md:flex-row justify-between items-start md:items-center gap-md">
+    <div className="flex flex-col gap-8 animate-fade-in pb-10">
+      <header className="flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
         <div className="flex items-center gap-4">
-          <h2 className="font-headline-lg-mobile md:font-headline-lg text-primary font-bold">Overview</h2>
-          <a 
-            href="/discovery-report.pdf" 
-            download 
-            className="flex items-center gap-2 bg-indigo-100 hover:bg-indigo-200 text-indigo-700 px-4 py-2 rounded-full font-label-sm font-bold transition-colors shadow-sm"
+          <h2 className="text-2xl font-extrabold text-primary">Overview</h2>
+          <button 
+            onClick={() => setIsReportOpen(true)}
+            className="flex items-center gap-2 bg-indigo-100 hover:bg-indigo-200 text-indigo-700 px-5 py-2.5 rounded-full text-sm font-bold transition-colors shadow-sm"
           >
-            <span className="material-symbols-outlined text-[18px]">download</span>
-            Download Report
-          </a>
+            <span className="material-symbols-outlined text-[18px]">visibility</span>
+            View Report
+          </button>
         </div>
         
         <div className="flex bg-white/60 backdrop-blur-md border border-white/80 p-1 rounded-full shadow-sm">
@@ -49,23 +50,26 @@ export default function DashboardView() {
         </div>
       </header>
 
-      <section className="grid grid-cols-1 md:grid-cols-3 gap-md">
-        <div className="flex flex-col justify-center p-lg glass-card rounded-xl h-32">
+      <section className="grid grid-cols-1 md:grid-cols-3 gap-6">
+        <div className="flex flex-col justify-center p-6 glass-card rounded-xl shadow-sm h-28">
           <div className="text-xs font-bold text-slate-500 uppercase tracking-wider">SOURCES SCRAPED</div>
-          <div className="text-3xl md:text-4xl font-extrabold text-indigo-600 mt-2 truncate">{currentData.kpis.reviewed}</div>
+          <div className="text-2xl font-extrabold text-indigo-600 mt-1 truncate">{currentData.kpis.reviewed}</div>
         </div>
-        <div className="flex flex-col justify-center p-lg glass-card rounded-xl h-32">
+        <div className="flex flex-col justify-center p-6 glass-card rounded-xl shadow-sm h-28">
           <div className="text-xs font-bold text-slate-500 uppercase tracking-wider">HIGH-INTENT SIGNALS</div>
-          <div className="text-3xl md:text-4xl font-extrabold text-indigo-600 mt-2 truncate">{currentData.kpis.filtered}</div>
+          <div className="text-2xl font-extrabold text-indigo-600 mt-1 truncate">{currentData.kpis.filtered}</div>
         </div>
-        <div className="flex flex-col justify-center p-lg glass-card rounded-xl h-32">
+        <div className="flex flex-col justify-center p-6 glass-card rounded-xl shadow-sm h-28">
           <div className="text-xs font-bold text-slate-500 uppercase tracking-wider">TOP DRIVER</div>
-          <div className="text-3xl md:text-4xl font-extrabold text-indigo-600 mt-2 truncate">{currentData.kpis.topDriver}</div>
+          <div className="text-2xl font-extrabold text-indigo-600 mt-1 truncate">{currentData.kpis.topDriver}</div>
         </div>
       </section>
       
-      <section className="glass-card rounded-xl p-lg flex flex-col gap-4">
-        <h3 className="font-title-md font-bold text-on-surface">Category Distribution</h3>
+      <section className="glass-card rounded-xl p-6 flex flex-col gap-4">
+        <h3 className="text-xl font-bold text-slate-800">
+          Category Distribution 
+          <span className="text-sm font-normal text-slate-500 ml-2">(Share of {currentData.kpis.filtered.split(' ')[0]} signals)</span>
+        </h3>
         <div className="flex flex-col gap-3">
           {Object.entries(currentData.categoryDist).map(([category, value]) => (
             <div key={category} className="flex items-center gap-4">
@@ -80,11 +84,11 @@ export default function DashboardView() {
       </section>
 
       <div className="flex items-center gap-4 py-2">
-        <label className="font-title-md font-bold text-on-surface">Filter by Category:</label>
+        <label className="text-lg font-bold text-slate-800">Filter by Category:</label>
         <select 
           value={selectedCategory}
           onChange={(e) => setSelectedCategory(e.target.value)}
-          className="bg-white/80 border border-slate-300 text-slate-900 text-sm rounded-lg focus:ring-primary focus:border-primary block p-2.5 outline-none shadow-sm backdrop-blur-sm"
+          className="glass-card bg-white/40 backdrop-blur-md border border-white text-slate-900 text-sm rounded-lg focus:ring-primary focus:border-primary block p-2.5 outline-none shadow-sm font-medium"
         >
           {categories.map(c => <option key={c} value={c}>{c}</option>)}
         </select>
@@ -93,19 +97,19 @@ export default function DashboardView() {
       <div className="flex flex-col lg:flex-row gap-6 items-start">
         {/* Left Side: Core Findings */}
         <div className="flex-1 flex flex-col gap-4 w-full">
-          <h3 className="font-title-md text-primary font-bold">Core Findings</h3>
+          <h3 className="text-xl text-primary font-bold">Core Findings</h3>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             {questionTitles.map((q) => {
               const answer = currentData.answers[q.key];
               if (selectedCategory !== 'All' && answer.category !== selectedCategory) return null;
               
               return (
-                <div key={q.key} className="backdrop-blur-md bg-white/60 border border-white/80 rounded-2xl p-5 shadow-sm flex flex-col gap-3 hover:shadow-md transition-shadow">
+                <div key={q.key} className="glass-card bg-white/60 border border-white/80 rounded-2xl p-5 shadow-sm flex flex-col gap-3 hover:shadow-md transition-shadow">
                   <div className="flex justify-between items-start gap-2">
-                    <h4 className="font-title-md text-sm font-bold text-on-surface leading-snug">{q.title}</h4>
+                    <h4 className="text-base font-bold text-slate-800 leading-snug">{q.title}</h4>
                     <span className="text-[10px] bg-slate-200 text-slate-700 px-2 py-1 rounded-full font-bold whitespace-nowrap">{answer.category}</span>
                   </div>
-                  <div className="flex flex-col gap-2 font-body-md text-sm">
+                  <div className="flex flex-col gap-2 text-sm text-slate-700">
                     <p><span className="font-semibold text-slate-800">Insight:</span> {answer.insight}</p>
                     <p><span className="font-semibold text-primary">Data Proof:</span> {answer.dataProof}</p>
                   </div>
@@ -117,7 +121,7 @@ export default function DashboardView() {
         
         {/* Right Side: Raw Data Snippets */}
         <div className="w-full lg:w-80 flex flex-col gap-4 sticky top-4">
-          <h3 className="font-title-md text-primary font-bold">Raw Quotes</h3>
+          <h3 className="text-xl text-primary font-bold">Raw Quotes</h3>
           <div className="glass-card rounded-2xl p-4 flex flex-col gap-3 max-h-[600px] overflow-y-auto">
             {RAW_REVIEWS.filter(r => 
               (selectedSource === 'combined' || r.source === selectedSource) &&
@@ -134,6 +138,8 @@ export default function DashboardView() {
           </div>
         </div>
       </div>
+      
+      <ReportModal isOpen={isReportOpen} onClose={() => setIsReportOpen(false)} />
     </div>
   );
 }

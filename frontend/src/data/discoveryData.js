@@ -1,8 +1,8 @@
 export const dashboardData = {
   playstore: {
-    kpis: { reviewed: "9,115 Reviews", filtered: "210 High-Intent", topDriver: "Trust Deficit (61%)" },
+    kpis: { reviewed: "9,115 Reviews", filtered: "210 High-Intent", topDriver: "Trust Deficit (58%)" },
     crossPattern: "Dominant Cluster: Trust Deficit × Trust-Gated Shopper (72.2%)",
-    categoryDist: { 'Trust Deficit': 61, 'Delivery Anxiety': 22, 'Quality Uncertainty': 17 },
+    categoryDist: { 'Trust Deficit': 58, 'Delivery Anxiety': 24, 'Price Sensitivity': 12, 'Quality Uncertainty': 6 },
     answers: {
       q1: { category: "Trust Deficit", insight: "Users use the wishlist as a holding area while they evaluate whether Myntra can be trusted.", dataProof: "61.1% of reviews cited Trust Deficit as the primary driver.", voice: "I returned the products... but still haven't received the money." },
       q2: { category: "Delivery Anxiety", insight: "Post-purchase anxiety—fear that something will go wrong after the order is placed.", dataProof: "55.6% of evidence types were Delivery Complaints.", voice: "Cancelling shipped orders and refusing to honour the offer is unfair." },
@@ -19,7 +19,7 @@ export const dashboardData = {
   youtube: {
     kpis: { reviewed: "12 Haul Videos", filtered: "11 High-Intent", topDriver: "Visual Reality Gap" },
     crossPattern: "Dominant Cluster: Visual Appeal × Trend Follower (50.0%)",
-    categoryDist: { 'Visual Reality Gap': 50, 'Styling Uncertainty': 30, 'Visual Validation': 20 },
+    categoryDist: { 'Visual Reality Gap': 46, 'Styling Uncertainty': 32, 'Visual Validation': 22 },
     answers: {
       q1: { category: "Visual Reality Gap", insight: "Users save items discovered through haul videos to compare later.", dataProof: "50% of reviews cited Fabric/Visual Reality Gap.", voice: "The color in the video is completely different." },
       q2: { category: "Styling Uncertainty", insight: "The product looks different in the video compared to the catalog.", dataProof: "30% of reviews cited Styling Uncertainty.", voice: "I want to see how it fits on a normal body." },
@@ -36,7 +36,7 @@ export const dashboardData = {
   combined: {
     kpis: { reviewed: "9,127 Total Sources", filtered: "221 High-Intent", topDriver: "Trust Deficit" },
     crossPattern: "Dominant Cluster: Trust Deficit × Trust-Gated Shopper (61.1%)",
-    categoryDist: { 'Trust Deficit': 50, 'Delivery Anxiety': 30, 'Quality Uncertainty': 20 },
+    categoryDist: { 'Trust Deficit': 55.1, 'Delivery Anxiety': 22.8, 'Price Sensitivity': 11.4, 'Quality Uncertainty': 5.7, 'Visual Reality Gap': 2.3, 'Styling Uncertainty': 1.8, 'Visual Validation': 0.9 },
     answers: {
       q1: { category: "Trust Deficit", insight: "Users wishlist items to delay a decision when they encounter operational friction.", dataProof: "72.2% of users are 'Trust-Gated Shoppers'.", voice: "Cancellation after waiting for 8 days is unbearable." },
       q2: { category: "Delivery Anxiety", insight: "Post-purchase anxiety: fear of cancellations, slow refunds, and unreliable delivery.", dataProof: "Delivery Complaints (55.6%) and Return Anxiety (22.2%).", voice: "Myntra's return policy is complicated." },
@@ -53,30 +53,29 @@ export const dashboardData = {
 };
 
 export const RAW_REVIEWS = [
-  { source: 'playstore', text: "Added to wishlist but won't buy. Cancellation after waiting for 8 days is unbearable.", category: 'Trust Deficit', sentiment: 'Negative - Delivery Anxiety' },
-  { source: 'playstore', text: "Myntra's return policy is complicated when you receive the wrong product. Wishlist is safer.", category: 'Delivery Anxiety', sentiment: 'Negative - Trust' },
-  { source: 'youtube', text: "The color in the video haul is completely different from the app photos.", category: 'Quality Uncertainty', sentiment: 'Critical - Visual Gap' },
-  { source: 'playstore', text: "I check negative reviews to see if refunds are smooth before moving from wishlist to cart.", category: 'Trust Deficit', sentiment: 'Cautious - Refund Risk' },
-  { source: 'youtube', text: "I need to see it on a real person before I buy. Fabric looks stiff.", category: 'Quality Uncertainty', sentiment: 'Hesitant - Fabric' },
-  { source: 'playstore', text: "After waiting 20 days for delivery, they cancelled the order. Never again.", category: 'Delivery Anxiety', sentiment: 'Angry - Operational' },
-  { source: 'playstore', text: "Delivery takes too long to my city. Keeps items in wishlist.", category: 'Delivery Anxiety', sentiment: 'Frustrated - Logistics' },
-  { source: 'youtube', text: "Waiting for my favorite YouTuber to review this haul for fit validation.", category: 'Trust Deficit', sentiment: 'Passive - Fit' },
-  { source: 'playstore', text: "Just give me my refund on time. Kept item in wishlist until I trust them.", category: 'Trust Deficit', sentiment: 'Negative - Financial' },
-  { source: 'youtube', text: "I read dozens of reviews looking for sizing and fit feedback.", category: 'Quality Uncertainty', sentiment: 'Researching - Fit' },
+  { source: 'playstore', text: "Added to wishlist but won't buy. Cancellation after waiting for 8 days is unbearable.", category: 'Trust Deficit', sentiment: 'Negative - Delivery Anxiety', segment: 'Trust-Gated Shopper', evidence: 'Delivery Complaint' },
+  { source: 'playstore', text: "Myntra's return policy is complicated when you receive the wrong product. Wishlist is safer.", category: 'Delivery Anxiety', sentiment: 'Negative - Trust', segment: 'Trust-Gated Shopper', evidence: 'Return Anxiety' },
+  { source: 'youtube', text: "The color in the video haul is completely different from the app photos.", category: 'Quality Uncertainty', sentiment: 'Critical - Visual Gap', segment: 'Trend Follower', evidence: 'Cart Abandonment' },
+  { source: 'playstore', text: "I check negative reviews to see if refunds are smooth before moving from wishlist to cart.", category: 'Trust Deficit', sentiment: 'Cautious - Refund Risk', segment: 'Trust-Gated Shopper', evidence: 'Return Anxiety' },
+  { source: 'youtube', text: "I need to see it on a real person before I buy. Fabric looks stiff.", category: 'Quality Uncertainty', sentiment: 'Hesitant - Fabric', segment: 'Trend Follower', evidence: 'Cart Abandonment' },
+  { source: 'playstore', text: "After waiting 20 days for delivery, they cancelled the order. Never again.", category: 'Delivery Anxiety', sentiment: 'Angry - Operational', segment: 'Trust-Gated Shopper', evidence: 'Delivery Complaint' },
+  { source: 'playstore', text: "Delivery takes too long to my city. Keeps items in wishlist.", category: 'Delivery Anxiety', sentiment: 'Frustrated - Logistics', segment: 'Trust-Gated Shopper', evidence: 'Delivery Complaint' },
+  { source: 'youtube', text: "Waiting for my favorite YouTuber to review this haul for fit validation.", category: 'Trust Deficit', sentiment: 'Passive - Fit', segment: 'Trend Follower', evidence: 'Cart Abandonment' },
+  { source: 'playstore', text: "Just give me my refund on time. Kept item in wishlist until I trust them.", category: 'Trust Deficit', sentiment: 'Negative - Financial', segment: 'Trust-Gated Shopper', evidence: 'Return Anxiety' },
+  { source: 'youtube', text: "I read dozens of reviews looking for sizing and fit feedback.", category: 'Quality Uncertainty', sentiment: 'Researching - Fit', segment: 'Habitual Buyer', evidence: 'Cart Abandonment' },
   
-  // Expanded dataset for realism
-  { source: 'playstore', text: "Even after applying gift card they are charging 49rs more. Cancelled order from cart.", category: 'Price Sensitivity', sentiment: 'Negative - Hidden Costs' },
-  { source: 'playstore', text: "They never deliver on time here in Assam. Always 3-4 days late.", category: 'Delivery Anxiety', sentiment: 'Frustrated - Logistics' },
-  { source: 'youtube', text: "Does anyone know if this shrinks after wash? Waiting to buy it.", category: 'Quality Uncertainty', sentiment: 'Hesitant - Material' },
-  { source: 'playstore', text: "Customer care is worst. They don't help with missing items in return.", category: 'Trust Deficit', sentiment: 'Angry - Support' },
-  { source: 'youtube', text: "If she says it's good, I'll buy it. Trust her styling completely.", category: 'Visual Validation', sentiment: 'Positive - Influencer' },
-  { source: 'playstore', text: "Size chart is completely wrong. XL fits like M. Will keep in wishlist to check reviews later.", category: 'Quality Uncertainty', sentiment: 'Critical - Sizing' },
-  { source: 'playstore', text: "Why is convenience fee added on every single order now? Removing items from cart.", category: 'Price Sensitivity', sentiment: 'Negative - Fees' },
-  { source: 'youtube', text: "I don't trust app photos anymore, too much editing. Thank god for this haul.", category: 'Visual Validation', sentiment: 'Relieved - Reality Check' },
-  { source: 'playstore', text: "I check every day to see if my size is back in stock.", category: 'Convenience', sentiment: 'Active - Monitoring' },
-  { source: 'youtube', text: "Saved it just in case, but probably won't buy unless there's a big sale.", category: 'Price Sensitivity', sentiment: 'Passive - Bookmarking' },
-  { source: 'playstore', text: "Delivery boy refused to open package before payment. Didn't trust the contents.", category: 'Trust Deficit', sentiment: 'Anxious - Delivery' },
-  { source: 'playstore', text: "Added immediately after viewing the size chart but waiting for payday.", category: 'Convenience', sentiment: 'High Intent - Delayed' }
+  { source: 'playstore', text: "Even after applying gift card they are charging 49rs more. Cancelled order from cart.", category: 'Price Sensitivity', sentiment: 'Negative - Hidden Costs', segment: 'Deal Seeker', evidence: 'Cart Abandonment' },
+  { source: 'playstore', text: "They never deliver on time here in Assam. Always 3-4 days late.", category: 'Delivery Anxiety', sentiment: 'Frustrated - Logistics', segment: 'Trust-Gated Shopper', evidence: 'Delivery Complaint' },
+  { source: 'youtube', text: "Does anyone know if this shrinks after wash? Waiting to buy it.", category: 'Quality Uncertainty', sentiment: 'Hesitant - Material', segment: 'Habitual Buyer', evidence: 'Cart Abandonment' },
+  { source: 'playstore', text: "Customer care is worst. They don't help with missing items in return.", category: 'Trust Deficit', sentiment: 'Angry - Support', segment: 'Trust-Gated Shopper', evidence: 'Return Anxiety' },
+  { source: 'youtube', text: "If she says it's good, I'll buy it. Trust her styling completely.", category: 'Visual Appeal', sentiment: 'Positive - Influencer', segment: 'Trend Follower', evidence: 'Repeat Purchase' },
+  { source: 'playstore', text: "Size chart is completely wrong. XL fits like M. Will keep in wishlist to check reviews later.", category: 'Quality Uncertainty', sentiment: 'Critical - Sizing', segment: 'Habitual Buyer', evidence: 'Return Anxiety' },
+  { source: 'playstore', text: "Why is convenience fee added on every single order now? Removing items from cart.", category: 'Price Sensitivity', sentiment: 'Negative - Fees', segment: 'Deal Seeker', evidence: 'Cart Abandonment' },
+  { source: 'youtube', text: "I don't trust app photos anymore, too much editing. Thank god for this haul.", category: 'Trust Deficit', sentiment: 'Relieved - Reality Check', segment: 'Trend Follower', evidence: 'Cart Abandonment' },
+  { source: 'playstore', text: "I check every day to see if my size is back in stock.", category: 'Convenience', sentiment: 'Active - Monitoring', segment: 'Habitual Buyer', evidence: 'Repeat Purchase' },
+  { source: 'youtube', text: "Saved it just in case, but probably won't buy unless there's a big sale.", category: 'Price Sensitivity', sentiment: 'Passive - Bookmarking', segment: 'Deal Seeker', evidence: 'Cart Abandonment' },
+  { source: 'playstore', text: "Delivery boy refused to open package before payment. Didn't trust the contents.", category: 'Trust Deficit', sentiment: 'Anxious - Delivery', segment: 'Trust-Gated Shopper', evidence: 'Delivery Complaint' },
+  { source: 'playstore', text: "Added immediately after viewing the size chart but waiting for payday.", category: 'Convenience', sentiment: 'High Intent - Delayed', segment: 'Habitual Buyer', evidence: 'Repeat Purchase' }
 ];
 
 export const questionTitles = [
@@ -90,32 +89,4 @@ export const questionTitles = [
   { key: 'q8', title: "When is the wishlist genuine intent vs bookmarking?" },
   { key: 'q9', title: "How do behaviors differ across user segments?" },
   { key: 'q10', title: "What unmet needs emerge consistently?" }
-];
-
-export const decisionDriversData = [
-  { name: 'Trust Deficit', value: 61.1 },
-  { name: 'Delivery Anxiety', value: 16.7 },
-  { name: 'Price Sensitivity', value: 11.1 },
-  { name: 'Convenience', value: 5.6 },
-  { name: 'Visual Appeal', value: 5.6 }
-];
-
-export const userSegmentsData = [
-  { name: 'Trust-Gated Shopper', value: 72.2 },
-  { name: 'Deal Seeker', value: 11.1 },
-  { name: 'Habitual Buyer', value: 5.6 },
-  { name: 'Trend Follower', value: 5.6 }
-];
-
-export const evidenceTypesData = [
-  { name: 'Delivery Complaint', value: 55.6 },
-  { name: 'Return Anxiety', value: 22.2 },
-  { name: 'Repeat Purchase', value: 5.6 },
-  { name: 'Cart Abandonment', value: 5.6 }
-];
-
-export const crossPatternData = [
-  { name: 'Trust Deficit × Trust-Gated', value: 61.1 },
-  { name: 'Delivery Anxiety × Trust-Gated', value: 16.7 },
-  { name: 'Price Sensitivity × Deal Seeker', value: 11.1 }
 ];

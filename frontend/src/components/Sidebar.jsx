@@ -3,7 +3,6 @@ import React from 'react';
 export default function Sidebar({ activeView, setActiveView }) {
   const tabs = [
     { id: 'overview', label: 'Overview', icon: 'dashboard' },
-    { id: 'visuals', label: 'Visual Reports', icon: 'bar_chart' },
     { id: 'raw', label: 'Raw Data Feed', icon: 'list_alt' },
     { id: 'scraper', label: 'Live Scraper Engine', icon: 'terminal' },
     { id: 'how', label: 'How it Works', icon: 'account_tree' }
