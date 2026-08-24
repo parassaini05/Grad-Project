@@ -110,8 +110,17 @@ export default function ScraperView() {
       ]);
       realData = [
         { text: "My order was cancelled after 10 days.", category: "Trust Deficit", segment: "Trust-Gated Shopper", evidence: "Delivery Complaint" },
-        { text: "Returns are too complicated.", category: "Delivery Anxiety", segment: "Trust-Gated Shopper", evidence: "Return Anxiety" },
-        { text: "Fabric looks different than the video.", category: "Visual Reality Gap", segment: "Trend Follower", evidence: "Cart Abandonment" }
+        { text: "Returns are too complicated.", category: "Trust Deficit", segment: "Trust-Gated Shopper", evidence: "Return Anxiety" },
+        { text: "Customer care is worst.", category: "Trust Deficit", segment: "Trust-Gated Shopper", evidence: "Return Anxiety" },
+        { text: "Delivery boy refused to open package.", category: "Trust Deficit", segment: "Trust-Gated Shopper", evidence: "Delivery Complaint" },
+        { text: "Just give me my refund on time.", category: "Trust Deficit", segment: "Trust-Gated Shopper", evidence: "Return Anxiety" },
+        { text: "They never deliver on time here.", category: "Delivery Anxiety", segment: "Trust-Gated Shopper", evidence: "Delivery Complaint" },
+        { text: "After waiting 20 days, cancelled.", category: "Delivery Anxiety", segment: "Trust-Gated Shopper", evidence: "Delivery Complaint" },
+        { text: "Delivery takes too long to my city.", category: "Delivery Anxiety", segment: "Trust-Gated Shopper", evidence: "Delivery Complaint" },
+        { text: "Even after gift card they charging 49rs.", category: "Price Sensitivity", segment: "Deal Seeker", evidence: "Cart Abandonment" },
+        { text: "Why is convenience fee added?", category: "Price Sensitivity", segment: "Deal Seeker", evidence: "Cart Abandonment" },
+        { text: "Fabric looks different than the video.", category: "Quality Uncertainty", segment: "Trend Follower", evidence: "Cart Abandonment" },
+        { text: "Size chart is completely wrong.", category: "Quality Uncertainty", segment: "Habitual Buyer", evidence: "Return Anxiety" }
       ];
     }
     
