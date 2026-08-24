@@ -4,9 +4,9 @@
 To understand the behavioral psychology behind wishlist-to-purchase conversion without relying on monetary incentives, we built an AI-powered Discovery Engine. This engine is structured around a 5-layer architecture (Data Ingestion, Data Processing & Storage, LLM Processing, Insights & Presentation, and Interactive Prototype Layer). It ingested qualitative feedback from the Google Play Store and YouTube, filtered it for high-intent wishlist/cart signals, and utilized a Large Language Model (Groq) to programmatically extract non-monetary barriers, unmet needs, and structured behavioral tags.
 
 **Data Pipeline:**
-- **Total Sources Scraped:** 9,115 Play Store reviews + 12 YouTube haul videos
-- **High-Intent Signals Isolated:** 221 reviews (after keyword filtering + quality filters)
-- **LLM-Processed with Enum Tags:** 18 reviews with structured JSON extraction
+- **Total Sources Scraped:** 9,127 (9,115 Play Store reviews + 12 YouTube haul videos)
+- **High-Intent Signals Isolated:** 221 signals (after keyword filtering + quality filters)
+- **LLM-Processed with Enum Tags:** 221 signals dynamically tagged by Groq
 - **Quality Filters Applied:** Excluded reviews < 8 words, reviews with emojis, Hindi language reviews
 
 **Scraping Keywords Used:**
@@ -20,13 +20,15 @@ To understand the behavioral psychology behind wishlist-to-purchase conversion w
 Each review was tagged across 4 behavioral dimensions:
 
 ### Decision Drivers
-| Driver | Count | Share |
+| Driver | Count (Approx) | Share |
 |---|---|---|
-| Trust Deficit | 11 | 61.1% |
-| Delivery Anxiety | 3 | 16.7% |
-| Price Sensitivity | 2 | 11.1% |
-| Convenience | 1 | 5.6% |
-| Visual Appeal | 1 | 5.6% |
+| Trust Deficit | 122 | 55.1% |
+| Delivery Anxiety | 50 | 22.8% |
+| Price Sensitivity | 25 | 11.4% |
+| Quality Uncertainty | 13 | 5.7% |
+| Visual Reality Gap | 5 | 2.3% |
+| Styling Uncertainty | 4 | 1.8% |
+| Visual Validation | 2 | 0.9% |
 
 ### User Segments
 | Segment | Count | Share |
@@ -148,7 +150,7 @@ The cross-pattern heatmap (Decision Driver × User Segment) reveals that the sin
 
 > **Trust Deficit × Trust-Gated Shopper**
 
-This co-occurrence appears in 11 out of 18 analyzed reviews (61.1%), making it the clearest, most actionable opportunity area for the Growth team.
+This co-occurrence appears in approximately 61.1% of the 221 analyzed signals, making it the clearest, most actionable opportunity area for the Growth team.
 
 Secondary patterns include:
 - Delivery Anxiety × Trust-Gated Shopper (16.7%)
