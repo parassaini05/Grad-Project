@@ -1,32 +1,13 @@
-import React, { useState, useEffect } from 'react';
-import { questionTitles } from '../data/discoveryData';
+import React, { useState } from 'react';
+import { PieChart, Pie, Cell, ResponsiveContainer, Tooltip } from 'recharts';
+import { dashboardData as initialData, questionTitles } from '../data/discoveryData';
 import ReportModal from './ReportModal';
 
 export default function DashboardView() {
-  const [dashboardData, setDashboardData] = useState(null);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState(null);
-
-  const [selectedSource, setSelectedSource] = useState('playstore');
+  const [dashboardData] = useState(initialData);
+  const [selectedSource, setSelectedSource] = useState('combined');
   const [selectedCategory, setSelectedCategory] = useState('All');
   const [isReportOpen, setIsReportOpen] = useState(false);
-
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const apiUrl = import.meta.env.VITE_API_URL || 'http://localhost:8000';
-        const res = await fetch(`${apiUrl}/api/dashboard`);
-        if (!res.ok) throw new Error("Failed to fetch live dashboard data.");
-        const data = await res.json();
-        setDashboardData(data);
-      } catch (err) {
-        setError(err.message);
-      } finally {
-        setLoading(false);
-      }
-    };
-    fetchData();
-  }, []);
 
   const sources = [
     { id: 'playstore', label: 'Play Store', icon: 'shop' },
@@ -34,8 +15,6 @@ export default function DashboardView() {
     { id: 'combined', label: 'Combined Data', icon: 'hub' }
   ];
 
-  if (loading) return <div className="p-10 text-center text-primary font-bold animate-pulse">Loading genuine data from LLM pipeline...</div>;
-  if (error) return <div className="p-10 text-center text-red-500 font-bold">Error: {error}</div>;
   if (!dashboardData) return null;
 
   const currentData = dashboardData[selectedSource];
