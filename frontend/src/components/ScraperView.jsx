@@ -96,7 +96,7 @@ export default function ScraperView() {
 
     try {
       const apiUrl = import.meta.env.VITE_API_URL || 'http://localhost:8000';
-      const response = await fetch(`${apiUrl}/api/scrape?source=${source}&limit=6`);
+      const response = await fetch(`${apiUrl}/api/scrape?source=${source}&limit=2`);
       
       if (!response.ok) throw new Error(`Backend error: ${response.status}`);
       

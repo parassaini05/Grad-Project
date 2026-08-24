@@ -53,9 +53,9 @@ def analyze_feedback(client, text):
                     "content": build_prompt(text)
                 }
             ],
-            model="llama-3.1-70b-versatile",
+            model="llama-3.3-70b-versatile",
             temperature=0,
-            max_tokens=1024
+            max_tokens=256
         )
         content = response.choices[0].message.content
         match = re.search(r'\{[\s\S]*\}', content)
