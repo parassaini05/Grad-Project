@@ -53,7 +53,7 @@ def analyze_feedback(client, text):
                     "content": build_prompt(text)
                 }
             ],
-            model="openai/gpt-oss-20b",
+            model="llama-3.1-70b-versatile",
             temperature=0,
             max_tokens=1024
         )

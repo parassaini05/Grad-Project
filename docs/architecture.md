@@ -27,6 +27,12 @@ graph TD
         I --> J[Visualization / Dashboarding]
         J --> K[Final Discovery Report]
     end
+
+    subgraph Interactive UI Layer (Live Prototype)
+        K --> L[React Dashboard]
+        K --> M[Live Scraper Simulation]
+        K --> N[User Journey Simulator]
+    end
 ```
 
 ## 1. Data Ingestion Layer
@@ -48,3 +54,8 @@ Gathers raw feedback focusing heavily on wishlist behavior, intent, and barriers
 - **Processed Insights Database:** Stores the final LLM-evaluated data.
 - **Visualization Module:** Charts showing the most common non-monetary barriers preventing 30-day conversion.
 - **Final Reporting:** A structured breakdown of the Discovery Engine's findings, highlighting non-monetary opportunity areas for the Growth team.
+
+## 5. Interactive Prototype Layer (Live Working)
+- **React Dashboard:** Generated via Google Stitch, providing a live, clickable interface to explore the discovery findings (e.g., viewing Trust Deficit percentages dynamically by source).
+- **Live Scraper Simulation:** A visual terminal demonstrating the ingestion pipeline actively filtering noise and categorizing high-intent wishlist behaviors.
+- **User Journey Simulator:** An embedded mobile mockup representing the shopping app (Myntra/AJIO), allowing evaluators to physically test friction points directly on the dashboard.

@@ -41,3 +41,10 @@
   - **Insight:** Narrative synthesis of the behavioral pattern.
   - **Data Proof:** Hard percentages from the tagged dataset.
   - **Customer Voices:** Verbatim quotes from real users anchoring the insight.
+
+## Phase 5: Interactive Discovery Engine Prototype (Live Working)
+**Objective:** Provide a testable, live link demonstrating the workflow and findings of the AI Discovery Engine as required for the final Part 1 deliverable.
+- [x] **Interactive Dashboard Generation:** Use Google Stitch to generate a React-based UI mapping all insights, data proofs, and quotes dynamically by source (Play Store vs YouTube).
+- [x] **Live Scraper Simulation:** Build a view demonstrating the backend ingestion pipeline actively filtering noise and identifying wishlist/cart high-intent signals.
+- [x] **User Journey Simulator:** Embed a mobile mockup representing the Myntra/AJIO experience, allowing evaluators to physically test the friction points (e.g., Trust Deficit at checkout).
+- [x] **Deployment:** Export the React application from Stitch to provide a publicly accessible `[Link]` for testing the workflow.
