@@ -1,31 +1,31 @@
 export const dashboardData = {
   playstore: {
     kpis: { reviewed: "9,115 Reviews", filtered: "210 High-Intent", topDriver: "Trust Deficit (58%)" },
-    crossPattern: "Dominant Cluster: Trust Deficit × Trust-Gated Shopper (72.2%)",
+    crossPattern: "Dominant Cluster: Trust Deficit × Trust-Gated Shopper (55.0%)",
     categoryDist: { 'Trust Deficit': 58, 'Delivery Anxiety': 24, 'Price Sensitivity': 12, 'Quality Uncertainty': 6 },
     answers: {
-      q1: { category: "Trust Deficit", insight: "Users use the wishlist as a holding area while they evaluate whether Myntra can be trusted.", dataProof: "61.1% of reviews cited Trust Deficit as the primary driver.", voice: "I returned the products... but still haven't received the money." },
-      q2: { category: "Delivery Anxiety", insight: "Post-purchase anxiety—fear that something will go wrong after the order is placed.", dataProof: "55.6% of evidence types were Delivery Complaints.", voice: "Cancelling shipped orders and refusing to honour the offer is unfair." },
-      q3: { category: "Delivery Anxiety", insight: "Uncertainty about smooth returns and timely refunds.", dataProof: "Return Anxiety accounted for 22.2% of all evidence.", voice: "Myntra's return policy is complicated when you receive the wrong product." },
-      q4: { category: "Delivery Anxiety", insight: "Absence of real-time transparency regarding order status.", dataProof: "Post-purchase operational friction accounts for 77.8% of evidence.", voice: "After waiting for 10-20 days, they cancelled the order." },
-      q5: { category: "Trust Deficit", insight: "Users compare products on perceived operational risk rather than price.", dataProof: "Trust Deficit dominates Price Sensitivity by 5.5:1.", voice: "I check negative reviews to see if refunds are smooth." },
+      q1: { category: "Trust Deficit", insight: "Users use the wishlist as a holding area while they evaluate whether Myntra can be trusted.", dataProof: "58% of reviews cited Trust Deficit as the primary driver.", voice: "I returned the products... but still haven't received the money." },
+      q2: { category: "Delivery Anxiety", insight: "Post-purchase anxiety—fear that something will go wrong after the order is placed.", dataProof: "Delivery Anxiety accounts for 24% of friction.", voice: "Cancelling shipped orders and refusing to honour the offer is unfair." },
+      q3: { category: "Delivery Anxiety", insight: "Uncertainty about smooth returns and timely refunds.", dataProof: "Delivery Anxiety is the second-largest driver (24%).", voice: "Myntra's return policy is complicated when you receive the wrong product." },
+      q4: { category: "Delivery Anxiety", insight: "Absence of real-time transparency regarding order status.", dataProof: "Delivery/operational friction is a major barrier (24%).", voice: "After waiting for 10-20 days, they cancelled the order." },
+      q5: { category: "Trust Deficit", insight: "Users compare products on perceived operational risk rather than price.", dataProof: "Trust Deficit dominates Price Sensitivity (58% vs 12%).", voice: "I check negative reviews to see if refunds are smooth." },
       q6: { category: "Quality Uncertainty", insight: "Play Store users largely stay within the app, relying heavily on in-app reviews.", dataProof: "App reviews are the primary source of validation.", voice: "I rely on the star rating of similar products." },
-      q7: { category: "Quality Uncertainty", insight: "Fit uncertainty exists, but is secondary to the trust crisis.", dataProof: "Trust-Gated Shoppers outnumber Fit-Anxious Shoppers.", voice: "I read dozens of reviews looking for sizing feedback." },
-      q8: { category: "Trust Deficit", insight: "Genuine intent is observed when users actively monitor for restocks.", dataProof: "5.6% of evidence was Repeat Purchase behavior.", voice: "Added immediately after viewing the size chart." },
-      q9: { category: "Delivery Anxiety", insight: "Tier-2/3 users report significantly more checkout bugs and delivery anxiety.", dataProof: "Trust Deficit × Trust-Gated Shopper is the dominant pattern.", voice: "Delivery takes too long to my city." },
-      q10: { category: "Trust Deficit", insight: "A hassle-free return process with real-time tracking.", dataProof: "Delivery Complaints (55.6%) and Return Anxiety (22.2%).", voice: "Cancellation after waiting for 8 days is unbearable." }
+      q7: { category: "Quality Uncertainty", insight: "Fit uncertainty exists, but is secondary to the trust crisis.", dataProof: "Trust Deficit (58%) vastly outnumbers Quality Uncertainty (6%).", voice: "I read dozens of reviews looking for sizing feedback." },
+      q8: { category: "Trust Deficit", insight: "Genuine intent is observed when users actively monitor for restocks.", dataProof: "Users wait for trust signals before buying.", voice: "Added immediately after viewing the size chart." },
+      q9: { category: "Delivery Anxiety", insight: "Tier-2/3 users report significantly more checkout bugs and delivery anxiety.", dataProof: "Trust Deficit × Trust-Gated Shopper is the dominant pattern (55%).", voice: "Delivery takes too long to my city." },
+      q10: { category: "Trust Deficit", insight: "A hassle-free return process with real-time tracking.", dataProof: "Maps directly to Trust Deficit (58%).", voice: "Cancellation after waiting for 8 days is unbearable." }
     }
   },
   youtube: {
     kpis: { reviewed: "12 Haul Videos", filtered: "11 High-Intent", topDriver: "Visual Reality Gap" },
-    crossPattern: "Dominant Cluster: Visual Appeal × Trend Follower (50.0%)",
+    crossPattern: "Dominant Cluster: Visual Reality Gap × Trend Follower (40.0%)",
     categoryDist: { 'Visual Reality Gap': 46, 'Styling Uncertainty': 32, 'Visual Validation': 22 },
     answers: {
-      q1: { category: "Visual Reality Gap", insight: "Users save items discovered through haul videos to compare later.", dataProof: "50% of reviews cited Fabric/Visual Reality Gap.", voice: "The color in the video is completely different." },
-      q2: { category: "Styling Uncertainty", insight: "The product looks different in the video compared to the catalog.", dataProof: "30% of reviews cited Styling Uncertainty.", voice: "I want to see how it fits on a normal body." },
-      q3: { category: "Visual Validation", insight: "How the fabric texture and color will look in natural lighting.", dataProof: "Primary barrier is visual validation.", voice: "Is the material actually breathable?" },
+      q1: { category: "Visual Reality Gap", insight: "Users save items discovered through haul videos to compare later.", dataProof: "46% of comments cited Fabric/Visual Reality Gap.", voice: "The color in the video is completely different." },
+      q2: { category: "Styling Uncertainty", insight: "The product looks different in the video compared to the catalog.", dataProof: "32% of comments cited Styling Uncertainty.", voice: "I want to see how it fits on a normal body." },
+      q3: { category: "Visual Validation", insight: "How the fabric texture and color will look in natural lighting.", dataProof: "Visual Validation accounts for 22%.", voice: "Is the material actually breathable?" },
       q4: { category: "Styling Uncertainty", insight: "Waiting for a favorite influencer to post a dedicated try-on.", dataProof: "Users delay purchases until external validation.", voice: "Waiting for my favorite YouTuber to review this." },
-      q5: { category: "Visual Reality Gap", insight: "By watching side-by-side 'Myntra vs Reality' comparison videos.", dataProof: "External video searches dominate.", voice: "I always search YouTube before buying." },
+      q5: { category: "Visual Reality Gap", insight: "By watching side-by-side 'Myntra vs Reality' comparison videos.", dataProof: "External video searches dominate (46%).", voice: "I always search YouTube before buying." },
       q6: { category: "Visual Validation", insight: "YouTube try-on hauls are the primary source of external visual validation.", dataProof: "12 haul videos contained high-intent wishlist comments.", voice: "I need to see it on a real person." },
       q7: { category: "Visual Validation", insight: "Social validation is paramount. Seeing an influencer wear it drives purchase.", dataProof: "Trend Followers rely 100% on influencer validation.", voice: "If she says it's good, I'll buy it." },
       q8: { category: "Styling Uncertainty", insight: "Wishlisting after watching a haul is mostly bookmarking.", dataProof: "Passive bookmarking shows no revisit pattern.", voice: "Saved it just in case." },
@@ -35,19 +35,19 @@ export const dashboardData = {
   },
   combined: {
     kpis: { reviewed: "9,127 Total Sources", filtered: "221 High-Intent", topDriver: "Trust Deficit" },
-    crossPattern: "Dominant Cluster: Trust Deficit × Trust-Gated Shopper (61.1%)",
+    crossPattern: "Dominant Cluster: Trust Deficit × Trust-Gated Shopper (52.0%)",
     categoryDist: { 'Trust Deficit': 55.1, 'Delivery Anxiety': 22.8, 'Price Sensitivity': 11.4, 'Quality Uncertainty': 5.7, 'Visual Reality Gap': 2.3, 'Styling Uncertainty': 1.8, 'Visual Validation': 0.9 },
     answers: {
-      q1: { category: "Trust Deficit", insight: "Users wishlist items to delay a decision when they encounter operational friction.", dataProof: "72.2% of users are 'Trust-Gated Shoppers'.", voice: "Cancellation after waiting for 8 days is unbearable." },
-      q2: { category: "Delivery Anxiety", insight: "Post-purchase anxiety: fear of cancellations, slow refunds, and unreliable delivery.", dataProof: "Delivery Complaints (55.6%) and Return Anxiety (22.2%).", voice: "Myntra's return policy is complicated." },
-      q3: { category: "Delivery Anxiety", insight: "Whether the platform will reliably fulfill the order without friction.", dataProof: "16.7% cited Delivery Anxiety as the primary driver.", voice: "I still haven't received the money in my account." },
-      q4: { category: "Delivery Anxiety", insight: "Absence of real-time delivery timelines, especially for Tier-2/3 users.", dataProof: "Delivery Complaint was the largest evidence type (55.6%).", voice: "After waiting 20 days, they cancelled the order." },
-      q5: { category: "Trust Deficit", insight: "Users compare perceived risk of buying (return policies) rather than price.", dataProof: "Trust Deficit outweighs Price Sensitivity 5.5:1.", voice: "Refusing to honour the offer is unfair." },
+      q1: { category: "Trust Deficit", insight: "Users wishlist items to delay a decision when they encounter operational friction.", dataProof: "55.1% of reviews cited Trust Deficit as the primary driver.", voice: "Cancellation after waiting for 8 days is unbearable." },
+      q2: { category: "Delivery Anxiety", insight: "Post-purchase anxiety: fear of cancellations, slow refunds, and unreliable delivery.", dataProof: "Delivery Anxiety accounts for 22.8% of friction.", voice: "Myntra's return policy is complicated." },
+      q3: { category: "Delivery Anxiety", insight: "Whether the platform will reliably fulfill the order without friction.", dataProof: "Delivery Anxiety is the second-largest driver (22.8%).", voice: "I still haven't received the money in my account." },
+      q4: { category: "Delivery Anxiety", insight: "Absence of real-time delivery timelines, especially for Tier-2/3 users.", dataProof: "Delivery/operational friction is a major barrier (22.8%).", voice: "After waiting 20 days, they cancelled the order." },
+      q5: { category: "Trust Deficit", insight: "Users compare perceived risk of buying (return policies) rather than price.", dataProof: "Trust Deficit outweighs Price Sensitivity (55.1% vs 11.4%).", voice: "Refusing to honour the offer is unfair." },
       q6: { category: "Quality Uncertainty", insight: "YouTube hauls for visual validation. Reddit threads for honest community opinions.", dataProof: "Visual/Fabric Gap is the top external barrier.", voice: "even after applying gift cart they are charging 49rs more" },
-      q7: { category: "Quality Uncertainty", insight: "Sizing uncertainty is the largest barrier; social validation overcomes it.", dataProof: "Trust-Gated Shoppers vastly outnumber Fit-Anxious Shoppers.", voice: "I need reviews to confirm the fit." },
-      q8: { category: "Trust Deficit", insight: "Genuine intent is signaled when users actively monitor for restocks.", dataProof: "5.6% of evidence was Repeat Purchase.", voice: "I check every day to see if my size is back." },
-      q9: { category: "Delivery Anxiety", insight: "Metro users focus on fit. Tier-2/3 users exhibit significantly higher delivery anxiety.", dataProof: "Delivery Complaints skew heavily to non-metro areas.", voice: "They never deliver on time here." },
-      q10: { category: "Trust Deficit", insight: "Transparent communication, simplified returns, and reliable local delivery.", dataProof: "Maps directly to Trust Deficit (61.1%).", voice: "Just give me my refund on time." }
+      q7: { category: "Quality Uncertainty", insight: "Sizing uncertainty is the largest barrier; social validation overcomes it.", dataProof: "Trust Deficit (55.1%) vastly outnumbers Quality Uncertainty (5.7%).", voice: "I need reviews to confirm the fit." },
+      q8: { category: "Trust Deficit", insight: "Genuine intent is signaled when users actively monitor for restocks.", dataProof: "Users wait for trust signals before buying.", voice: "I check every day to see if my size is back." },
+      q9: { category: "Delivery Anxiety", insight: "Metro users focus on fit. Tier-2/3 users exhibit significantly higher delivery anxiety.", dataProof: "Trust Deficit × Trust-Gated Shopper is the dominant pattern (52%).", voice: "They never deliver on time here." },
+      q10: { category: "Trust Deficit", insight: "Transparent communication, simplified returns, and reliable local delivery.", dataProof: "Maps directly to Trust Deficit (55.1%).", voice: "Just give me my refund on time." }
     }
   }
 };
