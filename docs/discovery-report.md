@@ -1,7 +1,7 @@
 # Discovery Engine Findings: Myntra Wishlist Conversion
 
 ## 1. Introduction & Methodology
-To understand the behavioral psychology behind wishlist-to-purchase conversion without relying on monetary incentives, we built an AI-powered Discovery Engine. This engine ingested qualitative feedback from the Google Play Store and YouTube, filtered it for high-intent wishlist/cart signals, and utilized a Large Language Model (Groq) to programmatically extract non-monetary barriers, unmet needs, and structured behavioral tags.
+To understand the behavioral psychology behind wishlist-to-purchase conversion without relying on monetary incentives, we built an AI-powered Discovery Engine. This engine is structured around a 5-layer architecture (Data Ingestion, Data Processing & Storage, LLM Processing, Insights & Presentation, and Interactive Prototype Layer). It ingested qualitative feedback from the Google Play Store and YouTube, filtered it for high-intent wishlist/cart signals, and utilized a Large Language Model (Groq) to programmatically extract non-monetary barriers, unmet needs, and structured behavioral tags.
 
 **Data Pipeline:**
 - **Total Sources Scraped:** 9,115 Play Store reviews + 12 YouTube haul videos

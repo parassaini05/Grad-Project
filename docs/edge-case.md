@@ -2,7 +2,7 @@
 
 When building a real-world data pipeline and utilizing Large Language Models (LLMs), several edge cases can compromise the stability of the system or the accuracy of the insights. This document outlines the potential edge cases for the Myntra Wishlist Discovery Engine and proposed handling strategies.
 
-## 1. Data Ingestion (Scraping & APIs)
+## 1. Data Ingestion Layer
 
 ### 1.1. Rate Limiting and IP Blocking
 - **Scenario:** The Google Play Store scraper or the YouTube Data API is blocked temporarily due to making too many requests in a short period.
@@ -17,7 +17,7 @@ When building a real-world data pipeline and utilizing Large Language Models (LL
   - Ensure the scraper explicitly checks for `None`, `[deleted]`, or empty string text bodies.
   - Filter out text-less reviews during the initial Pandas preprocessing phase; star ratings without text cannot undergo behavioral analysis.
 
-## 2. Data Processing & Linguistic Variations
+## 2. Data Processing & Storage Layer
 
 ### 2.1. Mixed Languages and "Hinglish"
 - **Scenario:** Given Myntra's Indian user base, reviews are frequently written in "Hinglish" (Hindi written in the English alphabet) or regional languages mixed with English (e.g., "Delivery late tha, but product achha hai").
@@ -42,7 +42,7 @@ When building a real-world data pipeline and utilizing Large Language Models (LL
   - Implement a token counter (or character limit heuristic) before making the API call.
   - If a text exceeds the limit, truncate the text to the maximum allowable length (usually preserving the beginning and end of the text, where the main points usually reside).
 
-## 3. LLM Integration (Groq API)
+## 3. LLM Processing Layer
 
 ### 3.1. Malformed JSON Responses
 - **Scenario:** The Groq LLM is instructed to return a strict JSON format (e.g., `{"non_monetary_barrier": "Stock Uncertainty"}`), but instead it returns conversational text before the JSON, or a malformed JSON string (e.g., missing quotes).

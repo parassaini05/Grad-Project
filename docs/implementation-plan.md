@@ -7,7 +7,7 @@
 - [x] **API Access:** Register for Groq API.
 - [x] **Secret & Config Management:** Store all API credentials securely in a `.env` file.
 
-## Phase 2: Data Ingestion & Normalization
+## Phase 2: Data Ingestion & Data Processing Layer
 **Objective:** Collect raw unstructured feedback targeting wishlist behavior and normalize it for analysis.
 - [x] **Play Store & YouTube Scrapers:** 
   - Fetch reviews and comments from the last 12 weeks.
@@ -17,7 +17,7 @@
   - Clean and normalize the text.
   - Export the final dataset to `data/processed/normalized_reviews.json`.
 
-## Phase 3: LLM Integration and Prompt Engineering
+## Phase 3: LLM Processing Layer
 **Objective:** Connect to the Groq API, execute the behavioral analysis strategy, and assign structured enum tags.
 - [x] **Groq API Connection:** Implement a Python wrapper around the Groq SDK.
 - [x] **Prompt Development & Extraction:** 
@@ -32,7 +32,7 @@
     - **Evidence Types:** Cart Abandonment, Wishlist Stagnation, Return Anxiety, Sizing Complaint, etc.
   - Extract **verbatim customer quotes** from each review for the Customer Voices section.
 
-## Phase 4: Discovery Engine Findings & Report (Alignment with Part 1)
+## Phase 4: Insights & Presentation Layer
 **Objective:** Synthesize the extracted insights into a multi-layered report with Insight + Data Proof + Customer Voices.
 - [x] **Data Aggregation:** Quantify the frequency of different non-monetary barriers, decision drivers, and user segments.
 - [x] **Cross-Pattern Analysis:** Generate co-occurrence matrices (Decision Driver × User Segment) to uncover multi-dimensional behavioral patterns.
@@ -42,7 +42,7 @@
   - **Data Proof:** Hard percentages from the tagged dataset.
   - **Customer Voices:** Verbatim quotes from real users anchoring the insight.
 
-## Phase 5: Interactive Discovery Engine Prototype (Live Working)
+## Phase 5: Interactive Prototype Layer (Live Working)
 **Objective:** Provide a testable, live link demonstrating the workflow and findings of the AI Discovery Engine as required for the final Part 1 deliverable.
 - [x] **Interactive Dashboard Generation:** Use Google Stitch to generate a React-based UI mapping all insights, data proofs, and quotes dynamically by source (Play Store vs YouTube).
 - [x] **Live Scraper Simulation:** Build a view demonstrating the backend ingestion pipeline actively filtering noise and identifying wishlist/cart high-intent signals.
