@@ -2,24 +2,11 @@ import React, { useState } from 'react';
 import { RAW_REVIEWS } from '../data/discoveryData';
 
 export default function RawDataView() {
-  const [selectedSource, setSelectedSource] = useState('combined');
 
   return (
     <div className="flex flex-col gap-6 animate-fade-in h-full pb-10">
       <header className="flex justify-between items-center">
         <h2 className="font-headline-lg-mobile md:font-headline-lg text-primary font-bold">Raw Data Feed</h2>
-        <div className="flex items-center gap-3">
-          <label className="text-sm font-medium text-slate-600">Select Source:</label>
-          <select 
-            value={selectedSource}
-            onChange={(e) => setSelectedSource(e.target.value)}
-            className="glass-card border border-slate-300 text-slate-900 text-sm rounded-lg focus:ring-primary focus:border-primary block p-2.5 shadow-sm"
-          >
-            <option value="combined">All</option>
-            <option value="playstore">Play Store</option>
-            <option value="youtube">YouTube</option>
-          </select>
-        </div>
       </header>
 
       <div className="glass-card rounded-2xl p-6 flex flex-col flex-1 overflow-hidden">
@@ -34,7 +21,7 @@ export default function RawDataView() {
               </tr>
             </thead>
             <tbody>
-              {RAW_REVIEWS.filter(r => selectedSource === 'combined' || r.source === selectedSource).map((row, i) => (
+              {RAW_REVIEWS.map((row, i) => (
                 <tr key={i} className="border-b border-white/50 last:border-0 hover:bg-white/60 transition-colors">
                   <td className="px-6 py-4 whitespace-nowrap">
                     <span className={`inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-xs font-bold ${

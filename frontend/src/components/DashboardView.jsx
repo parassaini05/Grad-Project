@@ -5,19 +5,12 @@ import ReportModal from './ReportModal';
 
 export default function DashboardView() {
   const [dashboardData] = useState(initialData);
-  const [selectedSource, setSelectedSource] = useState('combined');
   const [selectedCategory, setSelectedCategory] = useState('All');
   const [isReportOpen, setIsReportOpen] = useState(false);
 
-  const sources = [
-    { id: 'playstore', label: 'Play Store', icon: 'shop' },
-    { id: 'youtube', label: 'YouTube', icon: 'video_library' },
-    { id: 'combined', label: 'Combined Data', icon: 'hub' }
-  ];
-
   if (!dashboardData) return null;
 
-  const currentData = dashboardData[selectedSource];
+  const currentData = dashboardData;
   const categories = ['All', ...Object.keys(currentData.categoryDist)];
   
   const displayKpis = (() => {
@@ -42,24 +35,6 @@ export default function DashboardView() {
             <span className="material-symbols-outlined text-[18px]">visibility</span>
             View Report
           </button>
-        </div>
-        <div className="flex bg-white/60 backdrop-blur-md border border-white/80 p-1 rounded-full shadow-sm">
-          {sources.map((source) => (
-            <button
-              key={source.id}
-              onClick={() => { setSelectedSource(source.id); setSelectedCategory('All'); }}
-              className={`flex items-center gap-sm px-6 py-2 rounded-full font-label-sm transition-all duration-200 ${
-                selectedSource === source.id
-                  ? 'bg-primary text-on-primary shadow-sm'
-                  : 'text-on-surface-variant hover:bg-white/80'
-              }`}
-            >
-              <span className="material-symbols-outlined text-[18px]" style={selectedSource === source.id ? { fontVariationSettings: "'FILL' 1" } : {}}>
-                {source.icon}
-              </span>
-              {source.label}
-            </button>
-          ))}
         </div>
       </header>
 
