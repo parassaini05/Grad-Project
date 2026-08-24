@@ -17,19 +17,19 @@ export const dashboardData = {
       'Convenience': 5.6,
       'Visual Appeal': 5.6
     },
+    // segmentDist: 1 record had 'Not Mentioned' segment (unclassifiable) — excluded. Normalized over 17 valid records.
     segmentDist: {
-      'Trust-Gated Shopper': 72.2,
-      'Deal Seeker': 11.1,
-      'Habitual Buyer': 5.6,
-      'Trend Follower': 5.6,
-      'Not Mentioned': 5.6
+      'Trust-Gated Shopper': 76.5,
+      'Deal Seeker': 11.8,
+      'Habitual Buyer': 5.9,
+      'Trend Follower': 5.9
     },
+    // evidenceDist: 2 records had 'Not Mentioned' evidence (positive reviews with no behavioral friction) — excluded. Normalized over 16 valid records.
     evidenceDist: {
-      'Delivery Complaint': 55.6,
-      'Return Anxiety': 22.2,
-      'Not Mentioned': 11.1,
-      'Repeat Purchase': 5.6,
-      'Cart Abandonment': 5.6
+      'Delivery Complaint': 62.5,
+      'Return Anxiety': 25.0,
+      'Repeat Purchase': 6.3,
+      'Cart Abandonment': 6.3
     },
     crossPattern: "Dominant Cluster: Trust Deficit × Trust-Gated Shopper (61.1%)",
     answers: {
@@ -53,6 +53,7 @@ export const dashboardData = {
       { text: "i havent got a single call from the agent and now my order has been cancelled after waiting for three weeks.", category: "Delivery Anxiety", source: "playstore", segment: "Trust-Gated Shopper", evidence: "Delivery Complaint" },
       { text: "I haven't received refund for the last 8 days and there is no customer support.", category: "Trust Deficit", source: "playstore", segment: "Trust-Gated Shopper", evidence: "Return Anxiety" },
       { text: "even after applying gift cart they are charging 49rs more?", category: "Price Sensitivity", source: "playstore", segment: "Deal Seeker", evidence: "Cart Abandonment" },
+      { text: "I really love this app... It really saves my money and gives some really nice and amazing discounts.", category: "Price Sensitivity", source: "playstore", segment: "Deal Seeker", evidence: "Repeat Purchase" },
       { text: "best shopping for rakhi great deal more beautiful rakhi online delivery at time I have save my time and money.", category: "Convenience", source: "playstore", segment: "Habitual Buyer", evidence: "Repeat Purchase" },
       { text: "it's always a joyful experience to add anything to the cart at Myntra.", category: "Visual Appeal", source: "playstore", segment: "Trend Follower", evidence: "Not Mentioned" },
       { text: "The color in the video is completely different from the app photos.", category: "Visual Reality Gap", source: "youtube", segment: "Trend Follower", evidence: "Cart Abandonment" },
@@ -64,8 +65,10 @@ export const dashboardData = {
     // categoryCounts from llm_insights.json (all 18 records are Play Store source)
     categoryCounts: { 'Trust Deficit': 11, 'Delivery Anxiety': 3, 'Price Sensitivity': 2, 'Convenience': 1, 'Visual Appeal': 1 },
     categoryDist: { 'Trust Deficit': 61.1, 'Delivery Anxiety': 16.7, 'Price Sensitivity': 11.1, 'Convenience': 5.6, 'Visual Appeal': 5.6 },
-    segmentDist: { 'Trust-Gated Shopper': 72.2, 'Deal Seeker': 11.1, 'Habitual Buyer': 5.6, 'Trend Follower': 5.6, 'Not Mentioned': 5.6 },
-    evidenceDist: { 'Delivery Complaint': 55.6, 'Return Anxiety': 22.2, 'Not Mentioned': 11.1, 'Repeat Purchase': 5.6, 'Cart Abandonment': 5.6 },
+    // segmentDist: 1 record unclassifiable ('Not Mentioned') excluded. Normalized over 17 valid records.
+    segmentDist: { 'Trust-Gated Shopper': 76.5, 'Deal Seeker': 11.8, 'Habitual Buyer': 5.9, 'Trend Follower': 5.9 },
+    // evidenceDist: 2 records unclassifiable ('Not Mentioned') excluded. Normalized over 16 valid records.
+    evidenceDist: { 'Delivery Complaint': 62.5, 'Return Anxiety': 25.0, 'Repeat Purchase': 6.3, 'Cart Abandonment': 6.3 },
     crossPattern: "Dominant Cluster: Trust Deficit × Trust-Gated Shopper (61.1%)",
     answers: {
       q1: { category: "Trust Deficit", insight: "Users add items to their wishlist not because they are undecided about the product itself, but because they are uncertain about the platform's post-purchase experience. They use the wishlist as a holding area.", dataProof: "61.1% of Play Store reviews cited Trust Deficit as the primary decision driver. 72.2% of users were Trust-Gated Shoppers.", voice: "I returned the products and the app showed that the refund has been processed, but I still haven't received the money in my account." },
@@ -88,6 +91,7 @@ export const dashboardData = {
       { text: "i havent got a single call from the agent and now my order has been cancelled after waiting for three weeks.", category: "Delivery Anxiety", source: "playstore", segment: "Trust-Gated Shopper", evidence: "Delivery Complaint" },
       { text: "I haven't received refund for the last 8 days and there is no customer support.", category: "Trust Deficit", source: "playstore", segment: "Trust-Gated Shopper", evidence: "Return Anxiety" },
       { text: "even after applying gift cart they are charging 49rs more?", category: "Price Sensitivity", source: "playstore", segment: "Deal Seeker", evidence: "Cart Abandonment" },
+      { text: "I really love this app... It really saves my money and gives some really nice and amazing discounts.", category: "Price Sensitivity", source: "playstore", segment: "Deal Seeker", evidence: "Repeat Purchase" },
       { text: "best shopping for rakhi great deal more beautiful rakhi online delivery at time I have save my time and money.", category: "Convenience", source: "playstore", segment: "Habitual Buyer", evidence: "Repeat Purchase" },
       { text: "it's always a joyful experience to add anything to the cart at Myntra.", category: "Visual Appeal", source: "playstore", segment: "Trend Follower", evidence: "Not Mentioned" }
     ]
