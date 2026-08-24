@@ -30,7 +30,7 @@ export default function RawDataView() {
                 <th scope="col" className="px-6 py-4 rounded-tl-lg">Source</th>
                 <th scope="col" className="px-6 py-4">Category</th>
                 <th scope="col" className="px-6 py-4">Quote</th>
-                <th scope="col" className="px-6 py-4 rounded-tr-lg">Sentiment/Insight</th>
+                <th scope="col" className="px-6 py-4 rounded-tr-lg">Segment / Evidence</th>
               </tr>
             </thead>
             <tbody>
@@ -52,8 +52,11 @@ export default function RawDataView() {
                   <td className="px-6 py-4 italic text-slate-700">
                     "{row.text}"
                   </td>
-                  <td className="px-6 py-4 text-slate-600 font-medium">
-                    {row.sentiment}
+                  <td className="px-6 py-4">
+                    <div className="flex flex-col gap-1">
+                      <span className="text-xs font-bold text-indigo-600 bg-indigo-50 px-2 py-0.5 rounded border border-indigo-100 w-fit">{row.segment}</span>
+                      <span className="text-xs font-bold text-purple-600 bg-purple-50 px-2 py-0.5 rounded border border-purple-100 w-fit">{row.evidence}</span>
+                    </div>
                   </td>
                 </tr>
               ))}

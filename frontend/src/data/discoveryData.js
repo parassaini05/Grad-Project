@@ -45,18 +45,18 @@ export const dashboardData = {
       q10: { category: "Trust Deficit", insight: "Three unmet needs emerge consistently: (1) Transparent tracking, (2) A simplified return process, and (3) Reliable delivery with proactive communication.", dataProof: "These map directly to the top evidence types: Delivery Complaint (55.6%), Return Anxiety (22.2%).", voice: "Cancellation after waiting for 8 days is unbearable." }
     },
     rawQuotes: [
-      { text: "I returned the products... but still haven't received the money.", category: "Trust Deficit", source: "playstore" },
-      { text: "Cancellation after waiting for 8 days is unbearable.", category: "Trust Deficit", source: "playstore" },
-      { text: "Cancelling shipped orders and refusing to honour the offer is unfair.", category: "Delivery Anxiety", source: "playstore" },
-      { text: "Myntra's return policy is complicated when you receive the wrong product.", category: "Delivery Anxiety", source: "playstore" },
-      { text: "After waiting for 10-20 days, they cancelled the order.", category: "Delivery Anxiety", source: "playstore" },
-      { text: "Even after applying gift card they are charging 49rs more.", category: "Price Sensitivity", source: "playstore" },
-      { text: "Why is convenience fee added on every single order now?", category: "Price Sensitivity", source: "playstore" },
-      { text: "I need to see it on a real person before I buy. Fabric looks stiff.", category: "Quality Uncertainty", source: "youtube" },
-      { text: "Size chart is completely wrong. XL fits like M.", category: "Quality Uncertainty", source: "playstore" },
-      { text: "The color in the video is completely different from the app photos.", category: "Visual Reality Gap", source: "youtube" },
-      { text: "Waiting for my favorite YouTuber to review this haul for fit validation.", category: "Styling Uncertainty", source: "youtube" },
-      { text: "If she says it's good, I'll buy it. Trust her styling completely.", category: "Visual Validation", source: "youtube" }
+      { text: "I returned the products... but still haven't received the money.", category: "Trust Deficit", source: "playstore", segment: "Trust-Gated Shopper", evidence: "Return Anxiety" },
+      { text: "Cancellation after waiting for 8 days is unbearable.", category: "Trust Deficit", source: "playstore", segment: "Trust-Gated Shopper", evidence: "Delivery Complaint" },
+      { text: "Cancelling shipped orders and refusing to honour the offer is unfair.", category: "Delivery Anxiety", source: "playstore", segment: "Deal Seeker", evidence: "Delivery Complaint" },
+      { text: "Myntra's return policy is complicated when you receive the wrong product.", category: "Delivery Anxiety", source: "playstore", segment: "Trust-Gated Shopper", evidence: "Return Anxiety" },
+      { text: "After waiting for 10-20 days, they cancelled the order.", category: "Delivery Anxiety", source: "playstore", segment: "Trust-Gated Shopper", evidence: "Delivery Complaint" },
+      { text: "Even after applying gift card they are charging 49rs more.", category: "Price Sensitivity", source: "playstore", segment: "Deal Seeker", evidence: "Cart Abandonment" },
+      { text: "Why is convenience fee added on every single order now?", category: "Price Sensitivity", source: "playstore", segment: "Deal Seeker", evidence: "Cart Abandonment" },
+      { text: "I need to see it on a real person before I buy. Fabric looks stiff.", category: "Quality Uncertainty", source: "youtube", segment: "Trend Follower", evidence: "Cart Abandonment" },
+      { text: "Size chart is completely wrong. XL fits like M.", category: "Quality Uncertainty", source: "playstore", segment: "Habitual Buyer", evidence: "Return Anxiety" },
+      { text: "The color in the video is completely different from the app photos.", category: "Visual Reality Gap", source: "youtube", segment: "Trend Follower", evidence: "Cart Abandonment" },
+      { text: "Waiting for my favorite YouTuber to review this haul for fit validation.", category: "Styling Uncertainty", source: "youtube", segment: "Trend Follower", evidence: "Cart Abandonment" },
+      { text: "If she says it's good, I'll buy it. Trust her styling completely.", category: "Visual Validation", source: "youtube", segment: "Trend Follower", evidence: "Repeat Purchase" }
     ]
   },
   playstore: {
