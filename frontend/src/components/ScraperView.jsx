@@ -94,20 +94,35 @@ export default function ScraperView() {
       });
     }, 1000);
 
+    let realData = [];
     try {
       const apiUrl = import.meta.env.VITE_API_URL || 'http://localhost:8000';
       const response = await fetch(`${apiUrl}/api/scrape?source=${source}&limit=2`);
-      
       if (!response.ok) throw new Error(`Backend error: ${response.status}`);
-      
       const json = await response.json();
-      const realData = json.data || [];
-      
+      realData = json.data || [];
+    } catch (err) {
+      clearInterval(intervalRef.current);
+      setLogs(prev => [
+        ...prev.filter(l => !l.startsWith('> Processing real-time')),
+        `> [WARNING] Backend connection failed: ${err.message}`,
+        `> Using robust fallback data to visualize the analytical pipeline.`
+      ]);
+      realData = [
+        { text: "My order was cancelled after 10 days.", category: "Trust Deficit", segment: "Trust-Gated Shopper", evidence: "Delivery Complaint" },
+        { text: "Returns are too complicated.", category: "Delivery Anxiety", segment: "Trust-Gated Shopper", evidence: "Return Anxiety" },
+        { text: "Fabric looks different than the video.", category: "Visual Reality Gap", segment: "Trend Follower", evidence: "Cart Abandonment" }
+      ];
+    }
+    
+    if (realData.length > 0) {
       clearInterval(intervalRef.current);
       
       setLogs(prev => [
-        ...prev.filter(l => !l.startsWith('> Processing real-time')),
-        `> [SUCCESS] Extracted ${realData.length} valid behavioral signals.`,
+        ...prev.filter(l => !l.startsWith('> Processing real-time') && !l.startsWith('> [WARNING]')),
+        ...(realData[0].text === "My order was cancelled after 10 days." 
+            ? [`> [WARNING] Live API failed. Injecting fallback signals for visualization.`]
+            : [`> [SUCCESS] Extracted ${realData.length} valid behavioral signals.`])
       ]);
 
       realData.forEach((review) => {
@@ -118,9 +133,8 @@ export default function ScraperView() {
         ]);
       });
 
-      setLogs(prev => [...prev, `> Generating dynamic visualization matrices from Live LLM Data...`]);
+      setLogs(prev => [...prev, `> Generating dynamic visualization matrices from extracted data...`]);
       
-      // Fallback arrays to avoid Recharts crashes if data is weirdly empty
       const fallbackData = [{name: 'No Data', value: 100, count: 0}];
       
       const drivers = getFrequencies(realData, 'category');
@@ -136,16 +150,8 @@ export default function ScraperView() {
       setDynamicCross(cross.length > 0 ? cross : fallbackData);
       
       setScrapeComplete(true);
-    } catch (err) {
-      clearInterval(intervalRef.current);
-      setLogs(prev => [
-        ...prev.filter(l => !l.startsWith('> Processing real-time')),
-        `> [ERROR] Backend connection failed: ${err.message}`,
-        `> Check if Railway backend is running, or if VITE_API_URL is correct.`
-      ]);
-    } finally {
-      setIsScraping(false);
     }
+    setIsScraping(false);
   };
 
   return (
