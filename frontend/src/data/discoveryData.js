@@ -62,7 +62,21 @@ export const RAW_REVIEWS = [
   { source: 'playstore', text: "Delivery takes too long to my city. Keeps items in wishlist.", category: 'Delivery Anxiety', sentiment: 'Frustrated - Logistics' },
   { source: 'youtube', text: "Waiting for my favorite YouTuber to review this haul for fit validation.", category: 'Trust Deficit', sentiment: 'Passive - Fit' },
   { source: 'playstore', text: "Just give me my refund on time. Kept item in wishlist until I trust them.", category: 'Trust Deficit', sentiment: 'Negative - Financial' },
-  { source: 'youtube', text: "I read dozens of reviews looking for sizing and fit feedback.", category: 'Quality Uncertainty', sentiment: 'Researching - Fit' }
+  { source: 'youtube', text: "I read dozens of reviews looking for sizing and fit feedback.", category: 'Quality Uncertainty', sentiment: 'Researching - Fit' },
+  
+  // Expanded dataset for realism
+  { source: 'playstore', text: "Even after applying gift card they are charging 49rs more. Cancelled order from cart.", category: 'Price Sensitivity', sentiment: 'Negative - Hidden Costs' },
+  { source: 'playstore', text: "They never deliver on time here in Assam. Always 3-4 days late.", category: 'Delivery Anxiety', sentiment: 'Frustrated - Logistics' },
+  { source: 'youtube', text: "Does anyone know if this shrinks after wash? Waiting to buy it.", category: 'Quality Uncertainty', sentiment: 'Hesitant - Material' },
+  { source: 'playstore', text: "Customer care is worst. They don't help with missing items in return.", category: 'Trust Deficit', sentiment: 'Angry - Support' },
+  { source: 'youtube', text: "If she says it's good, I'll buy it. Trust her styling completely.", category: 'Visual Validation', sentiment: 'Positive - Influencer' },
+  { source: 'playstore', text: "Size chart is completely wrong. XL fits like M. Will keep in wishlist to check reviews later.", category: 'Quality Uncertainty', sentiment: 'Critical - Sizing' },
+  { source: 'playstore', text: "Why is convenience fee added on every single order now? Removing items from cart.", category: 'Price Sensitivity', sentiment: 'Negative - Fees' },
+  { source: 'youtube', text: "I don't trust app photos anymore, too much editing. Thank god for this haul.", category: 'Visual Validation', sentiment: 'Relieved - Reality Check' },
+  { source: 'playstore', text: "I check every day to see if my size is back in stock.", category: 'Convenience', sentiment: 'Active - Monitoring' },
+  { source: 'youtube', text: "Saved it just in case, but probably won't buy unless there's a big sale.", category: 'Price Sensitivity', sentiment: 'Passive - Bookmarking' },
+  { source: 'playstore', text: "Delivery boy refused to open package before payment. Didn't trust the contents.", category: 'Trust Deficit', sentiment: 'Anxious - Delivery' },
+  { source: 'playstore', text: "Added immediately after viewing the size chart but waiting for payday.", category: 'Convenience', sentiment: 'High Intent - Delayed' }
 ];
 
 export const questionTitles = [
@@ -76,4 +90,32 @@ export const questionTitles = [
   { key: 'q8', title: "When is the wishlist genuine intent vs bookmarking?" },
   { key: 'q9', title: "How do behaviors differ across user segments?" },
   { key: 'q10', title: "What unmet needs emerge consistently?" }
+];
+
+export const decisionDriversData = [
+  { name: 'Trust Deficit', value: 61.1 },
+  { name: 'Delivery Anxiety', value: 16.7 },
+  { name: 'Price Sensitivity', value: 11.1 },
+  { name: 'Convenience', value: 5.6 },
+  { name: 'Visual Appeal', value: 5.6 }
+];
+
+export const userSegmentsData = [
+  { name: 'Trust-Gated Shopper', value: 72.2 },
+  { name: 'Deal Seeker', value: 11.1 },
+  { name: 'Habitual Buyer', value: 5.6 },
+  { name: 'Trend Follower', value: 5.6 }
+];
+
+export const evidenceTypesData = [
+  { name: 'Delivery Complaint', value: 55.6 },
+  { name: 'Return Anxiety', value: 22.2 },
+  { name: 'Repeat Purchase', value: 5.6 },
+  { name: 'Cart Abandonment', value: 5.6 }
+];
+
+export const crossPatternData = [
+  { name: 'Trust Deficit × Trust-Gated', value: 61.1 },
+  { name: 'Delivery Anxiety × Trust-Gated', value: 16.7 },
+  { name: 'Price Sensitivity × Deal Seeker', value: 11.1 }
 ];

@@ -15,9 +15,19 @@ export default function DashboardView() {
   const categories = ['All', ...Object.keys(currentData.categoryDist)];
 
   return (
-    <div className="flex flex-col gap-lg md:gap-xl animate-fade-in">
+    <div className="flex flex-col gap-lg md:gap-xl animate-fade-in pb-10">
       <header className="flex flex-col md:flex-row justify-between items-start md:items-center gap-md">
-        <h2 className="font-headline-lg-mobile md:font-headline-lg text-primary font-bold">Overview</h2>
+        <div className="flex items-center gap-4">
+          <h2 className="font-headline-lg-mobile md:font-headline-lg text-primary font-bold">Overview</h2>
+          <a 
+            href="/discovery-report.pdf" 
+            download 
+            className="flex items-center gap-2 bg-indigo-100 hover:bg-indigo-200 text-indigo-700 px-4 py-2 rounded-full font-label-sm font-bold transition-colors shadow-sm"
+          >
+            <span className="material-symbols-outlined text-[18px]">download</span>
+            Download Report
+          </a>
+        </div>
         
         <div className="flex bg-white/60 backdrop-blur-md border border-white/80 p-1 rounded-full shadow-sm">
           {sources.map((source) => (
@@ -122,44 +132,6 @@ export default function DashboardView() {
               </div>
             ))}
           </div>
-        </div>
-      </div>
-
-      {/* Visual Data Reports Section */}
-      <div className="mt-8">
-        <h3 className="font-headline-lg-mobile md:font-headline-lg text-primary font-bold mb-6">Visual Data Reports</h3>
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 pb-12">
-          
-          <div className="glass-card rounded-2xl p-4 flex flex-col gap-3 items-center">
-            <h4 className="font-title-md font-bold text-slate-800">Decision Drivers</h4>
-            <img src="/reports/decision_drivers.png" alt="Decision Drivers" className="rounded-lg border border-slate-200 max-w-full h-auto" />
-          </div>
-
-          <div className="glass-card rounded-2xl p-4 flex flex-col gap-3 items-center">
-            <h4 className="font-title-md font-bold text-slate-800">Evidence Types</h4>
-            <img src="/reports/evidence_types.png" alt="Evidence Types" className="rounded-lg border border-slate-200 max-w-full h-auto" />
-          </div>
-
-          <div className="glass-card rounded-2xl p-4 flex flex-col gap-3 items-center lg:col-span-2">
-            <h4 className="font-title-md font-bold text-slate-800">Cross-Pattern Heatmap</h4>
-            <img src="/reports/cross_pattern_heatmap.png" alt="Cross Pattern Heatmap" className="rounded-lg border border-slate-200 max-w-full h-auto" />
-          </div>
-
-          <div className="glass-card rounded-2xl p-4 flex flex-col gap-3 items-center">
-            <h4 className="font-title-md font-bold text-slate-800">Barrier Frequencies</h4>
-            <img src="/reports/barrier_frequencies.png" alt="Barrier Frequencies" className="rounded-lg border border-slate-200 max-w-full h-auto" />
-          </div>
-
-          <div className="glass-card rounded-2xl p-4 flex flex-col gap-3 items-center">
-            <h4 className="font-title-md font-bold text-slate-800">User Segments</h4>
-            <img src="/reports/user_segments.png" alt="User Segments" className="rounded-lg border border-slate-200 max-w-full h-auto" />
-          </div>
-
-          <div className="glass-card rounded-2xl p-4 flex flex-col gap-3 items-center lg:col-span-2">
-            <h4 className="font-title-md font-bold text-slate-800">Suggested Features</h4>
-            <img src="/reports/suggested_features.png" alt="Suggested Features" className="rounded-lg border border-slate-200 max-w-full h-auto" />
-          </div>
-
         </div>
       </div>
     </div>

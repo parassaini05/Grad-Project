@@ -5,7 +5,7 @@ export default function RawDataView() {
   const [selectedSource, setSelectedSource] = useState('combined');
 
   return (
-    <div className="flex flex-col gap-6 animate-fade-in h-full">
+    <div className="flex flex-col gap-6 animate-fade-in h-full pb-10">
       <header className="flex justify-between items-center">
         <h2 className="font-headline-lg-mobile md:font-headline-lg text-primary font-bold">Raw Data Feed</h2>
         <div className="flex items-center gap-3">
@@ -13,7 +13,7 @@ export default function RawDataView() {
           <select 
             value={selectedSource}
             onChange={(e) => setSelectedSource(e.target.value)}
-            className="bg-white/60 backdrop-blur-md border border-slate-300 text-slate-900 text-sm rounded-lg focus:ring-primary focus:border-primary block p-2.5 shadow-sm"
+            className="glass-card border border-slate-300 text-slate-900 text-sm rounded-lg focus:ring-primary focus:border-primary block p-2.5 shadow-sm"
           >
             <option value="combined">All</option>
             <option value="playstore">Play Store</option>
@@ -22,8 +22,8 @@ export default function RawDataView() {
         </div>
       </header>
 
-      <div className="bg-white/40 backdrop-blur-xl border border-white/60 rounded-2xl shadow-sm overflow-hidden flex-1 flex flex-col">
-        <div className="overflow-y-auto flex-1 p-2">
+      <div className="glass-card rounded-2xl p-6 flex flex-col flex-1 overflow-hidden">
+        <div className="flex-1 overflow-y-auto pr-2 rounded-xl border border-slate-100">
           <table className="w-full text-sm text-left text-slate-600">
             <thead className="text-xs text-slate-700 uppercase bg-white/50 sticky top-0 backdrop-blur-md z-10">
               <tr>
