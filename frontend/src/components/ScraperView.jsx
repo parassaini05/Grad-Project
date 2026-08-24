@@ -129,12 +129,10 @@ export default function ScraperView() {
         { text: "Not sure about the quality.", category: "Quality Uncertainty", segment: "Deal Seeker", evidence: "Cart Abandonment" }
       ];
 
-      if (source === 'playstore') {
+      if (source === 'playstore' || source === 'combined') {
         realData = fallbackPlaystore;
       } else if (source === 'youtube') {
         realData = fallbackYoutube;
-      } else {
-        realData = [...fallbackPlaystore, ...fallbackYoutube];
       }
     }
     
