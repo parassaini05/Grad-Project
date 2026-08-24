@@ -31,7 +31,6 @@ graph TD
     subgraph "Interactive UI Layer (Live Prototype)"
         K --> L[React Dashboard]
         K --> M[Live Scraper Simulation]
-        K --> N[User Journey Simulator]
     end
 ```
 
@@ -56,6 +55,5 @@ Gathers raw feedback focusing heavily on wishlist behavior, intent, and barriers
 - **Final Reporting:** A structured breakdown of the Discovery Engine's findings, highlighting non-monetary opportunity areas for the Growth team.
 
 ## 5. Interactive Prototype Layer (Live Working)
-- **React Dashboard:** Generated via Google Stitch, providing a live, clickable interface to explore the discovery findings (e.g., viewing Trust Deficit percentages dynamically by source).
-- **Live Scraper Simulation:** A visual terminal demonstrating the ingestion pipeline actively filtering noise and categorizing high-intent wishlist behaviors.
-- **User Journey Simulator:** An embedded mobile mockup representing the shopping app (Myntra/AJIO), allowing evaluators to physically test friction points directly on the dashboard.
+- **React Dashboard:** A live, clickable interface to explore the discovery findings (e.g., viewing Trust Deficit percentages dynamically by source).
+- **Live Scraper Simulation:** A visual terminal demonstrating the ingestion pipeline actively filtering noise and categorizing high-intent wishlist behaviors, complete with real-time dynamic graphing based on source.
