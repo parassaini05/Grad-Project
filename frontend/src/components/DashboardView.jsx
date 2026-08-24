@@ -26,7 +26,7 @@ export default function DashboardView() {
     return {
       reviewed: currentData.kpis.reviewed,
       filtered: `${count} High-Intent`,
-      topDriver: `${selectedCategory} (100%)`
+      topDriver: selectedCategory
     };
   })();
 
