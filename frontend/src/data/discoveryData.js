@@ -112,3 +112,7 @@ export const questionTitles = [
   { key: 'q9', title: "How do behaviors differ across user segments?" },
   { key: 'q10', title: "What unmet needs emerge consistently?" }
 ];
+
+export const RAW_REVIEWS = [
+  ...dashboardData.combined.rawQuotes
+];
