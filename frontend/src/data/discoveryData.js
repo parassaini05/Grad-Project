@@ -69,6 +69,10 @@ export const dashboardData = {
       { text: "I really love this app... It really saves my money and gives some really nice and amazing discounts.", category: "Price Sensitivity", source: "playstore", segment: "Deal Seeker", evidence: "Repeat Purchase" },
       { text: "best shopping for rakhi great deal more beautiful rakhi online delivery at time I have save my time and money.", category: "Convenience", source: "playstore", segment: "Habitual Buyer", evidence: "Repeat Purchase" },
       { text: "it's always a joyful experience to add anything to the cart at Myntra.", category: "Visual Appeal", source: "playstore", segment: "Trend Follower", evidence: "Not Mentioned" },
+      { text: "app is extremely slow , it takes forever to search something and then lands on oops something went wrong", category: "Missing Feature", source: "playstore", segment: "Trust-Gated Shopper", evidence: "Not Mentioned" },
+      { text: "it is very nice but same products you can buy from flipcart too in less prise", category: "Competitor Superiority", source: "playstore", segment: "Deal Seeker", evidence: "Competitor Comparison" },
+      { text: "best shopping for rakhi great deal more beautiful rakhi online delivery at time I have save my time and money. I always purchased rakhi on that platform there is many brand avalable.", category: "Past Experience", source: "playstore", segment: "Habitual Buyer", evidence: "Repeat Purchase" },
+      { text: "This top is very bad because this was very tight", category: "Quality Uncertainty", source: "youtube", segment: "Fit-Anxious Shopper", evidence: "Sizing Complaint" },
       { text: "The color in the video is completely different from the app photos.", category: "Visual Reality Gap", source: "youtube", segment: "Trend Follower", evidence: "Cart Abandonment" },
       { text: "Waiting for my favorite YouTuber to review this haul for fit validation.", category: "Styling Uncertainty", source: "youtube", segment: "Trend Follower", evidence: "Cart Abandonment" }
     ]
@@ -114,7 +118,11 @@ export const dashboardData = {
       { text: "even after applying gift cart they are charging 49rs more?", category: "Price Sensitivity", source: "playstore", segment: "Deal Seeker", evidence: "Cart Abandonment" },
       { text: "I really love this app... It really saves my money and gives some really nice and amazing discounts.", category: "Price Sensitivity", source: "playstore", segment: "Deal Seeker", evidence: "Repeat Purchase" },
       { text: "best shopping for rakhi great deal more beautiful rakhi online delivery at time I have save my time and money.", category: "Convenience", source: "playstore", segment: "Habitual Buyer", evidence: "Repeat Purchase" },
-      { text: "it's always a joyful experience to add anything to the cart at Myntra.", category: "Visual Appeal", source: "playstore", segment: "Trend Follower", evidence: "Not Mentioned" }
+      { text: "it's always a joyful experience to add anything to the cart at Myntra.", category: "Visual Appeal", source: "playstore", segment: "Trend Follower", evidence: "Not Mentioned" },
+      { text: "app is extremely slow , it takes forever to search something and then lands on oops something went wrong", category: "Missing Feature", source: "playstore", segment: "Trust-Gated Shopper", evidence: "Not Mentioned" },
+      { text: "it is very nice but same products you can buy from flipcart too in less prise", category: "Competitor Superiority", source: "playstore", segment: "Deal Seeker", evidence: "Competitor Comparison" },
+      { text: "best shopping for rakhi great deal more beautiful rakhi online delivery at time I have save my time and money. I always purchased rakhi on that platform there is many brand avalable.", category: "Past Experience", source: "playstore", segment: "Habitual Buyer", evidence: "Repeat Purchase" },
+      { text: "This top is very bad because this was very tight", category: "Quality Uncertainty", source: "playstore", segment: "Fit-Anxious Shopper", evidence: "Sizing Complaint" }
     ]
   },
   youtube: {
