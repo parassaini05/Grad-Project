@@ -138,7 +138,9 @@ export default function DashboardView() {
             {selectedSource === 'youtube' ? 'n=12 (manually curated YouTube signals)' : 'n=221 LLM-tagged Play Store records'}
           </p>
           <div className="flex flex-col gap-3">
-            {Object.entries(currentData.categoryDist).map(([cat, val]) => {
+            {Object.entries(currentData.categoryDist)
+              .filter(([cat]) => cat !== 'Not Mentioned')
+              .map(([cat, val]) => {
               const col = getColor(cat);
               const isActive = selectedCategory === cat;
               return (
@@ -163,7 +165,9 @@ export default function DashboardView() {
           <h3 className="text-base font-bold text-slate-800">User Segments</h3>
           <div className="flex flex-col gap-3">
             {currentData.segmentDist
-              ? Object.entries(currentData.segmentDist).map(([seg, val]) => (
+              ? Object.entries(currentData.segmentDist)
+                  .filter(([seg]) => seg !== 'Not Mentioned')
+                  .map(([seg, val]) => (
                 <div key={seg} className="flex items-center gap-3">
                   <span className="w-28 text-xs font-semibold text-slate-600 truncate shrink-0" title={seg}>{seg}</span>
                   <div className="flex-1 bg-slate-200 rounded-full h-3 overflow-hidden">
@@ -182,7 +186,9 @@ export default function DashboardView() {
           <h3 className="text-base font-bold text-slate-800">Evidence Types</h3>
           <div className="flex flex-col gap-3">
             {currentData.evidenceDist
-              ? Object.entries(currentData.evidenceDist).map(([ev, val]) => (
+              ? Object.entries(currentData.evidenceDist)
+                  .filter(([ev]) => ev !== 'Not Mentioned')
+                  .map(([ev, val]) => (
                 <div key={ev} className="flex items-center gap-3">
                   <span className="w-28 text-xs font-semibold text-slate-600 truncate shrink-0" title={ev}>{ev}</span>
                   <div className="flex-1 bg-slate-200 rounded-full h-3 overflow-hidden">

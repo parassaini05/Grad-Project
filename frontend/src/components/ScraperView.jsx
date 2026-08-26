@@ -9,7 +9,7 @@ const COLORS = ['#3525cd', '#831ada', '#0555dd', '#9e41f5', '#4f46e5'];
 function getFrequencies(array, key) {
   const counts = {};
   array.forEach(item => {
-    if (item[key]) {
+    if (item[key] && item[key] !== "Not Mentioned") {
       counts[item[key]] = (counts[item[key]] || 0) + 1;
     }
   });
@@ -27,7 +27,7 @@ function getFrequencies(array, key) {
 function getCrossPatterns(array) {
   const counts = {};
   array.forEach(item => {
-    if (item.category && item.segment) {
+    if (item.category && item.segment && item.category !== "Not Mentioned" && item.segment !== "Not Mentioned") {
       const key = `${item.category.split(' ')[0]} × ${item.segment.split('-')[0]}`;
       counts[key] = (counts[key] || 0) + 1;
     }
