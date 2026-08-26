@@ -7,6 +7,7 @@ To understand the behavioral psychology behind wishlist-to-purchase conversion w
 - **Total Sources Scraped:** 9,127 (9,115 Play Store reviews + 12 YouTube haul videos)
 - **High-Intent Signals Isolated:** 221 signals (after keyword filtering + quality filters)
 - **LLM-Processed with Enum Tags:** 221 signals dynamically tagged by Groq
+- **LLM Guardrails Applied:** Schema validation (Pydantic), hallucination retries (Tenacity), and precision checks via Golden Dataset evals.
 - **Quality Filters Applied:** Excluded reviews < 8 words, reviews with emojis, Hindi language reviews
 
 **Scraping Keywords Used:**

@@ -42,21 +42,22 @@
   - **Data Proof:** Hard percentages from the tagged dataset.
   - **Customer Voices:** Verbatim quotes from real users anchoring the insight.
 
-## Phase 5: Interactive Prototype Layer (Live Working)
+## Phase 5: LLM Guardrails & Pipeline Evaluation
+**Objective:** Fortify the LLM extraction pipeline against hallucinations, ensure strict type safety, and implement automated quality checks.
+
+### 1. Schema Validation (Guardrails)
+- [x] **Pydantic Integration:** Replace the basic regex parser with `pydantic` models to strictly enforce JSON schema and enum matching (e.g., ensuring `Decision Driver` is exactly one of the 10 allowed strings).
+- [x] **Retry Logic:** Implement a retry loop using the `tenacity` library. If the LLM hallucinates an invalid tag, automatically retry the prompt with the validation error injected (up to 3 retries).
+
+### 2. Automated Evals Pipeline
+- [x] **Golden Dataset Creation:** Manually annotate a "Golden Dataset" of 20 representative high-intent reviews to serve as the ground truth.
+- [x] **Eval Script:** Create an evaluation script (`src/run_evals.py`) that periodically measures the LLM's tag accuracy (precision/recall) against the Golden Dataset to prevent regression when prompts or models change.
+
+### 3. Data Safety
+- [x] **PII Filtering:** Implement a lightweight regex/filtering step to scrub any Personal Identifiable Information (PII) before sending raw user reviews to the Groq API.
+
+## Phase 6: Interactive Prototype Layer (Live Working)
 **Objective:** Provide a testable, live link demonstrating the workflow and findings of the AI Discovery Engine as required for the final Part 1 deliverable.
 - [x] **Interactive Dashboard Generation:** Build a React-based UI mapping all insights, data proofs, and quotes dynamically by source (Play Store vs YouTube).
 - [x] **Live Scraper Simulation:** Build a view demonstrating the backend ingestion pipeline actively filtering noise and identifying wishlist/cart high-intent signals.
 - [x] **Deployment:** Configure Railway for the FastAPI backend and Vercel for the Vite frontend to provide a publicly accessible link for testing the workflow.
-
-## Phase 6: Business Metric Decomposition (Part 2)
-**Objective:** Break down the Wishlist → Purchase Conversion metric and determine where the highest-potential opportunities lie.
-- [x] **Audit Live Product:** Map out the exact step-by-step workflow for a Myntra user converting a wishlisted item to a purchase within 30 days.
-- [x] **Define Metric Tree:** Deconstruct the conversion math (W2P30) into sequential probabilities (login, revisit, buyable size/stock, fit decision, trust).
-- [x] **Synthesize Opportunities:** Intersect the AI Discovery Engine insights (Part 1) with the product flow to rank drop-off severity.
-- [x] **Create Deliverable:** Generate `part-2-metric-decomposition.md` and script a PPT slide `part-2-one-slide.pptx` for the final deck.
-
-## Phase 7: User Research (Part 3)
-**Objective:** Validate the highest potential opportunity through primary research (5-6 user interviews).
-- [ ] **Define Target Segment:** Select a segment (e.g., Trust-Gated Shoppers or Fit-Anxious Shoppers) based on Part 1 & 2.
-- [ ] **Draft Interview Guide:** Prepare a script targeting why they saved items, intention to purchase, roadblocks, and off-app behavior.
-- [ ] **Conduct Interviews & Synthesize:** Conduct 5-6 interviews and extract root causes preventing desired behavior.

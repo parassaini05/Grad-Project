@@ -16,21 +16,23 @@ graph TD
         D --> |Removes Noise/Irrelevant| E[(Raw Data Storage)]
     end
 
-    subgraph "LLM Processing Layer"
-        E --> F[Prompt Builder: Behavioral Focus]
+    subgraph "LLM Processing Layer (with Guardrails)"
+        E --> |PII Scrubbed| F[Prompt Builder: Behavioral Focus]
         F --> |Batched Text| G[Groq LLM API]
-        G --> |JSON/Opportunity Areas| H[Response Parser]
+        G --> |JSON Response| H[Pydantic Schema Validator]
+        H --> |Validation Error| F
+        H --> |Validated Data| I[LLM Evals / Golden Dataset Check]
     end
 
     subgraph "Insights & Presentation Layer"
-        H --> I[(Quantified Insights Database)]
-        I --> J[Visualization / Dashboarding]
-        J --> K[Final Discovery Report]
+        I --> J[(Quantified Insights Database)]
+        J --> K[Visualization / Dashboarding]
+        K --> L[Final Discovery Report]
     end
 
     subgraph "Interactive UI Layer (Live Prototype)"
-        K --> L[React Dashboard]
-        K --> M[Live Scraper Simulation]
+        L --> M[React Dashboard]
+        L --> N[Live Scraper Simulation]
     end
 ```
 
@@ -44,10 +46,12 @@ Gathers raw feedback focusing heavily on wishlist behavior, intent, and barriers
   - Standard text cleaning.
   - Strict filtering to ensure only texts containing signals related to saving, wishlisting, hesitating, or comparing are passed to the LLM.
 
-## 3. LLM Processing Layer (The Core Engine)
-- **Prompt Builder:** Constructs prompts instructing the Groq model to act as a behavioral product manager. It asks the LLM to identify the specific friction point, the user's underlying need, and categorize the barrier (e.g., Sizing Uncertainty, Social Validation, Wait for Price Drop).
+## 3. LLM Processing Layer (The Core Engine with Guardrails)
+- **PII Filter:** Scrubs personally identifiable information before hitting the Groq API.
+- **Prompt Builder:** Constructs prompts instructing the Groq model to act as a behavioral product manager. It asks the LLM to identify the specific friction point, the user's underlying need, and categorize the barrier.
 - **Groq API Integration:** Handles inference endpoints.
-- **Response Parser:** Validates and extracts JSON containing identified barriers, user intent segments, and unmet needs.
+- **Guardrails (Pydantic & Tenacity):** Replaces basic string parsing with strict schema validation. If the LLM hallucinates an invalid tag, a retry loop injects the error back into the prompt to auto-correct.
+- **LLM Evals Pipeline:** Runs periodic precision/recall checks against a manually annotated 20-review "Golden Dataset" to prevent regression.
 
 ## 4. Insights & Presentation Layer
 - **Processed Insights Database:** Stores the final LLM-evaluated data.
