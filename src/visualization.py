@@ -14,9 +14,9 @@ def generate_visualizations():
         
     df = pd.read_csv(input_file)
     
-    # Filter only relevant insights
-    if 'is_relevant' in df.columns:
-        df = df[df['is_relevant'] == True]
+    # Filter only relevant insights (Removed to include all 221 high-intent signals as per methodology)
+    # if 'is_relevant' in df.columns:
+    #     df = df[df['is_relevant'] == True]
         
     reports_dir = "reports"
     os.makedirs(reports_dir, exist_ok=True)

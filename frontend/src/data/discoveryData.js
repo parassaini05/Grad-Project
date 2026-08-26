@@ -4,30 +4,45 @@ export const dashboardData = {
     categoryCounts: {
       'Trust Deficit': 132,
       'Delivery Anxiety': 30,
-      'Price Sensitivity': 10,
+      'Not Mentioned': 15,
       'Convenience': 15,
-      'Visual Appeal': 2
+      'Price Sensitivity': 10,
+      'Missing Feature': 7,
+      'Past Experience': 5,
+      'Competitor Superiority': 3,
+      'Visual Appeal': 2,
+      'Quality Uncertainty': 2
     },
     categoryDist: { 
       'Trust Deficit': 59.7, 
       'Delivery Anxiety': 13.6, 
-      'Price Sensitivity': 4.5,
+      'Not Mentioned': 6.8,
       'Convenience': 6.8,
-      'Visual Appeal': 0.9
+      'Price Sensitivity': 4.5,
+      'Missing Feature': 3.2,
+      'Past Experience': 2.3,
+      'Competitor Superiority': 1.4,
+      'Visual Appeal': 0.9,
+      'Quality Uncertainty': 0.9
     },
     segmentDist: {
       'Trust-Gated Shopper': 68.8,
-      'Deal Seeker': 6.3,
+      'Not Mentioned': 13.6,
       'Habitual Buyer': 7.7,
+      'Deal Seeker': 6.3,
+      'Hesitant First-Timer': 2.3,
       'Trend Follower': 0.9,
-      'Not Mentioned': 13.6
+      'Fit-Anxious Shopper': 0.5
     },
     evidenceDist: {
       'Delivery Complaint': 54.3,
-      'Return Anxiety': 6.3,
       'Not Mentioned': 26.7,
+      'Return Anxiety': 6.3,
+      'Wishlist Stagnation': 3.6,
+      'Cart Abandonment': 3.2,
+      'Competitor Comparison': 3.2,
       'Repeat Purchase': 1.8,
-      'Cart Abandonment': 3.2
+      'Sizing Complaint': 0.9
     },
     crossPattern: "Dominant Cluster: Trust Deficit × Trust-Gated Shopper (56.1%)",
     answers: {
@@ -60,10 +75,21 @@ export const dashboardData = {
   },
   playstore: {
     kpis: { reviewed: "9,115 Sources", filtered: "221 High-Intent", topDriver: "Trust Deficit" },
-    categoryCounts: { 'Trust Deficit': 132, 'Delivery Anxiety': 30, 'Price Sensitivity': 10, 'Convenience': 15, 'Visual Appeal': 2 },
-    categoryDist: { 'Trust Deficit': 59.7, 'Delivery Anxiety': 13.6, 'Price Sensitivity': 4.5, 'Convenience': 6.8, 'Visual Appeal': 0.9 },
-    segmentDist: { 'Trust-Gated Shopper': 68.8, 'Deal Seeker': 6.3, 'Habitual Buyer': 7.7, 'Trend Follower': 0.9, 'Not Mentioned': 13.6 },
-    evidenceDist: { 'Delivery Complaint': 54.3, 'Return Anxiety': 6.3, 'Not Mentioned': 26.7, 'Repeat Purchase': 1.8, 'Cart Abandonment': 3.2 },
+    categoryCounts: {
+      'Trust Deficit': 132,
+      'Delivery Anxiety': 30,
+      'Not Mentioned': 15,
+      'Convenience': 15,
+      'Price Sensitivity': 10,
+      'Missing Feature': 7,
+      'Past Experience': 5,
+      'Competitor Superiority': 3,
+      'Visual Appeal': 2,
+      'Quality Uncertainty': 2
+    },
+    categoryDist: { 'Trust Deficit': 59.7, 'Delivery Anxiety': 13.6, 'Not Mentioned': 6.8, 'Convenience': 6.8, 'Price Sensitivity': 4.5, 'Missing Feature': 3.2, 'Past Experience': 2.3, 'Competitor Superiority': 1.4, 'Visual Appeal': 0.9, 'Quality Uncertainty': 0.9 },
+    segmentDist: { 'Trust-Gated Shopper': 68.8, 'Not Mentioned': 13.6, 'Habitual Buyer': 7.7, 'Deal Seeker': 6.3, 'Hesitant First-Timer': 2.3, 'Trend Follower': 0.9, 'Fit-Anxious Shopper': 0.5 },
+    evidenceDist: { 'Delivery Complaint': 54.3, 'Not Mentioned': 26.7, 'Return Anxiety': 6.3, 'Wishlist Stagnation': 3.6, 'Cart Abandonment': 3.2, 'Competitor Comparison': 3.2, 'Repeat Purchase': 1.8, 'Sizing Complaint': 0.9 },
     crossPattern: "Dominant Cluster: Trust Deficit × Trust-Gated Shopper (56.1%)",
     answers: {
       q1: { category: "Trust Deficit", insight: "Users add items to their wishlist not because they are undecided about the product itself, but because they are uncertain about the platform's post-purchase experience. They use the wishlist as a holding area.", dataProof: "59.7% of Play Store reviews cited Trust Deficit as the primary decision driver. 68.8% of users were Trust-Gated Shoppers.", voice: "I returned the products and the app showed that the refund has been processed, but I still haven't received the money in my account." },

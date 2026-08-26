@@ -1,6 +1,11 @@
-decision_driver,Gift Purchase,Not Mentioned,Occasion Shopping,Wishlist Hoarding
-Convenience,0,0,1,0
-Delivery Anxiety,0,2,0,1
-Price Sensitivity,1,1,0,0
-Trust Deficit,0,10,1,0
-Visual Appeal,0,1,0,0
+decision_driver,Deal Seeker,Gift Purchase,Impulse Browse,Not Mentioned,Occasion Shopping,Routine Replenishment,Wishlist Hoarding
+Competitor Superiority,0,0,0,3,0,0,0
+Convenience,0,1,1,9,1,2,1
+Delivery Anxiety,0,1,0,25,4,0,0
+Missing Feature,0,0,3,3,0,0,1
+Not Mentioned,0,0,0,15,0,0,0
+Past Experience,0,0,0,3,1,1,0
+Price Sensitivity,0,0,1,5,0,3,1
+Quality Uncertainty,0,0,0,2,0,0,0
+Trust Deficit,2,3,0,121,0,2,4
+Visual Appeal,0,0,2,0,0,0,0

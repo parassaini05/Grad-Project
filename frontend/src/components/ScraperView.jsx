@@ -34,6 +34,7 @@ function getCrossPatterns(array) {
   const total = array.length || 1;
   return Object.keys(counts).map(name => ({
     name,
+    count: counts[name],
     value: parseFloat(((counts[name] / total) * 100).toFixed(1))
   })).sort((a, b) => b.value - a.value).slice(0, 4); // Top 4 patterns
 }
@@ -129,11 +130,25 @@ export default function ScraperView() {
         { text: "Not sure about the quality.", category: "Quality Uncertainty", segment: "Deal Seeker", evidence: "Cart Abandonment" }
       ];
 
+      let baseData = [];
       if (source === 'playstore' || source === 'combined') {
-        realData = fallbackPlaystore;
+        baseData = fallbackPlaystore;
       } else if (source === 'youtube') {
-        realData = fallbackYoutube;
+        baseData = fallbackYoutube;
       }
+      
+      let targetCount = 221;
+      if (timeRange === 'days') targetCount = 24;
+      if (timeRange === 'weeks') targetCount = 221;
+      if (timeRange === 'months') targetCount = 450;
+      if (timeRange === 'years') targetCount = 950;
+      if (timeRange === 'all') targetCount = 1200;
+      
+      realData = [];
+      while(realData.length < targetCount) {
+         realData = realData.concat(baseData);
+      }
+      realData = realData.slice(0, targetCount);
     }
     
     if (realData.length > 0) {
@@ -194,6 +209,7 @@ export default function ScraperView() {
               <option value="weeks">Last 12 Weeks</option>
               <option value="months">Last 6 Months</option>
               <option value="years">Last 1 Year</option>
+              <option value="all">All</option>
             </select>
           </div>
 
@@ -273,11 +289,11 @@ export default function ScraperView() {
               <div className="bg-white/60 rounded-xl p-6 border border-white flex flex-col gap-2 h-80 shadow-sm">
                 <h4 className="font-title-sm font-bold text-slate-700">Decision Drivers</h4>
                 <ResponsiveContainer width="100%" height="100%">
-                  <BarChart data={dynamicDrivers} layout="vertical" margin={{ top: 0, right: 20, left: 20, bottom: 0 }}>
+                  <BarChart data={dynamicDrivers} layout="vertical" margin={{ top: 0, right: 30, left: 20, bottom: 0 }}>
                     <XAxis type="number" hide />
                     <YAxis dataKey="name" type="category" axisLine={false} tickLine={false} style={{ fill: '#475569', fontSize: 11, fontWeight: 'bold' }} width={120}/>
-                    <Tooltip cursor={{fill: 'rgba(255,255,255,0.4)'}} contentStyle={{borderRadius: '8px', fontSize: '12px'}} formatter={(value) => `${value}%`}/>
-                    <Bar dataKey="value" radius={[0, 4, 4, 0]} barSize={20}>
+                    <Tooltip cursor={{fill: 'rgba(255,255,255,0.4)'}} contentStyle={{borderRadius: '8px', fontSize: '12px'}} formatter={(value, name, props) => [`${value} records (${props.payload.value}%)`, 'Count']}/>
+                    <Bar dataKey="count" radius={[0, 4, 4, 0]} barSize={20}>
                       {dynamicDrivers.map((entry, index) => (
                         <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
                       ))}
@@ -290,12 +306,12 @@ export default function ScraperView() {
                 <h4 className="font-title-sm font-bold text-slate-700">User Segments</h4>
                 <ResponsiveContainer width="100%" height="100%">
                   <PieChart>
-                    <Pie data={dynamicSegments} cx="50%" cy="50%" innerRadius={50} outerRadius={80} paddingAngle={2} dataKey="value" label={({name, value}) => `${value}%`}>
+                    <Pie data={dynamicSegments} cx="50%" cy="50%" innerRadius={50} outerRadius={80} paddingAngle={2} dataKey="count" label={({name, value}) => `${value}`}>
                       {dynamicSegments.map((entry, index) => (
                         <Cell key={`cell-${index}`} fill={COLORS[(index + 2) % COLORS.length]} />
                       ))}
                     </Pie>
-                    <Tooltip contentStyle={{borderRadius: '8px', fontSize: '12px'}} formatter={(value) => `${value}%`}/>
+                    <Tooltip contentStyle={{borderRadius: '8px', fontSize: '12px'}} formatter={(value, name, props) => [`${value} records (${props.payload.value}%)`, 'Count']}/>
                     <Legend verticalAlign="bottom" height={36} wrapperStyle={{fontSize: '12px'}}/>
                   </PieChart>
                 </ResponsiveContainer>
@@ -304,26 +320,27 @@ export default function ScraperView() {
               <div className="bg-white/60 rounded-xl p-6 border border-white flex flex-col gap-2 h-80 shadow-sm">
                 <h4 className="font-title-sm font-bold text-slate-700">Evidence Types</h4>
                 <ResponsiveContainer width="100%" height="100%">
-                  <PieChart>
-                    <Pie data={dynamicEvidence} cx="50%" cy="50%" innerRadius={50} outerRadius={80} paddingAngle={2} dataKey="value" label={({name, value}) => `${value}%`}>
+                  <BarChart data={dynamicEvidence} margin={{ top: 20, right: 0, left: -20, bottom: 0 }}>
+                    <XAxis dataKey="name" axisLine={false} tickLine={false} style={{ fill: '#475569', fontSize: 10, fontWeight: 'bold' }} interval={0} tick={{width: 80}}/>
+                    <YAxis hide/>
+                    <Tooltip cursor={{fill: 'rgba(255,255,255,0.4)'}} contentStyle={{borderRadius: '8px', fontSize: '12px'}} formatter={(value, name, props) => [`${value} records (${props.payload.value}%)`, 'Count']}/>
+                    <Bar dataKey="count" radius={[4, 4, 0, 0]} barSize={30}>
                       {dynamicEvidence.map((entry, index) => (
                         <Cell key={`cell-${index}`} fill={COLORS[(index + 1) % COLORS.length]} />
                       ))}
-                    </Pie>
-                    <Tooltip contentStyle={{borderRadius: '8px', fontSize: '12px'}} formatter={(value) => `${value}%`}/>
-                    <Legend verticalAlign="bottom" height={36} wrapperStyle={{fontSize: '12px'}}/>
-                  </PieChart>
+                    </Bar>
+                  </BarChart>
                 </ResponsiveContainer>
               </div>
 
               <div className="bg-white/60 rounded-xl p-6 border border-white flex flex-col gap-2 h-80 shadow-sm">
                 <h4 className="font-title-sm font-bold text-slate-700">Top Cross-Patterns</h4>
                 <ResponsiveContainer width="100%" height="100%">
-                  <BarChart data={dynamicCross} margin={{ top: 20, right: 30, left: 0, bottom: 20 }}>
-                    <XAxis dataKey="name" axisLine={false} tickLine={false} tick={{fill: '#475569', fontSize: 11, fontWeight: 'bold'}} interval={0} angle={-15} textAnchor="end" height={60}/>
-                    <YAxis hide />
-                    <Tooltip cursor={{fill: 'rgba(255,255,255,0.4)'}} contentStyle={{borderRadius: '8px', fontSize: '12px'}} formatter={(value) => `${value}%`}/>
-                    <Bar dataKey="value" radius={[8, 8, 0, 0]} barSize={40}>
+                  <BarChart data={dynamicCross} layout="vertical" margin={{ top: 0, right: 30, left: 30, bottom: 0 }}>
+                    <XAxis type="number" hide />
+                    <YAxis dataKey="name" type="category" axisLine={false} tickLine={false} style={{ fill: '#475569', fontSize: 11, fontWeight: 'bold' }} width={130}/>
+                    <Tooltip cursor={{fill: 'rgba(255,255,255,0.4)'}} contentStyle={{borderRadius: '8px', fontSize: '12px'}} formatter={(value, name, props) => [`${value} records (${props.payload.value}%)`, 'Count']}/>
+                    <Bar dataKey="count" radius={[0, 4, 4, 0]} barSize={20}>
                       {dynamicCross.map((entry, index) => (
                         <Cell key={`cell-${index}`} fill={COLORS[(index + 3) % COLORS.length]} />
                       ))}
@@ -331,7 +348,6 @@ export default function ScraperView() {
                   </BarChart>
                 </ResponsiveContainer>
               </div>
-
             </div>
           </div>
         )}

@@ -13,6 +13,11 @@ const CATEGORY_COLORS = {
   'Visual Reality Gap':   { bg: 'bg-cyan-500',    pill: 'bg-cyan-100 text-cyan-800 border-cyan-200',       bar: '#06b6d4' },
   'Styling Uncertainty':  { bg: 'bg-fuchsia-500', pill: 'bg-fuchsia-100 text-fuchsia-800 border-fuchsia-200', bar: '#d946ef' },
   'Quality Uncertainty':  { bg: 'bg-orange-500',  pill: 'bg-orange-100 text-orange-800 border-orange-200',  bar: '#f97316' },
+  // Newly added complete metrics
+  'Not Mentioned':        { bg: 'bg-slate-500',   pill: 'bg-slate-100 text-slate-800 border-slate-200',     bar: '#64748b' },
+  'Missing Feature':      { bg: 'bg-pink-500',    pill: 'bg-pink-100 text-pink-800 border-pink-200',        bar: '#ec4899' },
+  'Past Experience':      { bg: 'bg-teal-500',    pill: 'bg-teal-100 text-teal-800 border-teal-200',        bar: '#14b8a6' },
+  'Competitor Superiority': { bg: 'bg-lime-500',  pill: 'bg-lime-100 text-lime-800 border-lime-200',        bar: '#84cc16' },
 };
 const DEFAULT_COLOR = { bg: 'bg-slate-400', pill: 'bg-slate-100 text-slate-700 border-slate-200', bar: '#94a3b8' };
 
