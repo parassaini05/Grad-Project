@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { RAW_REVIEWS } from '../data/discoveryData';
+import insightsData from '../data/llm_insights.json';
 import { BarChart, Bar, XAxis, YAxis, Tooltip, ResponsiveContainer, Cell, PieChart, Pie, Legend } from 'recharts';
 
 const COLORS = ['#3525cd', '#831ada', '#0555dd', '#9e41f5', '#4f46e5'];
@@ -110,16 +111,12 @@ export default function ScraperView() {
         `> Using robust fallback data to visualize the analytical pipeline.`
       ]);
       
-      const fallbackPlaystore = [
-        ...Array(7).fill({ text: "My order was cancelled without notice.", category: "Trust Deficit", segment: "Trust-Gated Shopper", evidence: "Delivery Complaint" }),
-        ...Array(4).fill({ text: "Refund not received after return.", category: "Trust Deficit", segment: "Trust-Gated Shopper", evidence: "Return Anxiety" }),
-        ...Array(2).fill({ text: "Delivery taking too long.", category: "Delivery Anxiety", segment: "Trust-Gated Shopper", evidence: "Delivery Complaint" }),
-        { text: "Where is my order?", category: "Delivery Anxiety", segment: "Not Mentioned", evidence: "Delivery Complaint" },
-        { text: "Even after gift card they charging 49rs.", category: "Price Sensitivity", segment: "Deal Seeker", evidence: "Cart Abandonment" },
-        { text: "I really love this app... saves my money.", category: "Price Sensitivity", segment: "Deal Seeker", evidence: "Repeat Purchase" },
-        { text: "Best shopping for rakhi great deal.", category: "Convenience", segment: "Habitual Buyer", evidence: "Not Mentioned" },
-        { text: "It's always a joyful experience.", category: "Visual Appeal", segment: "Trend Follower", evidence: "Not Mentioned" }
-      ];
+      const fallbackPlaystore = insightsData.map(d => ({
+        text: d.verbatim_quote || "No quote",
+        category: d.decision_driver || "Not Mentioned",
+        segment: d.user_segment || "Not Mentioned",
+        evidence: d.evidence_type || "Not Mentioned"
+      }));
 
       const fallbackYoutube = [
         ...Array(3).fill({ text: "The color in the video is completely different from the app photos.", category: "Visual Reality Gap", segment: "Trend Follower", evidence: "Return Anxiety" }),
@@ -142,13 +139,17 @@ export default function ScraperView() {
       if (timeRange === 'weeks') targetCount = 221;
       if (timeRange === 'months') targetCount = 450;
       if (timeRange === 'years') targetCount = 950;
-      if (timeRange === 'all') targetCount = 1200;
+      if (timeRange === 'all') targetCount = baseData.length;
       
       realData = [];
-      while(realData.length < targetCount) {
-         realData = realData.concat(baseData);
+      if (timeRange === 'all') {
+         realData = baseData;
+      } else {
+         while(realData.length < targetCount) {
+            realData = realData.concat(baseData);
+         }
+         realData = realData.slice(0, targetCount);
       }
-      realData = realData.slice(0, targetCount);
     }
     
     if (realData.length > 0) {
