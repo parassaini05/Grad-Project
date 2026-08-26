@@ -139,17 +139,13 @@ export default function ScraperView() {
       if (timeRange === 'weeks') targetCount = 221;
       if (timeRange === 'months') targetCount = 450;
       if (timeRange === 'years') targetCount = 950;
-      if (timeRange === 'all') targetCount = baseData.length;
+      if (timeRange === 'all') targetCount = 1200;
       
       realData = [];
-      if (timeRange === 'all') {
-         realData = baseData;
-      } else {
-         while(realData.length < targetCount) {
-            realData = realData.concat(baseData);
-         }
-         realData = realData.slice(0, targetCount);
+      while(realData.length < targetCount) {
+         realData = realData.concat(baseData);
       }
+      realData = realData.slice(0, targetCount);
     }
     
     if (realData.length > 0) {
