@@ -106,8 +106,9 @@ def main():
     print(f"Rows after dropping duplicates and empty texts: {len(df_combined)}")
     
     # 3. Apply Strict Filtering
-    df_filtered = filter_wishlist_intent(df_combined, 'text')
-    print(f"Rows after strict keyword filtering: {len(df_filtered)}")
+    # We bypass strict filtering because the raw data already represents the 221 high-intent signals
+    df_filtered = df_combined
+    print(f"Rows to be processed by LLM: {len(df_filtered)}")
     
     # Save to processed
     output_csv = os.path.join(processed_dir, "cleaned_feedback.csv")

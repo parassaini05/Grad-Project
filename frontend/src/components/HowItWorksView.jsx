@@ -116,7 +116,7 @@ const layers = [
       {
         icon: 'description',
         title: 'Final Discovery Report',
-        body: 'A structured breakdown of findings highlighting non-monetary opportunity areas — Trust Deficit (61.1%), Delivery Anxiety (16.7%), and Price Sensitivity (11.1%) — for the Growth team.',
+        body: 'A structured breakdown of findings highlighting non-monetary opportunity areas — Trust Deficit (59.7%), Delivery Anxiety (13.6%), and Price Sensitivity (4.5%) — for the Growth team.',
       },
     ],
     tech: ['Python', 'JSON', 'Cross-pattern Analysis'],

@@ -53,7 +53,7 @@ def analyze_feedback(client, text):
                     "content": build_prompt(text)
                 }
             ],
-            model="llama-3.3-70b-versatile",
+            model="qwen/qwen3.8-27b",
             temperature=0,
             max_tokens=256
         )
@@ -80,8 +80,8 @@ def main():
     client = get_groq_client()
     results = []
     
-    # Process up to 25 rows to stay within rate limits
-    df_sample = df.head(25).copy()
+    # Process all rows
+    df_sample = df.copy()
     
     for idx, row in df_sample.iterrows():
         print(f"Processing {idx+1}/{len(df_sample)}...", flush=True)
