@@ -134,18 +134,19 @@ export default function ScraperView() {
         baseData = fallbackYoutube;
       }
       
-      let targetCount = 221;
-      if (timeRange === 'days') targetCount = 24;
-      if (timeRange === 'weeks') targetCount = 221;
-      if (timeRange === 'months') targetCount = 450;
-      if (timeRange === 'years') targetCount = 950;
-      if (timeRange === 'all') targetCount = 1200;
+      let targetCount = baseData.length; // 'all' -> 221
+      if (timeRange === 'days') targetCount = Math.max(1, Math.floor(baseData.length * 0.05)); // ~11
+      if (timeRange === 'weeks') targetCount = Math.floor(baseData.length * 0.25); // ~55
+      if (timeRange === 'months') targetCount = Math.floor(baseData.length * 0.50); // ~110
+      if (timeRange === 'years') targetCount = Math.floor(baseData.length * 0.85); // ~187
       
+      // We want to slice the data, but maintain roughly the same distribution.
+      // Since baseData might be sorted, let's just pick elements evenly spaced.
       realData = [];
-      while(realData.length < targetCount) {
-         realData = realData.concat(baseData);
+      const step = baseData.length / targetCount;
+      for (let i = 0; i < targetCount; i++) {
+        realData.push(baseData[Math.floor(i * step)]);
       }
-      realData = realData.slice(0, targetCount);
     }
     
     if (realData.length > 0) {
