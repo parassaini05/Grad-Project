@@ -40,7 +40,7 @@ export default function DashboardView() {
   if (!dashboardData) return null;
 
   const currentData = dashboardData[selectedSource];
-  const categories = ['All', ...Object.keys(currentData.categoryDist)];
+  const categories = ['All', ...Object.keys(currentData.categoryDist).filter(cat => cat !== 'Not Mentioned')];
 
   const displayKpis = (() => {
     if (selectedCategory === 'All') return currentData.kpis;
