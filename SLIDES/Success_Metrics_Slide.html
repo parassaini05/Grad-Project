@@ -1,0 +1,416 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Success Metrics — Myntra Wishlist</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <style>
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: #0f0f1a;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            padding: 2rem;
+        }
+
+        /* ─── SLIDE CANVAS ─── */
+        .slide {
+            width: 1920px;
+            height: 1080px;
+            background: #0d1117;
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+            position: relative;
+        }
+
+        /* ─── BACKGROUND TEXTURE ─── */
+        .slide::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background:
+                radial-gradient(ellipse 900px 600px at 30% 50%, rgba(99,58,255,0.07) 0%, transparent 70%),
+                radial-gradient(ellipse 700px 500px at 80% 20%, rgba(225,29,72,0.06) 0%, transparent 70%);
+            pointer-events: none;
+        }
+
+        /* ─── HEADER ─── */
+        .header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 48px;
+            height: 100px;
+            flex-shrink: 0;
+            border-bottom: 1px solid rgba(255,255,255,0.07);
+            position: relative;
+            z-index: 2;
+        }
+        .header-left { display: flex; flex-direction: column; gap: 4px; }
+        .slide-label {
+            font-size: 14px; font-weight: 700; letter-spacing: 2.5px; text-transform: uppercase;
+            color: #e11d48;
+        }
+        .header-title {
+            font-size: 28px; font-weight: 900; color: #f0f4ff; letter-spacing: -0.3px;
+        }
+        
+        /* ─── BODY ─── */
+        .body {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            padding: 32px 48px;
+            gap: 24px;
+            position: relative;
+            z-index: 2;
+        }
+
+        /* ─── NORTH STAR (TOP FULL WIDTH) ─── */
+        .north-star {
+            background: linear-gradient(135deg, rgba(225, 29, 72, 0.15) 0%, rgba(225, 29, 72, 0.05) 100%);
+            border: 2px solid rgba(225, 29, 72, 0.4);
+            border-radius: 12px;
+            padding: 24px 36px;
+            display: flex;
+            align-items: center;
+            gap: 32px;
+            position: relative;
+            overflow: hidden;
+            box-shadow: 0 12px 32px rgba(225, 29, 72, 0.1);
+        }
+        
+        .north-star::before {
+            content: '';
+            position: absolute; top: 0; left: 0; right: 0; height: 4px;
+            background: linear-gradient(90deg, #f43f5e, #e11d48, #9f1239);
+        }
+
+        .ns-icon {
+            font-size: 56px;
+            background: rgba(225, 29, 72, 0.2);
+            width: 100px;
+            height: 100px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+            border: 2px solid rgba(225, 29, 72, 0.5);
+            flex-shrink: 0;
+            box-shadow: 0 0 40px rgba(225, 29, 72, 0.2);
+        }
+
+        .ns-content {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+        
+        .ns-label {
+            font-size: 14px;
+            font-weight: 800;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            color: #fda4af;
+        }
+        
+        .ns-title {
+            font-size: 32px;
+            font-weight: 900;
+            color: #fff;
+            letter-spacing: -0.5px;
+        }
+        
+        .ns-formula {
+            font-size: 17px;
+            font-weight: 500;
+            color: #fecdd3;
+            background: rgba(0,0,0,0.3);
+            padding: 10px 16px;
+            border-radius: 8px;
+            border-left: 4px solid #f43f5e;
+            display: inline-block;
+            margin-top: 4px;
+        }
+        .ns-formula strong {
+            color: #fff;
+            margin-right: 8px;
+        }
+
+        /* ─── METRICS GRID (BOTTOM) ─── */
+        .metrics-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr;
+            gap: 24px;
+            flex: 1;
+        }
+
+        /* ─── CARDS ─── */
+        .metric-card {
+            background: rgba(255,255,255,0.03);
+            border: 1px solid rgba(255,255,255,0.08);
+            border-radius: 12px;
+            padding: 24px 28px;
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        .mc-header {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            padding-bottom: 16px;
+            border-bottom: 1px solid rgba(255,255,255,0.08);
+        }
+
+        .mc-icon { font-size: 28px; }
+        .mc-title {
+            font-size: 20px; font-weight: 800; color: #f0f4ff;
+        }
+        
+        .leading-card {
+            border-top: 4px solid #10b981;
+            background: linear-gradient(180deg, rgba(16, 185, 129, 0.05) 0%, transparent 100%);
+        }
+        .guardrail-card {
+            border-top: 4px solid #f59e0b;
+            background: linear-gradient(180deg, rgba(245, 158, 11, 0.05) 0%, transparent 100%);
+        }
+        .op-card {
+            border-top: 4px solid #3b82f6;
+            background: linear-gradient(180deg, rgba(59, 130, 246, 0.05) 0%, transparent 100%);
+        }
+
+        .mc-list {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+            flex: 1;
+        }
+
+        .ml-item {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .ml-item-header {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+        
+        .ml-title {
+            font-size: 17px; font-weight: 700; color: #e2e8f0;
+        }
+
+        .leading-card .ml-title { color: #34d399; }
+        .guardrail-card .ml-title { color: #fbbf24; }
+        .op-card .ml-title { color: #93c5fd; }
+
+        .ml-formula {
+            font-size: 13px;
+            color: #cbd5e1;
+            background: rgba(255,255,255,0.04);
+            padding: 8px 12px;
+            border-radius: 6px;
+            border: 1px solid rgba(255,255,255,0.05);
+            line-height: 1.4;
+            font-family: monospace;
+        }
+        
+        .ml-rationale {
+            font-size: 13px;
+            color: #94a3b8;
+            padding-left: 12px;
+            border-left: 2px solid rgba(255,255,255,0.1);
+            line-height: 1.4;
+        }
+
+        /* ─── FOOTER ─── */
+        .footer {
+            height: 60px; border-top: 1px solid rgba(255,255,255,0.07);
+            display: flex; align-items: center; padding: 0 48px; gap: 16px;
+            flex-shrink: 0; position: relative; z-index: 2;
+            background: rgba(0,0,0,0.3);
+        }
+        .footer-ps {
+            background: linear-gradient(135deg, rgba(225,29,72,0.15), rgba(225,29,72,0.08));
+            border: 1px solid rgba(225,29,72,0.3); border-radius: 6px;
+            padding: 6px 16px; font-size: 13px; font-weight: 700; color: #f43f5e;
+            white-space: nowrap;
+        }
+        .footer-text { font-size: 14px; color: #475569; }
+        .footer-text strong { color: #64748b; }
+    </style>
+</head>
+<body>
+<div class="slide">
+    <!-- HEADER -->
+    <div class="header">
+        <div class="header-left">
+            <div class="slide-label">Success Metrics</div>
+            <div class="header-title">Evaluating the "Need it By?" Date Selector MVP</div>
+        </div>
+    </div>
+
+    <!-- BODY -->
+    <div class="body">
+        
+        <!-- NORTH STAR METRIC -->
+        <div class="north-star">
+            <div class="ns-icon">🎯</div>
+            <div class="ns-content">
+                <div class="ns-label">Primary Business Metric (The North Star)</div>
+                <div class="ns-title">Conversion Rate & Incremental GMV</div>
+                <div class="ns-formula">
+                    <strong>Formula:</strong> (Orders / Wishlist Sessions) &times; 100 <strong>&amp;</strong> &Delta; Baseline GMV
+                </div>
+            </div>
+        </div>
+
+        <div class="metrics-grid">
+            
+            <!-- LEADING INDICATORS -->
+            <div class="metric-card leading-card">
+                <div class="mc-header">
+                    <div class="mc-icon">📈</div>
+                    <div class="mc-title">Leading Indicators</div>
+                </div>
+                <div class="mc-list">
+                    
+                    <div class="ml-item">
+                        <div class="ml-item-header">
+                            <div class="ml-title">1. "Need it by?" Engagement</div>
+                        </div>
+                        <div class="ml-formula">
+                            (Sessions with click / Total sessions) * 100
+                        </div>
+                        <div class="ml-rationale">Measures feature discoverability and initial user curiosity.</div>
+                    </div>
+
+                    <div class="ml-item">
+                        <div class="ml-item-header">
+                            <div class="ml-title">2. Date-Locked to Bag Conv.</div>
+                        </div>
+                        <div class="ml-formula">
+                            (Items moved to bag post-selection / Total items with selected date) * 100
+                        </div>
+                        <div class="ml-rationale">Core hypothesis validation — a guaranteed date must drive a significantly higher move-to-bag rate than the baseline.</div>
+                    </div>
+
+                    <div class="ml-item">
+                        <div class="ml-item-header">
+                            <div class="ml-title">3. Time-to-Bag</div>
+                        </div>
+                        <div class="ml-formula">
+                            Σ(Time bag - Time added) / Total moved to bag
+                        </div>
+                        <div class="ml-rationale">Expected to accelerate decisions and reduce idle time in the wishlist.</div>
+                    </div>
+
+                </div>
+            </div>
+
+            <!-- GUARDRAIL METRICS -->
+            <div class="metric-card guardrail-card">
+                <div class="mc-header">
+                    <div class="mc-icon">🛡️</div>
+                    <div class="mc-title">Guardrail Metrics</div>
+                </div>
+                <div class="mc-list">
+                    
+                    <div class="ml-item">
+                        <div class="ml-item-header">
+                            <div class="ml-title">1. Post-Date Lock Bag Abandon.</div>
+                        </div>
+                        <div class="ml-formula">
+                            (Abandoned date-locked items / Total date-locked items moved to bag) * 100
+                        </div>
+                        <div class="ml-rationale">Ensures we aren't generating false intent via the 15-minute lock.</div>
+                    </div>
+
+                    <div class="ml-item">
+                        <div class="ml-item-header">
+                            <div class="ml-title">2. Wishlist Addition Rate</div>
+                        </div>
+                        <div class="ml-formula">
+                            Total items added / Total active sessions
+                        </div>
+                        <div class="ml-rationale">Ensures the new calendar UI doesn't make the wishlist feel cluttered.</div>
+                    </div>
+
+                    <div class="ml-item">
+                        <div class="ml-item-header">
+                            <div class="ml-title">3. AOV Impact</div>
+                        </div>
+                        <div class="ml-formula">
+                            AOV (Standard Checkouts) - AOV (Date-Locked)
+                        </div>
+                        <div class="ml-rationale">The per-item calendar may fragment baskets into single-item checkouts, lowering AOV and hurting unit economics.</div>
+                    </div>
+
+                </div>
+            </div>
+
+            <!-- OPERATIONAL & BUSINESS METRICS -->
+            <div class="metric-card op-card">
+                <div class="mc-header">
+                    <div class="mc-icon">🚚</div>
+                    <div class="mc-title">Operational Metrics</div>
+                </div>
+                <div class="mc-list">
+                    
+                    <div class="ml-item">
+                        <div class="ml-item-header">
+                            <div class="ml-title">1. On-Time Delivery Rate</div>
+                        </div>
+                        <div class="ml-formula">
+                            (Date-locked orders on time / Total date-locked orders) * 100
+                        </div>
+                        <div class="ml-rationale">Tracks "The Broken Promise". Failing to meet a guaranteed date causes permanent churn.</div>
+                    </div>
+
+                    <div class="ml-item">
+                        <div class="ml-item-header">
+                            <div class="ml-title">2. Date Selection Completion</div>
+                        </div>
+                        <div class="ml-formula">
+                            Confirmed selections / Calendar opens
+                        </div>
+                        <div class="ml-rationale">Catches friction inside the calendar UX — if users open it but don't confirm, the dates shown or the interaction itself is broken.</div>
+                    </div>
+
+                    <div class="ml-item">
+                        <div class="ml-item-header">
+                            <div class="ml-title">3. Timer Completion Rate</div>
+                        </div>
+                        <div class="ml-formula">
+                            Bags in 15 mins / Total date-locked items
+                        </div>
+                        <div class="ml-rationale">Measures if the 15-min micro-commitment is working or if the window is too short / urgency too weak.</div>
+                    </div>
+
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <!-- FOOTER -->
+    <div class="footer">
+        <div class="footer-ps">Strategic Validation</div>
+        <div class="footer-text">
+            Success is defined by eliminating operational anxiety and driving <strong>active wishlist conversion</strong>.
+        </div>
+    </div>
+</div>
+</body>
+</html>

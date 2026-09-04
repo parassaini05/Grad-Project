@@ -1,0 +1,435 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Discovery Engine — How 9,127 Reviews Became 3 PM Hypotheses</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <style>
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: #e5e7eb;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            padding: 2rem;
+        }
+
+        /* ── SLIDE FRAME: 1920×1080 ── */
+        .slide {
+            width: 1920px;
+            height: 1080px;
+            background: #ffffff;
+            box-shadow: 0 12px 48px rgba(0,0,0,0.2);
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+            position: relative;
+        }
+
+        /* ── HEADER ── */
+        .header {
+            background: #1e1b4b;
+            padding: 18px 40px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            flex-shrink: 0;
+        }
+        .header-title {
+            font-size: 28px;
+            font-weight: 900;
+            color: #f9a8d4;
+            letter-spacing: -0.3px;
+        }
+        .header-link {
+            font-size: 18px;
+            color: #a5b4fc;
+            font-weight: 700;
+            text-decoration: none;
+            border: 2px solid #a5b4fc;
+            padding: 5px 16px;
+            border-radius: 6px;
+        }
+        .header-link:hover { background: #a5b4fc; color: #1e1b4b; }
+
+        /* ── PIPELINE ROW ── */
+        .pipeline {
+            display: grid;
+            grid-template-columns: repeat(5, 1fr);
+            border-bottom: 4px solid #e11d48;
+            flex-shrink: 0;
+        }
+        .stage {
+            padding: 18px 24px;
+            text-align: center;
+            border-right: 2px solid #fce7f3;
+            background: #fff1f5;
+        }
+        .stage:last-child { border-right: none; }
+        .stage-badge {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 38px; height: 38px;
+            background: #e11d48;
+            color: white;
+            border-radius: 50%;
+            font-weight: 900;
+            font-size: 18px;
+            margin-bottom: 6px;
+        }
+        .stage-name {
+            font-size: 13px;
+            font-weight: 800;
+            text-transform: uppercase;
+            letter-spacing: 1.2px;
+            color: #6b7280;
+        }
+        .stage-num {
+            font-size: 36px;
+            font-weight: 900;
+            color: #1e1b4b;
+            line-height: 1.1;
+            margin: 4px 0 2px;
+        }
+        .stage-sub {
+            font-size: 16px;
+            font-weight: 700;
+            color: #e11d48;
+        }
+        .stage-detail {
+            font-size: 14px;
+            color: #6b7280;
+            margin-top: 5px;
+            line-height: 1.4;
+        }
+        .tag-row {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 5px;
+            margin-top: 7px;
+        }
+        .tag {
+            background: #fce7f3;
+            color: #9d174d;
+            border-radius: 20px;
+            padding: 3px 10px;
+            font-size: 13px;
+            font-weight: 700;
+        }
+
+        /* ── BODY 3-COL ── */
+        .body {
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr;
+            flex: 1;
+            overflow: hidden;
+        }
+        .card {
+            padding: 24px 28px;
+            border-right: 2px solid #e5e7eb;
+            display: flex;
+            flex-direction: column;
+            gap: 14px;
+            background: #f9fafb;
+        }
+        .card:last-child { border-right: none; background: #fff; }
+        .card:nth-child(2) { background: #fafafa; }
+        .card-title {
+            font-size: 22px;
+            font-weight: 900;
+            color: #1e1b4b;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            border-bottom: 3px solid #e11d48;
+            padding-bottom: 8px;
+        }
+        .card-icon {
+            background: #e11d48;
+            color: white;
+            width: 32px; height: 32px;
+            border-radius: 6px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 16px;
+            flex-shrink: 0;
+        }
+
+        .section-head {
+            font-size: 20px;
+            font-weight: 800;
+            color: #1e1b4b;
+            margin-top: 4px;
+        }
+        .body-text {
+            font-size: 18px;
+            color: #374151;
+            line-height: 1.55;
+        }
+        .accent { color: #e11d48; font-weight: 800; }
+        .accent-blue { color: #1d4ed8; font-weight: 800; }
+
+        .enum-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 8px;
+        }
+        .enum-pill {
+            background: #fce7f3;
+            border: 2px solid #fbcfe8;
+            border-radius: 6px;
+            padding: 8px 12px;
+            font-size: 17px;
+            font-weight: 700;
+            color: #9d174d;
+            text-align: center;
+        }
+
+        .num-highlight {
+            font-size: 36px;
+            font-weight: 900;
+            color: #e11d48;
+            display: inline;
+        }
+
+        .step-block {
+            display: flex;
+            gap: 12px;
+            align-items: flex-start;
+        }
+        .step-num-box {
+            background: #1e1b4b;
+            color: #f9a8d4;
+            font-weight: 900;
+            font-size: 16px;
+            min-width: 28px;
+            height: 28px;
+            border-radius: 5px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-top: 2px;
+            flex-shrink: 0;
+        }
+
+        .quote-box {
+            background: #fff;
+            border-left: 4px solid #e11d48;
+            padding: 12px 16px;
+            border-radius: 0 6px 6px 0;
+            font-size: 17px;
+            font-style: italic;
+            color: #4b5563;
+            line-height: 1.5;
+        }
+        .quote-tag {
+            font-style: normal;
+            font-size: 15px;
+            font-weight: 800;
+            color: #1e1b4b;
+            margin-top: 6px;
+        }
+
+        .val-item {
+            display: flex;
+            gap: 12px;
+            align-items: flex-start;
+        }
+        .val-dot {
+            width: 12px;
+            height: 12px;
+            background: #e11d48;
+            border-radius: 50%;
+            flex-shrink: 0;
+            margin-top: 7px;
+        }
+
+        /* ── FOOTER ── */
+        .footer {
+            background: #1e1b4b;
+            color: #e5e7eb;
+            font-size: 20px;
+            padding: 10px 40px;
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            flex-shrink: 0;
+        }
+        .footer-badge {
+            background: #e11d48;
+            color: white;
+            font-weight: 800;
+            font-size: 16px;
+            padding: 4px 12px;
+            border-radius: 4px;
+            white-space: nowrap;
+        }
+    </style>
+</head>
+<body>
+<div class="slide">
+
+    <!-- HEADER -->
+    <div class="header">
+        <div class="header-title">Our AI Engine Turned 9,127 Reviews Into 3 Actionable PM Hypotheses</div>
+        <a class="header-link" href="https://github.com/parassaini05/Grad-Project" target="_blank">⚙ View Groq + Pydantic Pipeline ↗</a>
+    </div>
+
+    <!-- PIPELINE -->
+    <div class="pipeline">
+        <div class="stage">
+            <div class="stage-badge">①</div>
+            <div class="stage-name">Ingest</div>
+            <div class="stage-num">9,127</div>
+            <div class="stage-sub">Raw Sources</div>
+            <div class="tag-row">
+                <span class="tag">Play Store</span>
+                <span class="tag">YouTube Hauls</span>
+            </div>
+            <div class="stage-detail">9,115 app reviews + 12 haul video transcripts scraped & standardised</div>
+        </div>
+        <div class="stage">
+            <div class="stage-badge">②</div>
+            <div class="stage-name">Filter</div>
+            <div class="stage-num">221</div>
+            <div class="stage-sub">High-Intent Signals</div>
+            <div class="tag-row">
+                <span class="tag">Keyword Match</span>
+                <span class="tag">Length ≥ 25w</span>
+            </div>
+            <div class="stage-detail">Wishlist & purchase-intent keywords isolate signals from noise</div>
+        </div>
+        <div class="stage">
+            <div class="stage-badge">③</div>
+            <div class="stage-name">Tag</div>
+            <div class="stage-num">4 Dims</div>
+            <div class="stage-sub">35 Enum Tags</div>
+            <div class="tag-row">
+                <span class="tag">Groq LLM</span>
+                <span class="tag">Pydantic Guard</span>
+            </div>
+            <div class="stage-detail">Each signal tagged to strict enums — no open-ended generation</div>
+        </div>
+        <div class="stage">
+            <div class="stage-badge">④</div>
+            <div class="stage-name">Mining</div>
+            <div class="stage-num">56.1%</div>
+            <div class="stage-sub">Top Cross-Pattern</div>
+            <div class="tag-row">
+                <span class="tag">Cross-Patterns</span>
+                <span class="tag">No LLM</span>
+            </div>
+            <div class="stage-detail">Tags paired & tallied mathematically. Top co-occurrences surfaced</div>
+        </div>
+        <div class="stage">
+            <div class="stage-badge">⑤</div>
+            <div class="stage-name">Synthesis</div>
+            <div class="stage-num">3</div>
+            <div class="stage-sub">Hypotheses · 6 Insights</div>
+            <div class="tag-row">
+                <span class="tag">LLM Synthesis</span>
+                <span class="tag">Verbatim Proof</span>
+            </div>
+            <div class="stage-detail">Top patterns + raw quotes fed to LLM → grounded PM hypotheses</div>
+        </div>
+    </div>
+
+    <!-- BODY -->
+    <div class="body">
+
+        <!-- Card 1: How themes form -->
+        <div class="card">
+            <div class="card-title">
+                <div class="card-icon">🏷</div>
+                How Themes Are Generated
+            </div>
+            <div class="section-head">The Labelling Approach — Stages 1, 2 & 3</div>
+            <div class="body-text">
+                Raw reviews are narrowed by keyword relevance and length filter, then passed to the Groq LLM which acts as a <span class="accent">tag-labeller</span> only — not a content generator.
+            </div>
+            <div class="section-head">The Enum System</div>
+            <div class="body-text">LLM maps each signal to 35 predefined enums across 4 dimensions:</div>
+            <div class="enum-grid">
+                <div class="enum-pill">Evidence Types</div>
+                <div class="enum-pill">Decision Drivers</div>
+                <div class="enum-pill">Purchase Contexts</div>
+                <div class="enum-pill">User Segments</div>
+            </div>
+            <div class="section-head">The Guardrail</div>
+            <div class="body-text">
+                LLM <span class="accent">cannot create new tags</span>. Pydantic schema rejects any value outside the predefined list — enforcing zero hallucination at the taxonomy layer.
+            </div>
+        </div>
+
+        <!-- Card 2: How insights form -->
+        <div class="card">
+            <div class="card-title">
+                <div class="card-icon">📊</div>
+                How Insights Are Generated
+            </div>
+            <div class="step-block">
+                <div class="step-num-box">4</div>
+                <div>
+                    <div class="section-head">Behaviour Math (No LLM)</div>
+                    <div class="body-text">Tagged signals are recombined. Recurring tag pairs are <span class="accent">tallied purely mathematically</span>. Top 10 co-occurring pairs surfaced without any LLM interpretation.</div>
+                </div>
+            </div>
+            <div class="step-block" style="margin-top: 4px;">
+                <div class="step-num-box">5</div>
+                <div>
+                    <div class="section-head">Synthesis</div>
+                    <div class="body-text">Top pattern stats + 3 verbatim quotes per top-5 pattern → LLM generates grounded PM hypotheses.</div>
+                </div>
+            </div>
+            <div class="body-text" style="margin-top: 6px; background:#fce7f3; padding:12px; border-radius:6px;">
+                <strong>Top Cross-Pattern Logic:</strong> Highest-frequency intersection across 2 dimensions (Decision Driver × User Segment).<br/>
+                Result: <span class="accent">Trust Deficit × Trust-Gated Shopper = 56.1%</span> of all 221 signals.
+            </div>
+        </div>
+
+        <!-- Card 3: Quality validation -->
+        <div class="card">
+            <div class="card-title">
+                <div class="card-icon">✅</div>
+                Quality Is Validated Across 3 Layers
+            </div>
+
+            <div class="val-item">
+                <div class="step-num-box">1</div>
+                <div class="body-text"><strong>Behaviour Math filter</strong> removes noise. Raw evidence feed with verbatim reviews + tags is fully auditable.</div>
+            </div>
+            <div class="val-item">
+                <div class="step-num-box">2</div>
+                <div class="body-text"><strong>Enum system enforces 100% precision.</strong> Pydantic schema rejects any tag outside the allowed list. Zero hallucination at tagging stage.</div>
+            </div>
+            <div class="val-item">
+                <div class="step-num-box">3</div>
+                <div class="body-text"><strong>Every insight is grounded</strong> in quantitative pattern data + verbatim user quotes displayed alongside it.</div>
+            </div>
+
+            <div class="quote-box">
+                "After waiting for 10–20 days, they just cancelled my order without any communication. No transparency whatsoever."
+                <div class="quote-tag">Tagged: Trust Deficit (Decision Driver) × Trust-Gated Shopper (User Segment)</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- FOOTER -->
+    <div class="footer">
+        <span class="footer-badge">Key Finding</span>
+        <span>
+            <strong>68.8%</strong> of wishlist holders are Trust-Gated Shoppers — willing to buy, but paralysed by delivery &amp; return fears.
+            Delivery Anxiety accounts for <strong>54.3%</strong> of all behavioral evidence, dominating Price Sensitivity by <strong>12×</strong>.
+        </span>
+    </div>
+
+</div>
+</body>
+</html>

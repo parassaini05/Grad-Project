@@ -1,0 +1,453 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>59.7% of Users Are Blocked by Trust Deficit, Not Price — Discovery Findings</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <style>
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: #e5e7eb;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            padding: 2rem;
+        }
+
+        /* ── SLIDE FRAME ── */
+        .slide {
+            width: 1920px;
+            height: 1080px;
+            background: #ffffff;
+            box-shadow: 0 12px 48px rgba(0,0,0,0.2);
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+        }
+
+        /* ── HEADER ── */
+        .header {
+            background: #1e1b4b;
+            padding: 16px 40px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            flex-shrink: 0;
+        }
+        .header-title { font-size: 27px; font-weight: 900; color: #f9a8d4; }
+        .header-sub { font-size: 17px; color: #94a3b8; margin-top: 2px; font-weight: 500; }
+        .header-badge {
+            font-size: 16px;
+            color: #4ade80;
+            font-weight: 700;
+            border: 2px solid #4ade80;
+            padding: 4px 14px;
+            border-radius: 6px;
+        }
+
+        /* ── KPI CHIPS ── */
+        .kpi-row {
+            display: grid;
+            grid-template-columns: repeat(5, 1fr);
+            border-bottom: 4px solid #e11d48;
+            flex-shrink: 0;
+        }
+        .kpi {
+            padding: 14px 20px;
+            text-align: center;
+            border-right: 2px solid #fce7f3;
+            background: #fff1f5;
+        }
+        .kpi:last-child { border-right: none; }
+        .kpi-num { font-size: 42px; font-weight: 900; line-height: 1; }
+        .kpi-num.pink { color: #e11d48; }
+        .kpi-num.amber { color: #b45309; }
+        .kpi-num.indigo { color: #1e1b4b; }
+        .kpi-num.teal { color: #0f766e; }
+        .kpi-label { font-size: 14px; font-weight: 800; text-transform: uppercase; letter-spacing: 0.8px; color: #6b7280; margin-top: 3px; }
+        .kpi-sub { font-size: 15px; color: #6b7280; margin-top: 3px; line-height: 1.3; }
+
+        /* ── MAIN BODY ── */
+        .body {
+            display: grid;
+            grid-template-columns: 2fr 1.4fr 1.1fr;
+            flex: 1;
+            overflow: hidden;
+        }
+        .col {
+            padding: 20px 26px;
+            border-right: 2px solid #e5e7eb;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+        .col:last-child { border-right: none; background: #fff; }
+        .col-title {
+            font-size: 22px;
+            font-weight: 900;
+            color: #1e1b4b;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            border-bottom: 3px solid #e11d48;
+            padding-bottom: 7px;
+            flex-shrink: 0;
+        }
+        .col-icon {
+            background: #e11d48;
+            color: white;
+            width: 30px; height: 30px;
+            border-radius: 5px;
+            display: flex; align-items: center; justify-content: center;
+            font-size: 15px;
+            flex-shrink: 0;
+        }
+
+        /* ── BARS ── */
+        .bar-group { flex-shrink: 0; }
+        .bar-meta { display: flex; justify-content: space-between; align-items: baseline; margin-bottom: 4px; }
+        .bar-name { font-size: 18px; font-weight: 700; color: #1e1b4b; }
+        .bar-pct { font-size: 18px; font-weight: 900; }
+        .bar-track {
+            background: #f3f4f6;
+            height: 26px;
+            border-radius: 4px;
+            overflow: hidden;
+            box-shadow: inset 0 1px 2px rgba(0,0,0,0.05);
+        }
+        .bar-fill {
+            height: 100%;
+            display: flex;
+            align-items: center;
+            padding-left: 10px;
+            font-size: 14px;
+            font-weight: 700;
+            color: white;
+            border-radius: 4px;
+        }
+        .bar-note { font-size: 14px; color: #6b7280; margin-top: 3px; line-height: 1.3; }
+
+        /* highlight bar: thick left border instead of color-only signal */
+        .bar-highlight .bar-track { border: 2px solid #e11d48; }
+        .bar-highlight .bar-name { color: #e11d48; }
+
+        .divider { border: none; border-top: 2px dashed #e5e7eb; flex-shrink: 0; }
+
+        /* ── SEGMENT PILLS ── */
+        .seg-row { display: flex; align-items: center; gap: 12px; flex-shrink: 0; }
+        .seg-pct {
+            min-width: 70px;
+            text-align: center;
+            padding: 5px 10px;
+            border-radius: 20px;
+            font-size: 18px;
+            font-weight: 900;
+            flex-shrink: 0;
+        }
+        .seg-info { flex: 1; }
+        .seg-name { font-size: 18px; font-weight: 700; color: #1e1b4b; }
+        .seg-sub { font-size: 14px; color: #6b7280; margin-top: 1px; }
+
+        /* ── HEATMAP ── */
+        .heatmap { display: grid; grid-template-columns: 110px repeat(3, 1fr); gap: 4px; }
+        .hm-h {
+            background: #1e1b4b;
+            color: white;
+            font-size: 14px;
+            font-weight: 800;
+            padding: 6px 8px;
+            border-radius: 4px;
+            text-align: center;
+            display: flex; align-items: center; justify-content: center;
+        }
+        .hm-label {
+            background: #f3f4f6;
+            font-size: 14px;
+            font-weight: 700;
+            color: #374151;
+            padding: 7px 8px;
+            border-radius: 4px;
+            display: flex; align-items: center;
+        }
+        .hm-cell {
+            border-radius: 4px;
+            padding: 7px 4px;
+            text-align: center;
+            font-weight: 800;
+            font-size: 16px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+        }
+        .hm-sub { font-size: 11px; font-weight: 600; opacity: 0.85; }
+
+        /* ── QUOTES ── */
+        .quote-box {
+            background: #fff;
+            border-left: 4px solid #e11d48;
+            padding: 8px 12px;
+            border-radius: 0 6px 6px 0;
+            font-size: 14px;
+            font-style: italic;
+            color: #4b5563;
+            line-height: 1.4;
+            flex-shrink: 0;
+        }
+        .quote-tag {
+            font-style: normal;
+            font-weight: 800;
+            color: #1e1b4b;
+            font-size: 14px;
+            margin-top: 5px;
+        }
+
+        /* ── OPPORTUNITY CARDS ── */
+        .opp { padding: 8px 12px; border-radius: 6px; flex-shrink: 0; }
+        .opp-title { font-size: 14px; font-weight: 800; margin-bottom: 4px; }
+        .opp-body { font-size: 14px; color: #374151; line-height: 1.4; }
+        .opp-badge {
+            display: inline-block;
+            padding: 3px 10px;
+            border-radius: 20px;
+            font-size: 14px;
+            font-weight: 800;
+            margin-top: 6px;
+        }
+
+        /* ── FOOTER ── */
+        .footer {
+            background: #1e1b4b;
+            color: #e5e7eb;
+            font-size: 20px;
+            padding: 10px 40px;
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            flex-shrink: 0;
+        }
+        .footer-badge {
+            background: #e11d48;
+            color: white;
+            font-weight: 800;
+            font-size: 16px;
+            padding: 4px 12px;
+            border-radius: 4px;
+            white-space: nowrap;
+        }
+    </style>
+</head>
+<body>
+<div class="slide">
+
+    <!-- HEADER -->
+    <div class="header">
+        <div>
+            <div class="header-title">59.7% of Users Are Blocked by Trust Deficit, Not Price — AI Discovery Engine Findings</div>
+            <div class="header-sub">n = 221 high-intent signals · Groq LLM · Pydantic validated · Sources: Play Store (9,115) + YouTube Hauls (12)</div>
+        </div>
+        <div class="header-badge">✔ Zero Hallucination</div>
+    </div>
+
+    <!-- KPI ROW -->
+    <div class="kpi-row">
+        <div class="kpi">
+            <div class="kpi-num pink">59.7%</div>
+            <div class="kpi-label">Trust Deficit</div>
+            <div class="kpi-sub">Top decision driver · 132 of 221 signals</div>
+        </div>
+        <div class="kpi">
+            <div class="kpi-num amber">54.3%</div>
+            <div class="kpi-label">Delivery Complaints</div>
+            <div class="kpi-sub">Dominant evidence type · 120 of 221</div>
+        </div>
+        <div class="kpi">
+            <div class="kpi-num pink">68.8%</div>
+            <div class="kpi-label">Trust-Gated Shoppers</div>
+            <div class="kpi-sub">Willing to buy, paralysed by platform anxiety</div>
+        </div>
+        <div class="kpi">
+            <div class="kpi-num indigo">56.1%</div>
+            <div class="kpi-label">Top Cross-Pattern</div>
+            <div class="kpi-sub">Trust Deficit × Trust-Gated Shopper</div>
+        </div>
+        <div class="kpi">
+            <div class="kpi-num teal">3.2%</div>
+            <div class="kpi-label">Cart Abandonment</div>
+            <div class="kpi-sub">Drop-off is PRE-checkout, not at checkout</div>
+        </div>
+    </div>
+
+    <!-- BODY -->
+    <div class="body">
+
+        <!-- COL 1: Bar Charts -->
+        <div class="col" style="background:#f9fafb;">
+            <div class="col-title"><div class="col-icon">📊</div>Decision Drivers — What Blocks Conversion?</div>
+
+            <div class="bar-group bar-highlight">
+                <div class="bar-meta">
+                    <span class="bar-name">■ Trust Deficit</span>
+                    <span class="bar-pct" style="color:#e11d48;">59.7% (n=132)</span>
+                </div>
+                <div class="bar-track"><div class="bar-fill" style="width:59.7%; background:#e11d48;">Primary blocker</div></div>
+                <div class="bar-note">Platform reliability fears — #1 reason purchase is postponed</div>
+            </div>
+
+            <div class="bar-group">
+                <div class="bar-meta">
+                    <span class="bar-name">▲ Delivery Anxiety</span>
+                    <span class="bar-pct" style="color:#b45309;">13.6% (n=30)</span>
+                </div>
+                <div class="bar-track"><div class="bar-fill" style="width:13.6%; background:#b45309;">30 signals</div></div>
+                <div class="bar-note">Fear of opaque delivery — operationalised Trust Deficit</div>
+            </div>
+
+            <div class="bar-group">
+                <div class="bar-meta">
+                    <span class="bar-name">◆ Convenience</span>
+                    <span class="bar-pct" style="color:#1d4ed8;">6.8% (n=15)</span>
+                </div>
+                <div class="bar-track"><div class="bar-fill" style="width:6.8%; background:#1d4ed8;"></div></div>
+            </div>
+
+            <div class="bar-group">
+                <div class="bar-meta">
+                    <span class="bar-name">● Price Sensitivity</span>
+                    <span class="bar-pct" style="color:#374151;">4.5% (n=10)</span>
+                </div>
+                <div class="bar-track"><div class="bar-fill" style="width:4.5%; background:#64748b;"></div></div>
+                <div class="bar-note">12× smaller than Trust Deficit — discounts are NOT the answer</div>
+            </div>
+
+            <hr class="divider"/>
+            <div class="col-title" style="border-bottom:3px solid #b45309;"><div class="col-icon" style="background:#b45309;">🧾</div>Evidence Types — What Behaviours Are Seen?</div>
+
+            <div class="bar-group bar-highlight" style="--highlight-color:#b45309;">
+                <div class="bar-meta">
+                    <span class="bar-name" style="color:#b45309;">▲ Delivery Complaint</span>
+                    <span class="bar-pct" style="color:#b45309;">54.3% (n=120)</span>
+                </div>
+                <div class="bar-track" style="border:2px solid #b45309;"><div class="bar-fill" style="width:54.3%; background:#b45309;">120 signals</div></div>
+            </div>
+
+            <div class="bar-group">
+                <div class="bar-meta"><span class="bar-name">↩ Return Anxiety</span><span class="bar-pct" style="color:#7c3aed;">6.3% (n=14)</span></div>
+                <div class="bar-track"><div class="bar-fill" style="width:6.3%; background:#7c3aed;"></div></div>
+            </div>
+
+            <div class="bar-group">
+                <div class="bar-meta"><span class="bar-name">● Cart Abandonment</span><span class="bar-pct" style="color:#0f766e;">3.2% (n=7)</span></div>
+                <div class="bar-track"><div class="bar-fill" style="width:3.2%; background:#0f766e;"></div></div>
+                <div class="bar-note">Only 3.2% — friction is UPSTREAM of checkout, not at it</div>
+            </div>
+        </div>
+
+        <!-- COL 2: Segments + Heatmap -->
+        <div class="col" style="background:#fafafa;">
+            <div class="col-title"><div class="col-icon">👤</div>User Segments (n=221)</div>
+
+            <div class="seg-row">
+                <div class="seg-pct" style="background:#fff0f4; color:#e11d48; border:2px solid #fda4af;">68.8%</div>
+                <div class="seg-info">
+                    <div class="seg-name" style="color:#e11d48;">Trust-Gated Shopper</div>
+                    <div class="seg-sub">n=152 · Willing buyer, paralysed by platform fear</div>
+                </div>
+            </div>
+
+            <div class="seg-row">
+                <div class="seg-pct" style="background:#eff6ff; color:#1d4ed8; border:2px solid #bfdbfe;">7.7%</div>
+                <div class="seg-info">
+                    <div class="seg-name">Habitual Buyer</div>
+                    <div class="seg-sub">n=17 · Buys regularly but has trust friction</div>
+                </div>
+            </div>
+            <div class="seg-row">
+                <div class="seg-pct" style="background:#ecfdf5; color:#0f766e; border:2px solid #a7f3d0;">6.3%</div>
+                <div class="seg-info">
+                    <div class="seg-name">Deal Seeker</div>
+                    <div class="seg-sub">n=14 · Price-driven minority</div>
+                </div>
+            </div>
+
+            <hr class="divider"/>
+            <div class="col-title" style="border-bottom:3px solid #1d4ed8;"><div class="col-icon" style="background:#1d4ed8;">🔥</div>Cross-Pattern: Decision Driver × User Segment</div>
+            <div class="heatmap">
+                <div class="hm-h" style="background:#f3f4f6; color:#374151;">Driver ↓ / Seg →</div>
+                <div class="hm-h">Trust-Gated</div>
+                <div class="hm-h">Not Mentioned</div>
+                <div class="hm-h">Deal Seeker</div>
+
+                <div class="hm-label">Trust Deficit</div>
+                <div class="hm-cell" style="background:#e11d48; color:white;">121<div class="hm-sub">56.1%</div></div>
+                <div class="hm-cell" style="background:#fce7f3; color:#9d174d;">5</div>
+                <div class="hm-cell" style="background:#fce7f3; color:#9d174d;">2</div>
+
+                <div class="hm-label">Delivery Anxiety</div>
+                <div class="hm-cell" style="background:#fed7aa; color:#92400e;">25<div class="hm-sub">11.3%</div></div>
+                <div class="hm-cell" style="background:#fef3c7; color:#92400e;">4</div>
+                <div class="hm-cell" style="background:#fafafa; color:#9ca3af;">0</div>
+
+                <div class="hm-label">Price Sensitivity</div>
+                <div class="hm-cell" style="background:#f1f5f9; color:#64748b;">1</div>
+                <div class="hm-cell" style="background:#f1f5f9; color:#64748b;">5</div>
+                <div class="hm-cell" style="background:#dbeafe; color:#1d4ed8;">3</div>
+            </div>
+            <div style="font-size:14px; color:#6b7280; text-align:center;">
+                ■ Dark cell = most dominant behavioural cluster (n=121 of 221)
+            </div>
+        </div>
+
+        <!-- COL 3: Synthesis Output (Hypotheses) -->
+        <div class="col" style="gap: 12px; justify-content: center;">
+
+            <div style="font-size:14px; font-weight:900; color:#1e1b4b; border-bottom:3px solid #e11d48; padding-bottom:6px; margin-top:4px;">⑤ Synthesis Output — 3 Hypotheses Generated</div>
+            <div style="font-size:14px; color:#64748b; margin-top:0;">Engine cross-patterns + verbatim quotes → Groq LLM → 3 actionable hypotheses</div>
+
+            <div class="opp" style="background:#f1f5f9; border:1.5px solid #cbd5e1;">
+                <div style="display:flex; align-items:center; gap:8px; margin-bottom:4px;">
+                    <span style="background:#475569; color:white; font-size:12px; font-weight:900; padding:2px 8px; border-radius:20px;">H1 · Umbrella</span>
+                    <span style="font-size:14px; font-weight:900; color:#475569;">59.7%</span>
+                </div>
+                <div class="opp-title" style="color:#334155;">Trust Deficit Is the Root Cause</div>
+                <div class="opp-body">The primary barrier to wishlist conversion isn't price or product — it's a platform Trust Deficit. Too broad to build a single feature around.</div>
+            </div>
+
+            <div class="opp" style="background:#f1f5f9; border:1.5px solid #cbd5e1;">
+                <div style="display:flex; align-items:center; gap:8px; margin-bottom:4px;">
+                    <span style="background:#475569; color:white; font-size:12px; font-weight:900; padding:2px 8px; border-radius:20px;">H2 · Actionable</span>
+                    <span style="font-size:14px; font-weight:900; color:#475569;">54.3%</span>
+                </div>
+                <div class="opp-title" style="color:#334155;">Delivery Anxiety Is the Pre-Checkout Blocker</div>
+                <div class="opp-body">Users hold wishlist items because they fear a vague or broken delivery timeline. This blocks the 'Move to Bag' click entirely — pre-checkout, directly buildable.</div>
+            </div>
+
+            <div class="opp" style="background:#f1f5f9; border:1.5px solid #cbd5e1;">
+                <div style="display:flex; align-items:center; gap:8px; margin-bottom:4px;">
+                    <span style="background:#475569; color:white; font-size:12px; font-weight:900; padding:2px 8px; border-radius:20px;">H3 · Segment</span>
+                    <span style="font-size:14px; font-weight:900; color:#475569;">68.8%</span>
+                </div>
+                <div class="opp-title" style="color:#334155;">Trust-Gated Shopper Is the Dominant Segment</div>
+                <div class="opp-body">68.8% of users have intent to buy but are paralysed by platform unreliability. Defines WHO — not what to build.</div>
+            </div>
+        </div>
+
+    </div>
+
+    <!-- FOOTER -->
+    <div class="footer">
+        <span class="footer-badge">Engine Output</span>
+        <span>
+            AI Discovery Engine synthesised 221 signals into <strong>3 hypotheses</strong>. All 3 are data-grounded.
+            The next slide evaluates these hypotheses on scale, actionability, and timing to select a single focus for the MVP.
+        </span>
+    </div>
+
+</div>
+</body>
+</html>

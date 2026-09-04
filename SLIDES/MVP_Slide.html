@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>MVP Overview — Need it By?</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <style>
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        body { font-family: 'Inter', sans-serif; background: #0f0f1a; display: flex; justify-content: center; align-items: center; min-height: 100vh; padding: 2rem; }
+        .slide { width: 1920px; height: 1080px; background: #0d1117; display: flex; flex-direction: column; position: relative; padding: 70px 80px; overflow: hidden; }
+        
+        .slide::before { content: ''; position: absolute; inset: 0; background: radial-gradient(ellipse 900px 600px at 50% 50%, rgba(225,29,72,0.04) 0%, transparent 70%); pointer-events: none; }
+
+        /* HEADER */
+        .header { text-align: center; margin-bottom: 30px; position: relative; z-index: 2; }
+        .title { font-size: 42px; font-weight: 900; color: #f8fafc; margin-bottom: 12px; }
+        .subtitle { font-size: 24px; font-weight: 500; color: #94a3b8; }
+
+        /* WHAT IT DOES */
+        .what-it-does { border: 2px solid #34d399; background: rgba(5,150,105,0.07); border-radius: 12px; padding: 24px 32px; margin-bottom: 30px; position: relative; z-index: 2; }
+        .wid-title { font-size: 22px; font-weight: 900; color: #f8fafc; margin-bottom: 8px; }
+        .wid-text { font-size: 19px; color: #cbd5e1; line-height: 1.5; font-weight: 400; }
+
+        /* FLOW DIAGRAM */
+        .flow-section-title { font-size: 22px; font-weight: 900; color: #f8fafc; margin-bottom: 20px; position: relative; z-index: 2; }
+        
+        .flow-container { display: flex; align-items: stretch; justify-content: space-between; gap: 8px; margin-bottom: 40px; position: relative; z-index: 2; }
+        
+        .flow-step { flex: 1; background: linear-gradient(180deg, #f59e0b, #d97706); border-radius: 12px; padding: 24px 20px; position: relative; color: #1e293b; display: flex; flex-direction: column; box-shadow: 0 10px 25px rgba(245,158,11,0.1); border: 1px solid rgba(255,255,255,0.2); }
+        .step-num { width: 32px; height: 32px; border-radius: 50%; border: 2px solid #1e293b; display: flex; align-items: center; justify-content: center; font-weight: 900; font-size: 16px; margin: 0 auto 12px; }
+        .step-title { font-size: 20px; font-weight: 900; text-align: center; margin-bottom: 14px; line-height: 1.25; border-bottom: 1px solid rgba(0,0,0,0.15); padding-bottom: 12px; min-height: 64px; display: flex; align-items: center; justify-content: center; }
+        .step-text { font-size: 16px; font-weight: 500; line-height: 1.5; }
+        
+        .arrow { display: flex; align-items: center; justify-content: center; color: #f59e0b; font-size: 32px; font-weight: 900; transform: scaleY(1.8) scaleX(1.2); padding: 0 4px; }
+
+        /* BOTTOM ROW */
+        .bottom-row { display: flex; justify-content: space-between; align-items: flex-end; position: relative; z-index: 2; margin-top: auto; }
+        
+        .tech-stack { border: 2px solid #c2410c; background: rgba(194,65,12,0.07); border-radius: 12px; padding: 20px 28px; max-width: 65%; box-shadow: 0 10px 25px rgba(194,65,12,0.1); }
+        .ts-title { font-size: 20px; font-weight: 900; color: #f8fafc; margin-bottom: 8px; }
+        .ts-text { font-size: 18px; color: #cbd5e1; line-height: 1.5; }
+
+        .links { font-size: 20px; font-weight: 800; color: #f8fafc; display: flex; align-items: center; gap: 8px; }
+        .link { color: #38bdf8; text-decoration: none; border-bottom: 2px solid #38bdf8; padding-bottom: 2px; transition: color 0.2s; }
+    </style>
+</head>
+<body>
+<div class="slide">
+    <!-- HEADER -->
+    <div class="header">
+        <div class="title">MVP Overview - "Need it By?" Delivery Scheduler</div>
+        <div class="subtitle">Helping high-intent wishlist users confidently commit to a purchase before leaving the app</div>
+    </div>
+    
+    <!-- WHAT IT DOES -->
+    <div class="what-it-does">
+        <div class="wid-title">What it does :</div>
+        <div class="wid-text">
+            The "Need it By?" feature embeds directly into the existing Myntra Wishlist, transforming it from a passive bookmarking area into an active scheduling tool. It allows users to declare their delivery deadline, surfaces real-time logistics feasibility, and builds the certainty needed to convert hesitation into a purchase without checking competitor apps.
+        </div>
+    </div>
+
+    <!-- FLOW DIAGRAM -->
+    <div class="flow-section-title">High Level Flow Diagram :</div>
+    <div class="flow-container">
+        <!-- Step 1 -->
+        <div class="flow-step">
+            <div class="step-num">1</div>
+            <div class="step-title">Passive Wishlist Entry</div>
+            <div class="step-text">
+                User browses and adds items to the wishlist. The "Need it by a specific date?" prompt is injected natively above the 'Move to Bag' button.
+            </div>
+        </div>
+        
+        <div class="arrow">▶</div>
+        
+        <!-- Step 2 -->
+        <div class="flow-step">
+            <div class="step-num">2</div>
+            <div class="step-title">Date Selection Modal</div>
+            <div class="step-text">
+                User taps the prompt and opens a 7-day schedule modal. They select their hard deadline. Options show dynamic pricing (Standard vs +₹99).
+            </div>
+        </div>
+        
+        <div class="arrow">▶</div>
+        
+        <!-- Step 3 -->
+        <div class="flow-step">
+            <div class="step-num">3</div>
+            <div class="step-title">Logistics Validation</div>
+            <div class="step-text">
+                System checks item stock at the nearest fulfillment center against logistics capacity to validate if the requested date is possible.
+            </div>
+        </div>
+        
+        <div class="arrow">▶</div>
+        
+        <!-- Step 4 -->
+        <div class="flow-step">
+            <div class="step-num">4</div>
+            <div class="step-title">Guaranteed Date Confirmed</div>
+            <div class="step-text">
+                Wishlist card updates in real-time. Ambiguity is resolved. User sees a green "Delivery on [Date]" badge. Confidence is built.
+            </div>
+        </div>
+        
+        <div class="arrow">▶</div>
+        
+        <!-- Step 5 -->
+        <div class="flow-step">
+            <div class="step-num">5</div>
+            <div class="step-title">Urgency Hook & Buy</div>
+            <div class="step-text">
+                A 15-minute countdown timer appears to secure the delivery slot. Scarcity hooks the user to click "Move to Bag" and checkout immediately.
+            </div>
+        </div>
+    </div>
+
+    <!-- BOTTOM ROW -->
+    <div class="bottom-row">
+        <div class="tech-stack">
+            <div class="ts-title">Tech Stack :</div>
+            <div class="ts-text">
+                Next.js + React • Tailwind CSS • Vercel Deployment<br>
+                • Custom JSON data array simulating Myntra API delivery validation logic for standard vs expedited dates.
+            </div>
+        </div>
+        
+        <div class="links">
+            Detailed wireframe: <a href="#" class="link">Figma Link ↗</a> <span style="margin: 0 12px; color: #475569;">|</span> Live MVP: <a href="https://grad-project-mvp.vercel.app/" target="_blank" class="link">Link ↗</a>
+        </div>
+    </div>
+</div>
+</body>
+</html>

@@ -1,0 +1,406 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Primary Research — Users Need Delivery & Return Guarantees, Not Discounts</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <style>
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        body {
+            font-family: 'Inter', sans-serif;
+            background: #e5e7eb;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            padding: 2rem;
+        }
+
+        .slide {
+            width: 1920px;
+            height: 1080px;
+            background: #ffffff;
+            box-shadow: 0 12px 48px rgba(0,0,0,0.18);
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+        }
+
+        /* HEADER */
+        .header {
+            background: #1e1b4b;
+            padding: 12px 36px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            flex-shrink: 0;
+        }
+        .header-title { font-size: 24px; font-weight: 900; color: #f9a8d4; }
+        .header-sub { font-size: 15px; color: #94a3b8; margin-top: 2px; }
+        .header-links { display: flex; gap: 10px; }
+        .hlink {
+            font-size: 14px; font-weight: 700; color: #a5b4fc;
+            text-decoration: none; border: 2px solid #a5b4fc;
+            padding: 4px 12px; border-radius: 5px;
+        }
+
+        /* METHOD STRIP */
+        .method-strip {
+            background: #f1f5f9;
+            border-bottom: 3px solid #e11d48;
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            flex-shrink: 0;
+        }
+        .method-chip {
+            padding: 10px 18px;
+            border-right: 2px solid #e2e8f0;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+        .method-chip:last-child { border-right: none; }
+        .method-icon { font-size: 24px; flex-shrink: 0; }
+        .method-label { font-size: 12px; font-weight: 800; text-transform: uppercase; letter-spacing: 0.8px; color: #475569; }
+        .method-val { font-size: 26px; font-weight: 900; color: #1e1b4b; line-height: 1; }
+        .method-sub { font-size: 13px; color: #64748b; }
+
+        /* BODY */
+        .body {
+            flex: 1;
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr;
+            overflow: hidden;
+        }
+        .col {
+            padding: 16px 22px;
+            border-right: 2px solid #e5e7eb;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            overflow: hidden;
+        }
+        .col:last-child { border-right: none; }
+
+        .col-title {
+            font-size: 20px;
+            font-weight: 900;
+            color: #1e1b4b;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            border-bottom: 3px solid #e11d48;
+            padding-bottom: 6px;
+            flex-shrink: 0;
+        }
+        .col-icon {
+            color: white; width: 28px; height: 28px;
+            border-radius: 5px; display: flex;
+            align-items: center; justify-content: center;
+            font-size: 14px; flex-shrink: 0;
+            background: #e11d48;
+        }
+        .col-icon.blue { background: #1d4ed8; }
+        .col-icon.amber { background: #b45309; }
+
+        /* QUOTES */
+        .persona-block { flex-shrink: 0; }
+        .persona-tag { display: flex; align-items: center; gap: 8px; margin-bottom: 5px; }
+        .persona-name { font-size: 15px; font-weight: 800; color: #1e1b4b; background: #f1f5f9; padding: 2px 10px; border-radius: 20px; }
+        .persona-badge { font-size: 13px; font-weight: 700; color: #e11d48; background: #fff0f4; border: 1.5px solid #fda4af; padding: 2px 8px; border-radius: 20px; }
+        .persona-badge.amber { color: #b45309; background: #fff7ed; border-color: #fed7aa; }
+        .persona-badge.indigo { color: #4f46e5; background: #f5f3ff; border-color: #ddd6fe; }
+
+        .quote-box {
+            background: #f8fafc;
+            border-left: 4px solid #e11d48;
+            padding: 10px 14px;
+            border-radius: 0 6px 6px 0;
+            font-size: 17px;
+            font-style: italic;
+            color: #374151;
+            line-height: 1.45;
+        }
+        .quote-box.amber { border-left-color: #b45309; }
+        .quote-box.indigo { border-left-color: #4f46e5; }
+        .quote-insight {
+            font-style: normal; font-size: 14px; font-weight: 700;
+            color: #64748b; margin-top: 4px;
+        }
+        .quote-insight.amber { color: #b45309; }
+        .quote-insight.indigo { color: #4f46e5; }
+
+        /* FEAR BARS */
+        .fear-row { flex-shrink: 0; }
+        .fear-meta { display: flex; justify-content: space-between; align-items: baseline; margin-bottom: 4px; }
+        .fear-label { font-size: 17px; font-weight: 700; color: #1e1b4b; }
+        .fear-score { font-size: 20px; font-weight: 900; }
+        .fear-track { background: #f1f5f9; height: 20px; border-radius: 4px; overflow: hidden; }
+        .fear-fill { height: 100%; border-radius: 4px; display: flex; align-items: center; padding-left: 8px; font-size: 12px; font-weight: 700; color: white; }
+        .fear-note { font-size: 13px; color: #64748b; margin-top: 2px; }
+
+        .divider { border: none; border-top: 2px dashed #e5e7eb; flex-shrink: 0; }
+
+        /* WORKAROUND BARS */
+        .workaround-row { display: flex; align-items: center; gap: 10px; flex-shrink: 0; }
+        .w-label { font-size: 17px; font-weight: 700; color: #1e1b4b; width: 260px; flex-shrink: 0; }
+        .w-bar-track { flex: 1; background: #f1f5f9; height: 20px; border-radius: 4px; overflow: hidden; }
+        .w-bar-fill { height: 100%; border-radius: 4px; display: flex; align-items: center; padding-left: 8px; font-size: 12px; font-weight: 700; color: white; }
+        .w-pct { font-size: 18px; font-weight: 900; width: 50px; flex-shrink: 0; text-align: right; }
+
+        /* FEATURE RANKING */
+        .rank-row {
+            display: flex; align-items: center; gap: 10px;
+            padding: 10px 12px; border-radius: 6px; flex-shrink: 0;
+        }
+        .rank-medal { font-size: 24px; flex-shrink: 0; }
+        .rank-info { flex: 1; }
+        .rank-name { font-size: 19px; font-weight: 800; color: #1e1b4b; }
+        .rank-sub { font-size: 13px; color: #64748b; margin-top: 1px; }
+        .rank-score { font-size: 26px; font-weight: 900; flex-shrink: 0; }
+
+        /* VALIDATION BOX */
+        .validation-box {
+            background: #ecfdf5;
+            border: 2px solid #6ee7b7;
+            border-radius: 8px;
+            padding: 12px 16px;
+            flex-shrink: 0;
+        }
+        .val-title { font-size: 19px; font-weight: 900; color: #064e3b; margin-bottom: 4px; }
+        .val-body { font-size: 16px; color: #065f46; line-height: 1.5; }
+
+        /* FOOTER */
+        .footer {
+            background: #1e1b4b; color: #e5e7eb;
+            font-size: 18px; padding: 9px 36px;
+            display: flex; align-items: center; gap: 12px;
+            flex-shrink: 0;
+        }
+        .footer-badge {
+            background: #e11d48; color: white; font-weight: 800;
+            font-size: 14px; padding: 3px 11px; border-radius: 4px; white-space: nowrap;
+        }
+        .footer-badge.green { background: #0f766e; margin-left: auto; }
+    </style>
+</head>
+<body>
+<div class="slide">
+
+    <!-- HEADER -->
+    <div class="header">
+        <div>
+            <div class="header-title">Primary Research Validates: Users Need Delivery & Return Guarantees, Not Discounts</div>
+            <div class="header-sub">Quantitative & Qualitative: n=20 survey respondents · Age 18–45+ · Tier 1/2/3 cities</div>
+        </div>
+        <div class="header-links">
+            <a class="hlink" href="https://github.com/parassaini05/Grad-Project/blob/main/Part%204/survey_responses.csv" target="_blank">📊 Survey Data ↗</a>
+        </div>
+    </div>
+
+    <!-- METHOD STRIP -->
+    <div class="method-strip">
+        <div class="method-chip">
+            <div class="method-icon">📝</div>
+            <div>
+                <div class="method-label">Survey Respondents</div>
+                <div class="method-val">20</div>
+                <div class="method-sub">16 questions · Quantitative + Open-ended</div>
+            </div>
+        </div>
+        <div class="method-chip">
+            <div class="method-icon">🕰️</div>
+            <div>
+                <div class="method-label">Leave Wishlist for Weeks</div>
+                <div class="method-val">45.0%</div>
+                <div class="method-sub">9 of 20 survey respondents</div>
+            </div>
+        </div>
+        <div class="method-chip">
+            <div class="method-icon">✅</div>
+            <div>
+                <div class="method-label">Still Intend to Buy</div>
+                <div class="method-val">45.0%</div>
+                <div class="method-sub">"Waiting for the right trigger" · 9/20</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- BODY -->
+    <div class="body">
+
+        <!-- COL 1: Survey Quotes -->
+        <div class="col" style="background:#f9fafb;">
+            <div class="col-title"><div class="col-icon">📝</div>Open-Ended Survey Findings</div>
+
+            <div class="persona-block">
+                <div class="persona-tag">
+                    <span class="persona-name">Female, 25-34 · Tier 1</span>
+                    <span class="persona-badge">Trust Deficit</span>
+                </div>
+                <div class="quote-box">
+                    "I purchased a high end item from Myntra. It was expensive and the wrong product got delivered, since then I have been skeptical to purchasing anything expensive."
+                    <div class="quote-insight">→ High-value items require massive trust; one failure causes long-term skepticism.</div>
+                </div>
+            </div>
+
+            <div class="persona-block">
+                <div class="persona-tag">
+                    <span class="persona-name">Male, 18-24 · Tier 2</span>
+                    <span class="persona-badge amber">Quality Mismatch</span>
+                </div>
+                <div class="quote-box amber">
+                    "Quality mismatch gave me trust issues to order branded stuff from there... The fabric was not as shown."
+                    <div class="quote-insight amber">→ Expectation vs. reality gaps create hesitation for future purchases.</div>
+                </div>
+            </div>
+
+            <div class="persona-block">
+                <div class="persona-tag">
+                    <span class="persona-name">Female, 25-34 · Tier 2</span>
+                    <span class="persona-badge indigo">External Workarounds</span>
+                </div>
+                <div class="quote-box indigo">
+                    "I search for Myntra haul or try-on videos on YouTube for that specific brand to check size and fit."
+                    <div class="quote-insight indigo">→ Lack of visual trust forces users to seek external validation.</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- COL 2: Fears + Workarounds -->
+        <div class="col">
+            <div class="col-title"><div class="col-icon blue">😰</div>What Fears Block Purchase? (Survey Q9, 1–5 scale)</div>
+
+            <div class="fear-row">
+                <div class="fear-meta">
+                    <span class="fear-label">● Delivery delayed past need date</span>
+                    <span class="fear-score" style="color:#0f766e;">3.10 / 5</span>
+                </div>
+                <div class="fear-track"><div class="fear-fill" style="width:62.0%; background:#0f766e;">Highest-rated fear</div></div>
+                <div class="fear-note">Delivery anxiety is the #1 fear. Aligns perfectly with AI behavioral data.</div>
+            </div>
+
+            <div class="fear-row">
+                <div class="fear-meta">
+                    <span class="fear-label">■ Size wrong + Return hassle</span>
+                    <span class="fear-score" style="color:#e11d48;">3.00 / 5</span>
+                </div>
+                <div class="fear-track"><div class="fear-fill" style="width:60.0%; background:#e11d48;">3.00</div></div>
+                <div class="fear-note">Return friction is the second biggest barrier.</div>
+            </div>
+
+            <div class="fear-row">
+                <div class="fear-meta">
+                    <span class="fear-label">▲ Fabric/quality worse than photo</span>
+                    <span class="fear-score" style="color:#b45309;">2.85 / 5</span>
+                </div>
+                <div class="fear-track"><div class="fear-fill" style="width:57.0%; background:#b45309;">2.85</div></div>
+                <div class="fear-note">Expectation vs. Reality gap — drives YouTube haul-seeking behaviour.</div>
+            </div>
+
+            <div class="fear-row">
+                <div class="fear-meta">
+                    <span class="fear-label">◆ Refund delayed or denied</span>
+                    <span class="fear-score" style="color:#7c3aed;">2.70 / 5</span>
+                </div>
+                <div class="fear-track"><div class="fear-fill" style="width:54.0%; background:#7c3aed;">2.70</div></div>
+            </div>
+
+            <hr class="divider"/>
+
+            <div class="col-title" style="border-bottom-color:#1d4ed8;"><div class="col-icon blue">🔍</div>Where Do Users Go Outside the App? (Survey Q12)</div>
+
+            <div class="workaround-row">
+                <div class="w-label">👥 Ask Friends / Family</div>
+                <div class="w-bar-track"><div class="w-bar-fill" style="width:45.0%; background:#4f46e5;">45.0%</div></div>
+                <div class="w-pct" style="color:#4f46e5;">9/20</div>
+            </div>
+            <div class="workaround-row">
+                <div class="w-label">📺 YouTube Haul Videos</div>
+                <div class="w-bar-track"><div class="w-bar-fill" style="width:40.0%; background:#1d4ed8;">40.0%</div></div>
+                <div class="w-pct" style="color:#1d4ed8;">8/20</div>
+            </div>
+            <div class="workaround-row">
+                <div class="w-label">🛒 Check Competitor Apps</div>
+                <div class="w-bar-track"><div class="w-bar-fill" style="width:40.0%; background:#b45309;">40.0%</div></div>
+                <div class="w-pct" style="color:#b45309;">8/20</div>
+            </div>
+            <div class="workaround-row">
+                <div class="w-label">📱 Reddit / Instagram</div>
+                <div class="w-bar-track"><div class="w-bar-fill" style="width:20.0%; background:#64748b;">20.0%</div></div>
+                <div class="w-pct" style="color:#64748b;">4/20</div>
+            </div>
+
+            <div style="font-size:14px; color:#e11d48; font-weight:800; padding:4px 0;">
+                ↳ 85.0% of users seek trust signals OUTSIDE Myntra before buying
+            </div>
+        </div>
+
+        <!-- COL 3: Feature Ranking -->
+        <div class="col" style="background:#fafafa;">
+            <div class="col-title"><div class="col-icon amber">🏆</div>No Discount — What Would Make You Buy? (Survey Q15, Rank 1–4)</div>
+            <div style="font-size:13px; color:#64748b; flex-shrink:0; margin-top:-4px;">4 = Most confidence. Avg across 20 respondents.</div>
+
+            <div class="rank-row" style="background:#fff0f4; border:2px solid #fda4af;">
+                <div class="rank-medal">🥇</div>
+                <div class="rank-info">
+                    <div class="rank-name">Hassle-Free Return Guarantee Badge</div>
+                    <div class="rank-sub">"Priority no-questions-asked doorstep return for this item"</div>
+                </div>
+                <div class="rank-score" style="color:#e11d48;">2.85<span style="font-size:14px; font-weight:600;">/4</span></div>
+            </div>
+
+            <div class="rank-row" style="background:#fff7ed; border:2px solid #fed7aa;">
+                <div class="rank-medal">🥈</div>
+                <div class="rank-info">
+                    <div class="rank-name">Return Success Metric</div>
+                    <div class="rank-sub">"98% of users got their refund within 24 hours"</div>
+                </div>
+                <div class="rank-score" style="color:#b45309;">2.80<span style="font-size:14px; font-weight:600;">/4</span></div>
+            </div>
+
+            <div class="rank-row" style="background:#f0f9ff; border:2px solid #bae6fd;">
+                <div class="rank-medal">🥉</div>
+                <div class="rank-info">
+                    <div class="rank-name">Delivery Transparency Tracker</div>
+                    <div class="rank-sub">"99% of orders for this item arrived on/before promised date"</div>
+                </div>
+                <div class="rank-score" style="color:#0369a1;">2.75<span style="font-size:14px; font-weight:600;">/4</span></div>
+            </div>
+
+            <div class="rank-row" style="background:#f5f3ff; border:2px solid #ddd6fe;">
+                <div class="rank-medal">4️⃣</div>
+                <div class="rank-info">
+                    <div class="rank-name">Fit Predictor Proof</div>
+                    <div class="rank-sub">"85% of users with your height/weight kept this size"</div>
+                </div>
+                <div class="rank-score" style="color:#6d28d9;">2.60<span style="font-size:14px; font-weight:600;">/4</span></div>
+            </div>
+
+            <hr class="divider"/>
+
+            <div style="background:#fefce8; border:2px solid #fde047; border-radius:8px; padding:12px 16px; flex-shrink:0;">
+                <div style="font-size:13px; font-weight:900; color:#713f12; margin-bottom:6px;">⚠️ PM Prioritisation — Why Delivery for MVP, Not Return?</div>
+                <div style="font-size:12.5px; color:#78350f; line-height:1.6;">
+                    The updated survey (n=20) shows <strong>Delivery Anxiety as the #1 fear</strong>, perfectly aligning with the <strong>AI engine (n=221)</strong> which shows Delivery Complaints at <strong>54.3%</strong> of all evidence.<br/>
+                    Delivery anxiety is a <strong>pre-checkout blocker</strong> (kills the 'Move to Bag' click before it happens). Delivery anxiety is <strong>post-checkout</strong> — only relevant after conversion.<br/>
+                    <strong>Decision:</strong> Solve the pre-purchase blocker first → <em>"Need it By?"</em> delivery selector = MVP. Return Guarantee = Phase 2.
+                </div>
+            </div>
+        </div>
+
+
+
+    <!-- FOOTER -->
+    <div class="footer">
+        <span class="footer-badge">Key Validation</span>
+        <span style="font-size:16px;">
+            <strong>85.0% of users seek trust signals outside Myntra</strong>. While Return features are highly desired, Survey (Q9) quantitative data proves <strong>Delivery Anxiety is the highest rated fear</strong>. Delivery chosen as the MVP focus.
+        </span>
+        <span class="footer-badge green">Return Guarantee → Phase 2</span>
+    </div>
+
+</div>
+</body>
+</html>

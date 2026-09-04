@@ -1,0 +1,577 @@
+<!DOCTYPE html><html lang="en"><head>
+<meta charset="utf-8">
+<meta content="width=device-width, initial-scale=1.0" name="viewport">
+<title>Myntra</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Hanken+Grotesk:wght@400;700;900&amp;display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet">
+<script id="tailwind-config">
+        tailwind.config = {
+          darkMode: "class",
+          theme: {
+            extend: {
+              "colors": {
+                      "background": "#fff8f7",
+                      "on-tertiary-fixed-variant": "#005227",
+                      "on-surface-variant": "#5b4042",
+                      "on-secondary-container": "#007059",
+                      "secondary-fixed-dim": "#5cdcb8",
+                      "surface-container-lowest": "#ffffff",
+                      "tertiary": "#006a34",
+                      "on-secondary-fixed": "#002118",
+                      "surface-variant": "#f9dbdd",
+                      "primary-container": "#df2457",
+                      "tertiary-fixed-dim": "#5fde88",
+                      "on-primary": "#ffffff",
+                      "on-background": "#271719",
+                      "inverse-on-surface": "#ffeced",
+                      "on-tertiary": "#ffffff",
+                      "on-surface": "#271719",
+                      "on-error-container": "#93000a",
+                      "on-secondary": "#ffffff",
+                      "outline": "#8f6f72",
+                      "primary": "#b90041",
+                      "primary-fixed": "#ffd9dc",
+                      "surface-container-highest": "#f9dbdd",
+                      "surface-dim": "#f1d3d5",
+                      "inverse-surface": "#3e2c2d",
+                      "tertiary-fixed": "#7dfca2",
+                      "surface-container": "#ffe9ea",
+                      "surface-container-high": "#ffe1e3",
+                      "secondary": "#006b55",
+                      "error-container": "#ffdad6",
+                      "on-tertiary-container": "#f6fff3",
+                      "outline-variant": "#e3bdc0",
+                      "secondary-fixed": "#7bf8d3",
+                      "surface-tint": "#bd0043",
+                      "surface-container-low": "#fff0f0",
+                      "on-primary-container": "#fffbff",
+                      "primary-fixed-dim": "#ffb2ba",
+                      "on-error": "#ffffff",
+                      "surface": "#fff8f7",
+                      "on-tertiary-fixed": "#00210c",
+                      "tertiary-container": "#008644",
+                      "error": "#ba1a1a",
+                      "on-primary-fixed": "#400011",
+                      "inverse-primary": "#ffb2ba",
+                      "surface-bright": "#fff8f7",
+                      "secondary-container": "#78f6d0",
+                      "on-primary-fixed-variant": "#910031",
+                      "on-secondary-fixed-variant": "#00513f"
+              },
+              "borderRadius": {
+                      "DEFAULT": "0.25rem",
+                      "lg": "0.5rem",
+                      "xl": "0.75rem",
+                      "full": "9999px"
+              },
+              "spacing": {
+                      "xs": "4px",
+                      "base": "4px",
+                      "sm": "8px",
+                      "md": "16px",
+                      "lg": "24px",
+                      "xl": "32px",
+                      "container-margin": "16px",
+                      "gutter": "12px"
+              },
+              "fontFamily": {
+                      "headline-md": [
+                              "Hanken Grotesk"
+                      ],
+                      "body-lg": [
+                              "Hanken Grotesk"
+                      ],
+                      "headline-lg": [
+                              "Hanken Grotesk"
+                      ],
+                      "body-md": [
+                              "Hanken Grotesk"
+                      ],
+                      "price-strike": [
+                              "Hanken Grotesk"
+                      ],
+                      "label-caps": [
+                              "Hanken Grotesk"
+                      ],
+                      "price-main": [
+                              "Hanken Grotesk"
+                      ]
+              },
+              "fontSize": {
+                      "headline-md": [
+                              "18px",
+                              {
+                                      "lineHeight": "24px",
+                                      "letterSpacing": "-0.01em",
+                                      "fontWeight": "700"
+                              }
+                      ],
+                      "body-lg": [
+                              "16px",
+                              {
+                                      "lineHeight": "24px",
+                                      "fontWeight": "400"
+                              }
+                      ],
+                      "headline-lg": [
+                              "24px",
+                              {
+                                      "lineHeight": "32px",
+                                      "letterSpacing": "-0.02em",
+                                      "fontWeight": "700"
+                              }
+                      ],
+                      "body-md": [
+                              "14px",
+                              {
+                                      "lineHeight": "20px",
+                                      "fontWeight": "400"
+                              }
+                      ],
+                      "price-strike": [
+                              "12px",
+                              {
+                                      "lineHeight": "16px",
+                                      "fontWeight": "400"
+                              }
+                      ],
+                      "label-caps": [
+                              "11px",
+                              {
+                                      "lineHeight": "16px",
+                                      "letterSpacing": "0.08em",
+                                      "fontWeight": "700"
+                              }
+                      ],
+                      "price-main": [
+                              "16px",
+                              {
+                                      "lineHeight": "20px",
+                                      "fontWeight": "700"
+                              }
+                      ]
+              }
+      },
+          },
+        }
+      </script>
+<style>
+        body {
+            background-color: theme('colors.surface-container-lowest');
+            color: theme('colors.on-surface');
+        }
+        
+        /* Utility for 1px sharp borders */
+        .border-sharp {
+            border: 1px solid theme('colors.outline-variant');
+        }
+        
+        /* Hide scrollbar for horizontal scroll areas */
+        .hide-scrollbar::-webkit-scrollbar {
+            display: none;
+        }
+        .hide-scrollbar {
+            -ms-overflow-style: none;
+            scrollbar-width: none;
+        }
+
+        /* Nav active state */
+        .nav-item.active {
+            color: #FF3F6C !important;
+            font-weight: bold;
+        }
+        .nav-item.active .material-symbols-outlined {
+            font-variation-settings: 'FILL' 1;
+        }
+      </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+</head>
+<body class="font-body-md text-body-md pb-24 md:pb-0 pt-16 relative">
+<!-- TopAppBar -->
+<header class="bg-surface dark:bg-surface text-primary dark:text-primary-fixed-dim font-headline-lg text-headline-lg fixed top-0 w-full z-50 border-b border-outline-variant dark:border-outline flat no shadows flex justify-between items-center px-container-margin h-16 bg-surface-container-lowest">
+<div class="flex items-center gap-4">
+<button class="md:hidden text-on-surface-variant hover:bg-surface-container-low transition-colors active:opacity-80 transition-opacity flex items-center justify-center p-2 rounded-full">
+<span class="material-symbols-outlined">menu</span>
+</button>
+<span class="font-headline-lg text-headline-lg font-black text-[#FF3F6C] tracking-tighter hidden md:block cursor-pointer">MYNTRA</span>
+<span class="font-headline-lg text-headline-lg font-black text-[#FF3F6C] tracking-tighter md:hidden cursor-pointer">MYNTRA</span>
+</div>
+<div class="hidden md:flex items-center gap-8 ml-8 flex-1">
+<nav class="flex gap-6 font-label-caps text-label-caps uppercase tracking-widest text-on-surface-variant">
+<a class="text-[#FF3F6C] font-bold border-b-4 border-[#FF3F6C] pb-[20px] pt-[24px]" href="#">Home</a>
+<button class="hover:text-primary transition-colors py-[22px] uppercase tracking-widest" onclick="toggleOverlay('categories-overlay')">Categories</button>
+<a class="hover:text-primary transition-colors py-[22px]" href="#">Studio</a>
+</nav>
+<div class="flex-1 max-w-xl relative">
+<span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-on-surface-variant">search</span>
+<input class="w-full bg-surface-variant border-none rounded-sm pl-10 pr-4 py-2 text-body-md focus:ring-1 focus:ring-outline-variant outline-none cursor-pointer" onclick="toggleOverlay('search-overlay')" placeholder="Search for products, brands and more" readonly="" type="text">
+</div>
+</div>
+<div class="flex items-center gap-4 md:gap-6 ml-4">
+<button class="md:hidden text-on-surface-variant hover:bg-surface-container-low transition-colors active:opacity-80 transition-opacity" onclick="toggleOverlay('search-overlay')">
+<span class="material-symbols-outlined">search</span>
+</button>
+<button class="hidden md:flex flex-col items-center gap-1 text-on-surface-variant hover:text-primary transition-colors font-label-caps text-label-caps lowercase">
+<span class="material-symbols-outlined">person</span>
+<span class="">Profile</span>
+</button>
+<button class="flex flex-col items-center gap-1 text-on-surface-variant hover:text-primary transition-colors font-label-caps text-label-caps lowercase relative" onclick="console.log('Navigating to Wishlist screen...')">
+<span class="material-symbols-outlined">favorite</span>
+<span class="hidden md:block">Wishlist</span>
+<span class="absolute -top-1 -right-1 w-4 h-4 bg-[#FF3F6C] text-white text-[10px] rounded-full flex items-center justify-center font-bold" id="header-wishlist-count" style="display: none;">0</span>
+</button>
+<button class="flex flex-col items-center gap-1 text-on-surface-variant hover:text-primary transition-colors font-label-caps text-label-caps lowercase">
+<span class="material-symbols-outlined">shopping_bag</span>
+<span class="hidden md:block">Bag</span>
+</button>
+</div>
+</header>
+<main class="w-full max-w-7xl mx-auto md:pt-4">
+<!-- Hero Banner -->
+<section class="w-full bg-[#FF3F6C] text-white p-6 md:p-12 mb-8 md:mb-12 flex flex-col items-center justify-center text-center relative overflow-hidden h-[530px] md:h-[618px]">
+<!-- Abstract background shape -->
+<div class="absolute inset-0 opacity-20 pointer-events-none">
+<div class="absolute top-1/4 left-1/4 w-96 h-96 bg-white rounded-full mix-blend-overlay filter blur-3xl"></div>
+<div class="absolute bottom-1/4 right-1/4 w-96 h-96 bg-yellow-300 rounded-full mix-blend-overlay filter blur-3xl"></div>
+</div>
+<div class="relative z-10 space-y-6">
+<p class="font-label-caps text-label-caps uppercase tracking-[0.2em] opacity-90">Biggest Fashion Sale</p>
+<h1 class="text-5xl md:text-8xl font-black tracking-tighter leading-none">END OF<br>REASON<br>SALE</h1>
+<p class="font-headline-md text-headline-md font-bold mt-4">50-80% OFF</p>
+<button class="mt-8 bg-white text-[#FF3F6C] font-headline-md text-headline-md px-8 py-4 rounded-none hover:bg-gray-100 active:bg-gray-200 active:scale-95 transition-all uppercase">Shop Now</button>
+</div>
+</section>
+<!-- Trending Right Now -->
+<section class="px-container-margin mb-12">
+<div class="flex justify-between items-end mb-6">
+<h2 class="font-headline-lg text-headline-lg font-bold tracking-tight uppercase">Trending Right Now</h2>
+<a class="font-label-caps text-label-caps text-primary hover:underline uppercase active:opacity-70 transition-opacity" href="#">View All</a>
+</div>
+<!-- Horizontal Scroll on Mobile, Grid on Desktop -->
+<div class="flex overflow-x-auto hide-scrollbar gap-gutter pb-4 md:grid md:grid-cols-4 md:overflow-visible">
+<!-- Mandatory Product Card -->
+<article class="flex-none w-64 md:w-auto border-sharp bg-surface-container-lowest flex flex-col group relative cursor-pointer hover:border-gray-400 transition-colors">
+<div class="relative aspect-[3/4] w-full bg-surface-variant overflow-hidden" onclick="openQuickView(this)">
+<img class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" data-alt="A sleek, modern commuter laptop messenger bag made of high-quality black nylon. It features clean lines, minimal branding, and sturdy hardware, shot in a bright, minimalist studio setting with high-key lighting, casting soft architectural shadows to emphasize its premium build quality. 8k resolution, editorial fashion photography." src="https://lh3.googleusercontent.com/aida-public/AB6AXuAAOR6m6ZG1sWUKMNYp7zs37a1hfVDqgRQU27qf7NeboZa02t1YJKC-dE_9MiKTqjLUXZCDgaOo-2YF1l4wd3qFW3dtj3I2inczB5elL46S_7kqs_x_-huGGxnAu-kA441JxHGrQQYANyId78ddNeK0_ItGxz2usdK53nFzAHX7CN7mUf7L90GBy0b5JrVj3wMZQYYMMhvPwnNlTQbMM-H6PwGhG31e63WIWM_Z7HHzOR2mct_H73HCCQ">
+</div>
+<button class="absolute top-3 right-3 w-8 h-8 bg-white/80 backdrop-blur flex items-center justify-center rounded-full text-on-surface-variant hover:text-[#FF3F6C] active:scale-90 transition-all z-10 shadow-sm" onclick="toggleWishlist(this, event)">
+<span class="material-symbols-outlined text-[20px]">favorite</span>
+</button>
+<div class="p-4 flex flex-col flex-grow pointer-events-none">
+<h3 class="font-headline-md text-headline-md truncate font-bold">EUME</h3>
+<p class="text-on-surface-variant text-sm truncate mb-2">Commute Nylon Messenger Laptop Bag</p>
+<div class="mt-auto flex items-center gap-2">
+<span class="font-price-main text-price-main">₹3,999</span>
+</div>
+</div>
+</article>
+<!-- Product 2 -->
+<article class="flex-none w-64 md:w-auto border-sharp bg-surface-container-lowest flex flex-col group relative cursor-pointer hover:border-gray-400 transition-colors">
+<div class="relative aspect-[3/4] w-full bg-surface-variant overflow-hidden" onclick="openQuickView(this)">
+<img class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" data-alt="A stylish, oversized white cotton t-shirt with subtle minimalist typographic graphic design on the front. Worn by a fashion model in a clean, brightly lit editorial studio setting. The lighting is soft and even, highlighting the fabric texture and drape against a stark white background. High fashion minimal aesthetic." src="https://lh3.googleusercontent.com/aida-public/AB6AXuAvZFiArnyulX2ejyhd6uggVhr5-2XEgu0Fwbqe8eiOQJkTV-XSCPgUdEYkCj6FHOeI_LwMLhYZXF1ctHfSum7xIC588F1G8EDAPbyCsUWO31I-N_R44Ulo9r4RsjH2pzGKAalWKec2bZiQfimASYKe4V5UKk8rUd0fJlYw8GZ3D05LGo0ylVyn53MOa3ZJeEdSkG415J2ef9MD8ol0RqoNYZZNN-UXc_g-asNMwAehmgm8wG2EfrYQzw">
+<div class="absolute bottom-3 left-3 bg-white px-2 py-1 font-label-caps text-[10px] uppercase tracking-wider font-bold shadow-sm z-10">Bestseller</div>
+</div>
+<button class="absolute top-3 right-3 w-8 h-8 bg-white/80 backdrop-blur flex items-center justify-center rounded-full text-on-surface-variant hover:text-[#FF3F6C] active:scale-90 transition-all z-10 shadow-sm" onclick="toggleWishlist(this, event)">
+<span class="material-symbols-outlined text-[20px]">favorite</span>
+</button>
+<div class="p-4 flex flex-col flex-grow pointer-events-none">
+<h3 class="font-headline-md text-headline-md truncate font-bold">Roadster</h3>
+<p class="text-on-surface-variant text-sm truncate mb-2">Men Oversized Pure Cotton T-shirt</p>
+<div class="mt-auto flex items-center gap-2">
+<span class="font-price-main text-price-main">₹599</span>
+<span class="font-price-strike text-price-strike text-on-surface-variant line-through">₹1,299</span>
+<span class="text-xs text-primary font-bold">53% OFF</span>
+</div>
+</div>
+</article>
+<!-- Product 3 -->
+<article class="flex-none w-64 md:w-auto border-sharp bg-surface-container-lowest flex flex-col group relative cursor-pointer hover:border-gray-400 transition-colors">
+<div class="relative aspect-[3/4] w-full bg-surface-variant overflow-hidden" onclick="openQuickView(this)">
+<img class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" data-alt="A pair of sleek, chunky white sneakers with retro design elements and subtle grey accents. Placed on a minimalist concrete pedestal in a stark, bright studio environment. Soft directional lighting creates subtle, elegant shadows. Editorial product photography style, clean and precise." src="https://lh3.googleusercontent.com/aida-public/AB6AXuB98kuuqmVjoc5GALRbfqfkmQ-ZryOu4pA7UCEO5w99qepdJJA7B8lSBLK4UWV2SJwhqEtKmPTt3hiPyC6PFcBUCX7cXPe5tWQm2Tyog-insU7ZvJKdWlBATpovW9nL8BkLbuMQb0UD63jvNyE2kFdVv11UVofCazzK_UfpYcf7_-E0P7ld9z1M76wFuIqJHj4gEkrYvzrkkV1gBTVt8fQzuDybBe_EY4A6NnapCQQr5xiu5Go3S5SnbQ">
+</div>
+<button class="absolute top-3 right-3 w-8 h-8 bg-white/80 backdrop-blur flex items-center justify-center rounded-full text-on-surface-variant hover:text-[#FF3F6C] active:scale-90 transition-all z-10 shadow-sm" onclick="toggleWishlist(this, event)">
+<span class="material-symbols-outlined text-[20px]">favorite</span>
+</button>
+<div class="p-4 flex flex-col flex-grow pointer-events-none">
+<h3 class="font-headline-md text-headline-md truncate font-bold">Puma</h3>
+<p class="text-on-surface-variant text-sm truncate mb-2">Unisex Trinity Sneakers</p>
+<div class="mt-auto flex items-center gap-2">
+<span class="font-price-main text-price-main">₹3,299</span>
+<span class="font-price-strike text-price-strike text-on-surface-variant line-through">₹6,999</span>
+<span class="text-xs text-primary font-bold">52% OFF</span>
+</div>
+</div>
+</article>
+<!-- Product 4 -->
+<article class="flex-none w-64 md:w-auto border-sharp bg-surface-container-lowest flex flex-col group relative cursor-pointer hover:border-gray-400 transition-colors hidden md:flex">
+<div class="relative aspect-[3/4] w-full bg-surface-variant overflow-hidden" onclick="openQuickView(this)">
+<img class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" data-alt="An elegant women's floral midi dress in soft pastel tones, hanging on a minimalist black metal rack against a stark white wall. The lighting is natural and diffuse, creating a soft, airy atmosphere characteristic of modern premium fashion lookbooks." src="https://lh3.googleusercontent.com/aida-public/AB6AXuATABwLMi74-osoB8cDqSqf6JU0uJKVsJ-R-fHST-v99pBzQqQdiusQ_PY4ZzzA-kgyZObF5RsSJ57swCo4d6SGSEYJ0L-4x3iUqdwGSWXMEeCUI_VciKxbP5kEGrZ6pJE0BZ5L7Y-QVUYtYhnmDHGGNf8FyAugDkdLAVCAPBrHsK_OiEbrtGzJDim7X4mrMl6vIbVgSq1Vol_ZStgWLMB4vj7kV_Yne7CwvxyK8C7xu9jKHMi9UV2ICA">
+</div>
+<button class="absolute top-3 right-3 w-8 h-8 bg-white/80 backdrop-blur flex items-center justify-center rounded-full text-on-surface-variant hover:text-[#FF3F6C] active:scale-90 transition-all z-10 shadow-sm" onclick="toggleWishlist(this, event)">
+<span class="material-symbols-outlined text-[20px]">favorite</span>
+</button>
+<div class="p-4 flex flex-col flex-grow pointer-events-none">
+<h3 class="font-headline-md text-headline-md truncate font-bold">FRENCH CONNECTION</h3>
+<p class="text-on-surface-variant text-sm truncate mb-2">Floral A-Line Midi Dress</p>
+<div class="mt-auto flex items-center gap-2">
+<span class="font-price-main text-price-main">₹2,499</span>
+<span class="font-price-strike text-price-strike text-on-surface-variant line-through">₹4,999</span>
+<span class="text-xs text-primary font-bold">50% OFF</span>
+</div>
+</div>
+</article>
+</div>
+</section>
+<!-- Category Focus (Bento Grid) -->
+<section class="px-container-margin mb-12">
+<h2 class="font-headline-lg text-headline-lg font-bold tracking-tight uppercase mb-6">Shop by Category</h2>
+<div class="grid grid-cols-2 md:grid-cols-4 gap-gutter auto-rows-[200px]">
+<div class="col-span-2 row-span-2 relative group overflow-hidden border-sharp cursor-pointer bg-surface-variant">
+<img class="absolute inset-0 w-full h-full object-cover group-hover:scale-105 transition-transform duration-700" data-alt="A dynamic fashion editorial shot featuring multiple models wearing stylish streetwear. High contrast, bright studio lighting, minimalist concrete background. A blend of vibrant primary colors and monochrome outfits. Premium, modern aesthetic." src="https://lh3.googleusercontent.com/aida-public/AB6AXuC4jZMYZvGo87E8uhNBw3e7tDsxqrUMcmfJKYaXXsXD7z4W_NuhBmALa1lZNzXfUDZTp_a9AZOmch1S2aDNNL_L-MOt4D5O_hFT1O4uAFNvCZrTevuBWITqdeNuzsuSIRoTSuH8p1Q3oTFxU8eQ89q6Zb_5BmnOpSZHU8oHPev32hd3uzXybbbbVOum1_3AoVELyXZ5YwxX51pRFWAbM6B66w9CN3Nw8c-5SpKkmyfmlSVp9cXMElZ0Gw">
+<div class="absolute inset-0 bg-gradient-to-t from-black/70 via-black/20 to-transparent"></div>
+<div class="absolute bottom-6 left-6 text-white z-10">
+<h3 class="text-3xl font-black uppercase tracking-tighter mb-2">Streetwear</h3>
+<button class="font-label-caps text-label-caps uppercase border border-white px-4 py-2 hover:bg-white hover:text-black active:bg-gray-200 active:scale-95 transition-all">Explore</button>
+</div>
+<div class="absolute inset-0 z-0" onclick="console.log('Navigate to Streetwear')"></div>
+</div>
+<div class="relative group overflow-hidden border-sharp cursor-pointer bg-surface-variant" onclick="console.log('Navigate to Accessories')">
+<img class="absolute inset-0 w-full h-full object-cover group-hover:scale-105 transition-transform duration-700" data-alt="Close up shot of premium leather accessories including a wallet, watch, and belt arranged geometrically on a clean white surface. Sharp focus, strong directional lighting casting crisp shadows. Minimalist luxury aesthetic." src="https://lh3.googleusercontent.com/aida-public/AB6AXuC8hYDsSicgjIHB0g3K1iuoQc3Men3bishkn6bfHenkkCvzUt0k_iIwKXWylKSW_uvwuWoZVM8YUzGSxb2Ri0gK3tCKv-nx4tqJJuG1IOWpBeNDI9IBgEvBfIa1CwvGjM2JdXqDNX3yt2yfou_x6Kc8IaZXXBt11IPzmoGgDNIW_00uhbdp65XpbKrVL5oZX5JfpHhS-z8VTcrJs3ih_IN54FaSXRlWHv-nLYvPdR6XMMBVFxhKjaD-nw">
+<div class="absolute inset-0 bg-black/20 group-hover:bg-black/40 transition-colors"></div>
+<div class="absolute bottom-4 left-4 text-white">
+<h3 class="font-headline-md text-headline-md font-bold uppercase">Accessories</h3>
+</div>
+</div>
+<div class="relative group overflow-hidden border-sharp cursor-pointer bg-surface-variant" onclick="console.log('Navigate to Beauty')">
+<img class="absolute inset-0 w-full h-full object-cover group-hover:scale-105 transition-transform duration-700" data-alt="A minimalist layout of high-end skincare and beauty products with sleek packaging on a pristine white marble texture. Soft, diffused lighting highlighting product textures. Clean, modern cosmetic editorial style." src="https://lh3.googleusercontent.com/aida-public/AB6AXuDGZ1968TRvDU50n9PkY4ifE7F1y3lQ_uGKobQQmlVgCw7mBvvP0wkUc7x0zOywamiDno6O76161mw-E0SofD1ZrTzwA_sqSL00cylRbrBallvQizm8QseJLQ8m9yxEDdWomObKB-2lkGgoBxMNkqKSHvqP9Ec-FKrLOc_3iaXWb6u-aVEy84_H9pCX2vP3PpvGxU5F2oE6c8463lGhWOAYeuwJgcJzdmFsPoqBOrNjlkGciDZu6nMbmg">
+<div class="absolute inset-0 bg-black/20 group-hover:bg-black/40 transition-colors"></div>
+<div class="absolute bottom-4 left-4 text-white">
+<h3 class="font-headline-md text-headline-md font-bold uppercase">Beauty</h3>
+</div>
+</div>
+<div class="col-span-2 relative group overflow-hidden border-sharp cursor-pointer bg-surface-variant" onclick="console.log('Navigate to Activewear')">
+<img class="absolute inset-0 w-full h-full object-cover group-hover:scale-105 transition-transform duration-700" data-alt="Athletic wear fashion shot. A model mid-stride wearing premium activewear in a brightly lit, minimalist white studio setting. The focus is on the sleek fabric and dynamic movement. Modern fitness aesthetic." src="https://lh3.googleusercontent.com/aida-public/AB6AXuDxMSoaEi9t3t3e25o8R-ML0ImPyIqZpJRjY7A9weAJPs9VmeLb0LwJyjrLQ42m8F9fhTlvEnB5pemKKubya6pVsQBSFED0YxdwV8aINsf5m7F-xukzfcKLOGxrPZi2YjM9OvxAGq51qLUenj-xuvj-jVtOxjYCkWLBSj9b4bthfyQN0Mu3XTtFOhYE_0OYUg1ha7pXPzQH8GJLjMuIOeDA-zWdNvARe9Ch2L7XWlEyTigOoK3kV3uEww">
+<div class="absolute inset-0 bg-black/20 group-hover:bg-black/40 transition-colors"></div>
+<div class="absolute bottom-4 right-4 text-white text-right">
+<h3 class="text-2xl font-black uppercase tracking-tighter mb-1">Activewear</h3>
+<p class="font-label-caps text-label-caps uppercase">Up to 60% Off</p>
+</div>
+</div>
+</div>
+</section>
+</main>
+<!-- BottomNavBar (Mobile Only) -->
+<nav class="bg-surface dark:bg-surface text-on-surface-variant dark:text-on-surface-variant font-label-caps text-label-caps fixed bottom-0 w-full z-50 border-t border-outline-variant dark:border-outline flat no shadows flex justify-around items-center h-14 w-full md:hidden shadow-[0_-4px_16px_rgba(0,0,0,0.05)]">
+<button class="nav-item active flex flex-col items-center justify-center hover:bg-surface-container-low active:scale-95 transition-transform duration-100 w-full h-full" onclick="setActiveNav(this)">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">home</span>
+<span class="mt-1">Home</span>
+</button>
+<button class="nav-item flex flex-col items-center justify-center hover:bg-surface-container-low active:scale-95 transition-transform duration-100 w-full h-full" onclick="setActiveNav(this); toggleOverlay('categories-overlay')">
+<span class="material-symbols-outlined">category</span>
+<span class="mt-1">Categories</span>
+</button>
+<button class="nav-item flex flex-col items-center justify-center hover:bg-surface-container-low active:scale-95 transition-transform duration-100 w-full h-full relative" onclick="setActiveNav(this)">
+<span class="material-symbols-outlined">movie</span>
+<span class="mt-1">Studio</span>
+</button>
+<button class="nav-item flex flex-col items-center justify-center hover:bg-surface-container-low active:scale-95 transition-transform duration-100 w-full h-full relative" onclick="setActiveNav(this); console.log('Navigating to Wishlist screen...')">
+<span class="material-symbols-outlined">favorite</span>
+<span class="mt-1">Wishlist</span>
+<span class="absolute top-2 right-[30%] w-4 h-4 bg-[#FF3F6C] text-white text-[10px] rounded-full border border-surface flex items-center justify-center" id="mobile-wishlist-count" style="display: none;">0</span>
+</button>
+<button class="nav-item flex flex-col items-center justify-center hover:bg-surface-container-low active:scale-95 transition-transform duration-100 w-full h-full" onclick="setActiveNav(this)">
+<span class="material-symbols-outlined">person</span>
+<span class="mt-1">Profile</span>
+</button>
+</nav>
+<!-- Overlays -->
+<!-- Search Overlay -->
+<div class="fixed inset-0 bg-surface-container-lowest z-[100] hidden flex-col" id="search-overlay">
+<div class="flex items-center p-4 border-b border-outline-variant gap-4">
+<button class="text-on-surface-variant hover:text-primary transition-colors" onclick="toggleOverlay('search-overlay')">
+<span class="material-symbols-outlined">arrow_back</span>
+</button>
+<div class="flex-1 relative">
+<span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-on-surface-variant">search</span>
+<input class="w-full bg-surface-variant border-none rounded-sm pl-10 pr-4 py-2 text-body-md focus:ring-1 focus:ring-outline-variant outline-none" id="search-input" placeholder="Search for products, brands and more" type="text">
+</div>
+<button class="text-on-surface-variant hover:text-primary transition-colors">
+<span class="material-symbols-outlined">mic</span>
+</button>
+</div>
+<div class="p-4 flex-1 overflow-y-auto">
+<h3 class="font-label-caps text-label-caps text-on-surface-variant uppercase mb-4">Recent Searches</h3>
+<ul class="space-y-4 text-body-md">
+<li class="flex items-center gap-4 cursor-pointer hover:text-primary"><span class="material-symbols-outlined text-outline">history</span> Oversized T-shirts</li>
+<li class="flex items-center gap-4 cursor-pointer hover:text-primary"><span class="material-symbols-outlined text-outline">history</span> Running Shoes Men</li>
+<li class="flex items-center gap-4 cursor-pointer hover:text-primary"><span class="material-symbols-outlined text-outline">history</span> Laptop Bags</li>
+</ul>
+<h3 class="font-label-caps text-label-caps text-on-surface-variant uppercase mt-8 mb-4">Trending Searches</h3>
+<ul class="space-y-4 text-body-md">
+<li class="flex items-center gap-4 cursor-pointer hover:text-primary"><span class="material-symbols-outlined text-outline">trending_up</span> Summer Dresses</li>
+<li class="flex items-center gap-4 cursor-pointer hover:text-primary"><span class="material-symbols-outlined text-outline">trending_up</span> Cargo Pants</li>
+</ul>
+</div>
+</div>
+<!-- Categories Overlay -->
+<div class="fixed inset-0 bg-surface-container-lowest z-[100] hidden flex-col" id="categories-overlay">
+<div class="flex items-center p-4 border-b border-outline-variant gap-4 bg-surface-container-lowest">
+<button class="text-on-surface-variant hover:text-primary transition-colors" onclick="toggleOverlay('categories-overlay')">
+<span class="material-symbols-outlined">close</span>
+</button>
+<h2 class="font-headline-md text-headline-md font-bold uppercase tracking-tight">Categories</h2>
+</div>
+<div class="flex-1 overflow-y-auto p-4 grid grid-cols-2 gap-4">
+<div class="aspect-square bg-surface-variant flex items-center justify-center flex-col gap-2 cursor-pointer border-sharp hover:border-gray-400">
+<span class="material-symbols-outlined text-4xl text-on-surface-variant">checkroom</span>
+<span class="font-headline-md text-sm font-bold">Men</span>
+</div>
+<div class="aspect-square bg-surface-variant flex items-center justify-center flex-col gap-2 cursor-pointer border-sharp hover:border-gray-400">
+<span class="material-symbols-outlined text-4xl text-on-surface-variant">woman</span>
+<span class="font-headline-md text-sm font-bold">Women</span>
+</div>
+<div class="aspect-square bg-surface-variant flex items-center justify-center flex-col gap-2 cursor-pointer border-sharp hover:border-gray-400">
+<span class="material-symbols-outlined text-4xl text-on-surface-variant">child_care</span>
+<span class="font-headline-md text-sm font-bold">Kids</span>
+</div>
+<div class="aspect-square bg-surface-variant flex items-center justify-center flex-col gap-2 cursor-pointer border-sharp hover:border-gray-400">
+<span class="material-symbols-outlined text-4xl text-on-surface-variant">home</span>
+<span class="font-headline-md text-sm font-bold">Home &amp; Living</span>
+</div>
+<div class="aspect-square bg-surface-variant flex items-center justify-center flex-col gap-2 cursor-pointer border-sharp hover:border-gray-400">
+<span class="material-symbols-outlined text-4xl text-on-surface-variant">face</span>
+<span class="font-headline-md text-sm font-bold">Beauty</span>
+</div>
+</div>
+</div>
+<!-- Quick View Modal -->
+<div class="fixed inset-0 bg-black/60 z-[110] hidden items-center justify-center p-4 backdrop-blur-sm" id="quick-view-modal" onclick="closeQuickView(event)">
+<div class="bg-surface-container-lowest max-w-md w-full border-sharp rounded-sm flex flex-col max-h-[90vh] overflow-hidden shadow-2xl relative" onclick="event.stopPropagation()">
+<button class="absolute top-2 right-2 w-8 h-8 bg-white/80 rounded-full flex items-center justify-center z-10 text-on-surface-variant hover:text-primary" onclick="closeQuickView()">
+<span class="material-symbols-outlined">close</span>
+</button>
+<div class="w-full aspect-[3/4] bg-surface-variant relative">
+<img class="w-full h-full object-cover" id="quick-view-img" src="">
+</div>
+<div class="p-6 flex flex-col gap-2">
+<h3 class="font-headline-lg text-headline-lg font-bold" id="quick-view-brand">Brand Name</h3>
+<p class="text-on-surface-variant text-body-lg" id="quick-view-desc">Product Description</p>
+<div class="flex items-center gap-3 mt-2">
+<span class="font-price-main text-xl font-bold" id="quick-view-price">₹0</span>
+</div>
+<button class="w-full bg-[#FF3F6C] text-white py-3 mt-4 font-headline-md uppercase hover:bg-[#e0355f] active:scale-95 transition-all">Add to Bag</button>
+</div>
+</div>
+</div>
+<script>
+    // State
+    let wishlistCount = 0;
+
+    // Navigation Active State
+    function setActiveNav(element) {
+        const navItems = document.querySelectorAll('.nav-item');
+        navItems.forEach(item => {
+            item.classList.remove('active');
+            item.style.color = '';
+            item.querySelector('.material-symbols-outlined').style.fontVariationSettings = "'FILL' 0";
+        });
+        
+        element.classList.add('active');
+        element.style.color = '#FF3F6C';
+        element.querySelector('.material-symbols-outlined').style.fontVariationSettings = "'FILL' 1";
+    }
+
+    // Overlay Toggles
+    function toggleOverlay(id) {
+        const overlay = document.getElementById(id);
+        if (overlay.classList.contains('hidden')) {
+            overlay.classList.remove('hidden');
+            overlay.classList.add('flex');
+            if (id === 'search-overlay') {
+                setTimeout(() => document.getElementById('search-input').focus(), 100);
+            }
+        } else {
+            overlay.classList.add('hidden');
+            overlay.classList.remove('flex');
+        }
+    }
+
+    // Wishlist Logic
+    function toggleWishlist(button, event) {
+        event.stopPropagation(); // Prevent quick view from opening
+        const icon = button.querySelector('.material-symbols-outlined');
+        const isFilled = icon.style.fontVariationSettings === "'FILL' 1";
+        
+        if (isFilled) {
+            icon.style.fontVariationSettings = "'FILL' 0";
+            button.style.color = '';
+            wishlistCount = Math.max(0, wishlistCount - 1);
+        } else {
+            icon.style.fontVariationSettings = "'FILL' 1";
+            button.style.color = '#FF3F6C';
+            wishlistCount++;
+        }
+        updateWishlistCounters();
+    }
+
+    function updateWishlistCounters() {
+        const headerCount = document.getElementById('header-wishlist-count');
+        const mobileCount = document.getElementById('mobile-wishlist-count');
+        
+        if (wishlistCount > 0) {
+            headerCount.textContent = wishlistCount;
+            headerCount.style.display = 'flex';
+            mobileCount.textContent = wishlistCount;
+            mobileCount.style.display = 'flex';
+        } else {
+            headerCount.style.display = 'none';
+            mobileCount.style.display = 'none';
+        }
+    }
+
+    // Quick View Logic
+    function openQuickView(container) {
+        const modal = document.getElementById('quick-view-modal');
+        const img = modal.querySelector('#quick-view-img');
+        const brand = modal.querySelector('#quick-view-brand');
+        const desc = modal.querySelector('#quick-view-desc');
+        const price = modal.querySelector('#quick-view-price');
+
+        // Extract data from the clicked article
+        const article = container.closest('article');
+        const sourceImg = article.querySelector('img').src;
+        const sourceBrand = article.querySelector('h3').textContent;
+        const sourceDesc = article.querySelector('p').textContent;
+        const sourcePrice = article.querySelector('.text-price-main').textContent;
+
+        // Populate modal
+        img.src = sourceImg;
+        brand.textContent = sourceBrand;
+        desc.textContent = sourceDesc;
+        price.textContent = sourcePrice;
+
+        modal.classList.remove('hidden');
+        modal.classList.add('flex');
+        document.body.style.overflow = 'hidden'; // Prevent body scroll
+    }
+
+    function closeQuickView(event) {
+        // If event is provided and target is not the modal background, don't close
+        if (event && event.target !== document.getElementById('quick-view-modal')) {
+            return;
+        }
+        const modal = document.getElementById('quick-view-modal');
+        modal.classList.add('hidden');
+        modal.classList.remove('flex');
+        document.body.style.overflow = ''; // Restore body scroll
+    }
+</script>
+
+
+</body></html>

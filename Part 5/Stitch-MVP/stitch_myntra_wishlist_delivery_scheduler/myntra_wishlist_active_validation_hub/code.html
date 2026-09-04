@@ -1,0 +1,570 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Myntra Wishlist - Active Validation Engine</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Hanken+Grotesk:wght@400;700;900&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+          darkMode: "class",
+          theme: {
+            extend: {
+              "colors": {
+                      "background": "#fff8f7",
+                      "on-tertiary-fixed-variant": "#005227",
+                      "on-surface-variant": "#5b4042",
+                      "on-secondary-container": "#007059",
+                      "secondary-fixed-dim": "#5cdcb8",
+                      "surface-container-lowest": "#ffffff",
+                      "tertiary": "#006a34",
+                      "on-secondary-fixed": "#002118",
+                      "surface-variant": "#f9dbdd",
+                      "primary-container": "#df2457",
+                      "tertiary-fixed-dim": "#5fde88",
+                      "on-primary": "#ffffff",
+                      "on-background": "#271719",
+                      "inverse-on-surface": "#ffeced",
+                      "on-tertiary": "#ffffff",
+                      "on-surface": "#271719",
+                      "on-error-container": "#93000a",
+                      "on-secondary": "#ffffff",
+                      "outline": "#8f6f72",
+                      "primary": "#b90041",
+                      "primary-fixed": "#ffd9dc",
+                      "surface-container-highest": "#f9dbdd",
+                      "surface-dim": "#f1d3d5",
+                      "inverse-surface": "#3e2c2d",
+                      "tertiary-fixed": "#7dfca2",
+                      "surface-container": "#ffe9ea",
+                      "surface-container-high": "#ffe1e3",
+                      "secondary": "#006b55",
+                      "error-container": "#ffdad6",
+                      "on-tertiary-container": "#f6fff3",
+                      "outline-variant": "#e3bdc0",
+                      "secondary-fixed": "#7bf8d3",
+                      "surface-tint": "#bd0043",
+                      "surface-container-low": "#fff0f0",
+                      "on-primary-container": "#fffbff",
+                      "primary-fixed-dim": "#ffb2ba",
+                      "on-error": "#ffffff",
+                      "surface": "#fff8f7",
+                      "on-tertiary-fixed": "#00210c",
+                      "tertiary-container": "#008644",
+                      "error": "#ba1a1a",
+                      "on-primary-fixed": "#400011",
+                      "inverse-primary": "#ffb2ba",
+                      "surface-bright": "#fff8f7",
+                      "secondary-container": "#78f6d0",
+                      "on-primary-fixed-variant": "#910031",
+                      "on-secondary-fixed-variant": "#00513f"
+              },
+              "borderRadius": {
+                      "DEFAULT": "0.25rem",
+                      "lg": "0.5rem",
+                      "xl": "0.75rem",
+                      "full": "9999px"
+              },
+              "spacing": {
+                      "xs": "4px",
+                      "base": "4px",
+                      "sm": "8px",
+                      "md": "16px",
+                      "lg": "24px",
+                      "xl": "32px",
+                      "container-margin": "16px",
+                      "gutter": "12px"
+              },
+              "fontFamily": {
+                      "headline-md": [
+                              "Hanken Grotesk"
+                      ],
+                      "body-lg": [
+                              "Hanken Grotesk"
+                      ],
+                      "headline-lg": [
+                              "Hanken Grotesk"
+                      ],
+                      "body-md": [
+                              "Hanken Grotesk"
+                      ],
+                      "price-strike": [
+                              "Hanken Grotesk"
+                      ],
+                      "label-caps": [
+                              "Hanken Grotesk"
+                      ],
+                      "price-main": [
+                              "Hanken Grotesk"
+                      ]
+              },
+              "fontSize": {
+                      "headline-md": [
+                              "18px",
+                              {
+                                      "lineHeight": "24px",
+                                      "letterSpacing": "-0.01em",
+                                      "fontWeight": "700"
+                              }
+                      ],
+                      "body-lg": [
+                              "16px",
+                              {
+                                      "lineHeight": "24px",
+                                      "fontWeight": "400"
+                              }
+                      ],
+                      "headline-lg": [
+                              "24px",
+                              {
+                                      "lineHeight": "32px",
+                                      "letterSpacing": "-0.02em",
+                                      "fontWeight": "700"
+                              }
+                      ],
+                      "body-md": [
+                              "14px",
+                              {
+                                      "lineHeight": "20px",
+                                      "fontWeight": "400"
+                              }
+                      ],
+                      "price-strike": [
+                              "12px",
+                              {
+                                      "lineHeight": "16px",
+                                      "fontWeight": "400"
+                              }
+                      ],
+                      "label-caps": [
+                              "11px",
+                              {
+                                      "lineHeight": "16px",
+                                      "letterSpacing": "0.08em",
+                                      "fontWeight": "700"
+                              }
+                      ],
+                      "price-main": [
+                              "16px",
+                              {
+                                      "lineHeight": "20px",
+                                      "fontWeight": "700"
+                              }
+                      ]
+              }
+      },
+          },
+        }
+    </script>
+<style>
+        body {
+            background-color: theme('colors.background');
+            color: theme('colors.on-background');
+        }
+        
+        /* Modal Animation */
+        #dateSelectorModal {
+            transition: transform 0.3s ease-in-out;
+            transform: translateY(100%);
+        }
+        #dateSelectorModal.active {
+            transform: translateY(0);
+        }
+        #modalOverlay {
+            transition: opacity 0.3s ease-in-out;
+            opacity: 0;
+            pointer-events: none;
+        }
+        #modalOverlay.active {
+            opacity: 1;
+            pointer-events: auto;
+        }
+
+        .border-grid {
+            border: 1px solid #eaeaec;
+        }
+        .border-bottom-grid {
+            border-bottom: 1px solid #eaeaec;
+        }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="antialiased min-h-screen flex flex-col pt-16 pb-20 md:pb-0">
+<!-- TopAppBar -->
+<header class="bg-surface dark:bg-surface text-primary dark:text-primary-fixed-dim font-headline-lg text-headline-lg fixed top-0 w-full z-50 border-b border-outline-variant dark:border-outline flat no shadows flex justify-between items-center px-container-margin h-16">
+<button class="text-on-surface-variant dark:text-on-surface-variant hover:bg-surface-container-low transition-colors active:opacity-80 transition-opacity p-2 -ml-2">
+<span class="material-symbols-outlined" data-icon="menu">menu</span>
+</button>
+<div class="flex items-center gap-2">
+<h1 class="font-headline-lg text-headline-lg font-black text-primary tracking-tighter">MYNTRA</h1>
+<span class="font-body-md text-body-md text-on-surface-variant border-l border-outline-variant pl-2 ml-1">Wishlist (3)</span>
+</div>
+<button class="text-on-surface-variant dark:text-on-surface-variant hover:bg-surface-container-low transition-colors active:opacity-80 transition-opacity flex items-center p-2 -mr-2">
+<span class="font-label-caps text-label-caps mr-1">BAG</span>
+<span class="material-symbols-outlined" data-icon="shopping_bag">shopping_bag</span>
+</button>
+</header>
+<!-- Main Content -->
+<main class="flex-grow max-w-7xl mx-auto w-full px-container-margin py-md grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-gutter">
+<!-- Product 1: EUME Messenger Bag -->
+<article class="bg-surface-container-lowest border-grid flex flex-col relative" id="product-card-1">
+<button class="absolute top-2 right-2 bg-white/80 p-1 backdrop-blur-sm z-10 text-on-surface-variant hover:text-on-background transition-colors border-grid">
+<span class="material-symbols-outlined" data-icon="close">close</span>
+</button>
+<div class="aspect-[3/4] relative w-full border-bottom-grid bg-surface-container-low">
+<img class="w-full h-full object-cover" data-alt="A high-fashion studio shot of a sleek, black leather messenger bag, placed on a minimalist white pedestal. Soft, high-key lighting illuminates the bag, emphasizing its premium texture and sharp, structured lines. The background is a stark, pure white studio setting, creating a sophisticated and clean aesthetic suitable for an editorial lookbook." src="https://lh3.googleusercontent.com/aida-public/AB6AXuD5tEbO6L5T8dLO739jjs9KOGTrDX7EaGPlqQancOwRp3HVjCQe8svDXse0bHkLC4OvYjAz3073aJNOzsXDG9kkIpGMOzNk6TxRJiW2Gu58tNMBs2r7_Z2byiq4MTssCQ7x2LJspgL3KMk_txSFeTjCrvpn0FBYC3KBFykqIybXDNl-U_bp9DBH_AN2m08J7gvb2ZqHmHpuiNuKc_V9nyyWo25gqGsItlh6-Jkyopw9TLyinOyTc2PXRA"/>
+</div>
+<div class="p-md flex flex-col flex-grow">
+<div class="mb-sm">
+<h2 class="font-headline-md text-headline-md text-on-background line-clamp-1">EUME</h2>
+<p class="font-body-md text-body-md text-on-surface-variant line-clamp-1">Classic Black Leather Messenger Bag</p>
+</div>
+<div class="flex items-baseline gap-2 mb-md border-bottom-grid pb-md">
+<span class="font-price-main text-price-main text-on-background">₹3,499</span>
+<span class="font-price-strike text-price-strike text-on-surface-variant line-through">₹5,999</span>
+<span class="font-label-caps text-label-caps text-[#ff3f6c]">(41% OFF)</span>
+</div>
+<!-- ValidationHub -->
+<div class="flex flex-col gap-2 mb-md border-bottom-grid pb-md flex-grow" id="validation-hub-1">
+<div class="flex items-start gap-2">
+<span class="material-symbols-outlined text-[#008644] text-sm mt-0.5" data-icon="check_circle">check_circle</span>
+<span class="font-body-md text-body-md text-on-background">7 Days Hassle-Free Return Guaranteed</span>
+</div>
+<button class="flex items-center justify-between p-2 border-grid hover:bg-surface-container-low transition-colors text-left group" onclick="openDateSelector(1)">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-on-surface-variant group-hover:text-primary transition-colors" data-icon="calendar_month">calendar_month</span>
+<span class="font-body-md text-body-md text-on-surface-variant group-hover:text-on-background transition-colors">Need it for an event? <strong class="text-on-background group-hover:text-primary transition-colors">Schedule Delivery</strong></span>
+</div>
+<span class="material-symbols-outlined text-on-surface-variant" data-icon="chevron_right">chevron_right</span>
+</button>
+</div>
+<!-- Committed State (Hidden initially) -->
+<div class="hidden flex-col gap-2 mb-md border-bottom-grid pb-md flex-grow bg-surface-container-low p-2" id="committed-state-1">
+<div class="flex items-start gap-2">
+<span class="material-symbols-outlined text-[#ff3f6c] text-sm mt-0.5" data-icon="lock">lock</span>
+<div class="flex flex-col">
+<span class="font-body-md text-body-md text-on-background font-bold">Guaranteed Delivery on <span class="selected-date-display text-[#ff3f6c]"></span> locked.</span>
+<span class="font-body-md text-body-md text-on-surface-variant text-xs mt-1">Move to Bag in <span class="text-[#ff3f6c] font-bold timer-display">15:00</span> to secure slot.</span>
+</div>
+</div>
+</div>
+<button class="w-full bg-[#ff3f6c] text-white font-label-caps text-label-caps py-3 hover:bg-[#bd0043] transition-colors mt-auto flex items-center justify-center gap-2">
+                    MOVE TO BAG
+                </button>
+</div>
+</article>
+<!-- Product 2: Mango Midi Dress -->
+<article class="bg-surface-container-lowest border-grid flex flex-col relative" id="product-card-2">
+<button class="absolute top-2 right-2 bg-white/80 p-1 backdrop-blur-sm z-10 text-on-surface-variant hover:text-on-background transition-colors border-grid">
+<span class="material-symbols-outlined" data-icon="close">close</span>
+</button>
+<div class="aspect-[3/4] relative w-full border-bottom-grid bg-surface-container-low">
+<img class="w-full h-full object-cover" data-alt="A striking editorial image of a flowing, emerald green Mango midi dress, draped elegantly on a minimalist mannequin. The setting is a bright, airy gallery space with stark white walls and a polished concrete floor. High contrast lighting highlights the rich texture and movement of the fabric, contrasting sharply with the pristine, minimalist environment." src="https://lh3.googleusercontent.com/aida-public/AB6AXuCBBB5S18SCOjoTW2nDMVJuXvPV7fqg_tbsy6Ycd6Ly5QZ5Ho6-ISFTea34p1wRngf9kQaIqf29LLnwJylnjedg78yeJFzyq_20uyRRN56hsz4P9AhPKgtSphmAbzkmCKP9TPsT2J35DKhjuY25ppAQUYeYfGDvORlwjxhdvgc4-7xXODcagVqAaexAVeHX5Qf3nvVBR-gqxwmiHLfkb89aoDTRV-SdSbZCd8wfvBSKuiwa37Zp8EVC6w"/>
+<div class="absolute bottom-2 left-2 bg-[#ffe1e3] border-grid px-2 py-1 flex items-center gap-1">
+<span class="font-label-caps text-label-caps text-[#b90041]">BEST SELLER</span>
+</div>
+</div>
+<div class="p-md flex flex-col flex-grow">
+<div class="mb-sm">
+<h2 class="font-headline-md text-headline-md text-on-background line-clamp-1">MANGO</h2>
+<p class="font-body-md text-body-md text-on-surface-variant line-clamp-1">Emerald Green Flowy Midi Dress</p>
+</div>
+<div class="flex items-baseline gap-2 mb-md border-bottom-grid pb-md">
+<span class="font-price-main text-price-main text-on-background">₹4,590</span>
+</div>
+<!-- ValidationHub -->
+<div class="flex flex-col gap-2 mb-md border-bottom-grid pb-md flex-grow" id="validation-hub-2">
+<div class="flex items-start gap-2">
+<span class="material-symbols-outlined text-[#008644] text-sm mt-0.5" data-icon="check_circle">check_circle</span>
+<span class="font-body-md text-body-md text-on-background">7 Days Hassle-Free Return Guaranteed</span>
+</div>
+<button class="flex items-center justify-between p-2 border-grid hover:bg-surface-container-low transition-colors text-left group" onclick="openDateSelector(2)">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-on-surface-variant group-hover:text-primary transition-colors" data-icon="calendar_month">calendar_month</span>
+<span class="font-body-md text-body-md text-on-surface-variant group-hover:text-on-background transition-colors">Need it for an event? <strong class="text-on-background group-hover:text-primary transition-colors">Schedule Delivery</strong></span>
+</div>
+<span class="material-symbols-outlined text-on-surface-variant" data-icon="chevron_right">chevron_right</span>
+</button>
+</div>
+<!-- Committed State (Hidden initially) -->
+<div class="hidden flex-col gap-2 mb-md border-bottom-grid pb-md flex-grow bg-surface-container-low p-2" id="committed-state-2">
+<div class="flex items-start gap-2">
+<span class="material-symbols-outlined text-[#ff3f6c] text-sm mt-0.5" data-icon="lock">lock</span>
+<div class="flex flex-col">
+<span class="font-body-md text-body-md text-on-background font-bold">Guaranteed Delivery on <span class="selected-date-display text-[#ff3f6c]"></span> locked.</span>
+<span class="font-body-md text-body-md text-on-surface-variant text-xs mt-1">Move to Bag in <span class="text-[#ff3f6c] font-bold timer-display">15:00</span> to secure slot.</span>
+</div>
+</div>
+</div>
+<div class="mb-md">
+<label class="font-label-caps text-label-caps text-on-surface-variant block mb-2">SELECT SIZE</label>
+<div class="grid grid-cols-4 gap-2">
+<button class="border-grid py-2 text-center font-body-md text-body-md hover:border-[#ff3f6c] hover:text-[#ff3f6c] transition-colors focus:border-[#ff3f6c] focus:text-[#ff3f6c]">XS</button>
+<button class="border-grid py-2 text-center font-body-md text-body-md hover:border-[#ff3f6c] hover:text-[#ff3f6c] transition-colors focus:border-[#ff3f6c] focus:text-[#ff3f6c] border-[#ff3f6c] text-[#ff3f6c]">S</button>
+<button class="border-grid py-2 text-center font-body-md text-body-md hover:border-[#ff3f6c] hover:text-[#ff3f6c] transition-colors focus:border-[#ff3f6c] focus:text-[#ff3f6c]">M</button>
+<button class="border-grid py-2 text-center font-body-md text-body-md text-outline-variant relative overflow-hidden" disabled="">
+                            L
+                            <div class="absolute inset-0 border-t border-outline-variant transform rotate-45 scale-150 origin-center top-1/2"></div>
+</button>
+</div>
+</div>
+<button class="w-full bg-[#ff3f6c] text-white font-label-caps text-label-caps py-3 hover:bg-[#bd0043] transition-colors mt-auto flex items-center justify-center gap-2">
+                    MOVE TO BAG
+                </button>
+</div>
+</article>
+<!-- Product 3: Puma Sneakers -->
+<article class="bg-surface-container-lowest border-grid flex flex-col relative" id="product-card-3">
+<button class="absolute top-2 right-2 bg-white/80 p-1 backdrop-blur-sm z-10 text-on-surface-variant hover:text-on-background transition-colors border-grid">
+<span class="material-symbols-outlined" data-icon="close">close</span>
+</button>
+<div class="aspect-[3/4] relative w-full border-bottom-grid bg-surface-container-low flex items-center justify-center">
+<img class="w-full h-full object-cover" data-alt="A clean, minimalist product shot of a pair of pristine white Puma sneakers resting on a stark white geometric block. The lighting is crisp and bright, emphasizing the clean lines and texture of the shoes against a completely white background. The composition is highly structured, creating a premium, architectural look consistent with a high-fashion editorial style." src="https://lh3.googleusercontent.com/aida-public/AB6AXuA2aZehPQpVHEowGU09BeeEUpoZEwsBOp4r28lxWh74EhJOJdLejA45VYSWX68veKcHQ6r_2xJ-FSgautvfLzD1lpcnk66bVapPnZdQuarm1Wil847b3z4sfBq1sdTGMm7cKwp-OmbkK2rtfy0gs11VuQXR329JcD5crOch_an5cb_Xf1nh8Lg9xwHH6fRwQrmxR2fERIKq7vUZoXCCLgbYVbBnDZNJw8Nhhag9qTjf8SfRoeMqWOiXLA"/>
+</div>
+<div class="p-md flex flex-col flex-grow">
+<div class="mb-sm">
+<h2 class="font-headline-md text-headline-md text-on-background line-clamp-1">PUMA</h2>
+<p class="font-body-md text-body-md text-on-surface-variant line-clamp-1">White Classic Sneakers</p>
+</div>
+<div class="flex items-baseline gap-2 mb-md border-bottom-grid pb-md">
+<span class="font-price-main text-price-main text-on-background">₹2,999</span>
+<span class="font-price-strike text-price-strike text-on-surface-variant line-through">₹4,999</span>
+<span class="font-label-caps text-label-caps text-[#ff3f6c]">(40% OFF)</span>
+</div>
+<!-- ValidationHub -->
+<div class="flex flex-col gap-2 mb-md border-bottom-grid pb-md flex-grow" id="validation-hub-3">
+<div class="flex items-start gap-2">
+<span class="material-symbols-outlined text-[#008644] text-sm mt-0.5" data-icon="check_circle">check_circle</span>
+<span class="font-body-md text-body-md text-on-background">7 Days Hassle-Free Return Guaranteed</span>
+</div>
+<button class="flex items-center justify-between p-2 border-grid hover:bg-surface-container-low transition-colors text-left group" onclick="openDateSelector(3)">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-on-surface-variant group-hover:text-primary transition-colors" data-icon="calendar_month">calendar_month</span>
+<span class="font-body-md text-body-md text-on-surface-variant group-hover:text-on-background transition-colors">Need it for an event? <strong class="text-on-background group-hover:text-primary transition-colors">Schedule Delivery</strong></span>
+</div>
+<span class="material-symbols-outlined text-on-surface-variant" data-icon="chevron_right">chevron_right</span>
+</button>
+</div>
+<!-- Committed State (Hidden initially) -->
+<div class="hidden flex-col gap-2 mb-md border-bottom-grid pb-md flex-grow bg-surface-container-low p-2" id="committed-state-3">
+<div class="flex items-start gap-2">
+<span class="material-symbols-outlined text-[#ff3f6c] text-sm mt-0.5" data-icon="lock">lock</span>
+<div class="flex flex-col">
+<span class="font-body-md text-body-md text-on-background font-bold">Guaranteed Delivery on <span class="selected-date-display text-[#ff3f6c]"></span> locked.</span>
+<span class="font-body-md text-body-md text-on-surface-variant text-xs mt-1">Move to Bag in <span class="text-[#ff3f6c] font-bold timer-display">15:00</span> to secure slot.</span>
+</div>
+</div>
+</div>
+<div class="mb-md">
+<label class="font-label-caps text-label-caps text-on-surface-variant block mb-2">SELECT UK SIZE</label>
+<div class="flex gap-2 overflow-x-auto pb-2 no-scrollbar">
+<button class="flex-shrink-0 w-12 h-10 border-grid flex items-center justify-center font-body-md text-body-md hover:border-[#ff3f6c] hover:text-[#ff3f6c] transition-colors focus:border-[#ff3f6c] focus:text-[#ff3f6c]">6</button>
+<button class="flex-shrink-0 w-12 h-10 border-grid flex items-center justify-center font-body-md text-body-md hover:border-[#ff3f6c] hover:text-[#ff3f6c] transition-colors focus:border-[#ff3f6c] focus:text-[#ff3f6c]">7</button>
+<button class="flex-shrink-0 w-12 h-10 border-grid flex items-center justify-center font-body-md text-body-md hover:border-[#ff3f6c] hover:text-[#ff3f6c] transition-colors focus:border-[#ff3f6c] focus:text-[#ff3f6c] border-[#ff3f6c] text-[#ff3f6c]">8</button>
+<button class="flex-shrink-0 w-12 h-10 border-grid flex items-center justify-center font-body-md text-body-md hover:border-[#ff3f6c] hover:text-[#ff3f6c] transition-colors focus:border-[#ff3f6c] focus:text-[#ff3f6c]">9</button>
+<button class="flex-shrink-0 w-12 h-10 border-grid flex items-center justify-center font-body-md text-body-md text-outline-variant relative overflow-hidden" disabled="">
+                            10
+                            <div class="absolute inset-0 border-t border-outline-variant transform rotate-45 scale-150 origin-center top-1/2"></div>
+</button>
+</div>
+</div>
+<button class="w-full bg-[#ff3f6c] text-white font-label-caps text-label-caps py-3 hover:bg-[#bd0043] transition-colors mt-auto flex items-center justify-center gap-2">
+                    MOVE TO BAG
+                </button>
+</div>
+</article>
+</main>
+<!-- BottomNavBar (Mobile Only) -->
+<nav class="bg-surface dark:bg-surface fixed bottom-0 w-full z-50 border-t border-outline-variant dark:border-outline flat no shadows flex justify-around items-center h-14 w-full bg-surface md:hidden">
+<a class="flex flex-col items-center justify-center text-on-surface-variant dark:text-on-surface-variant hover:bg-surface-container-low active:scale-95 transition-transform duration-100 p-2 w-full h-full" href="#">
+<span class="material-symbols-outlined mb-1" data-icon="home">home</span>
+<span class="font-label-caps text-label-caps">Home</span>
+</a>
+<a class="flex flex-col items-center justify-center text-on-surface-variant dark:text-on-surface-variant hover:bg-surface-container-low active:scale-95 transition-transform duration-100 p-2 w-full h-full" href="#">
+<span class="material-symbols-outlined mb-1" data-icon="category">category</span>
+<span class="font-label-caps text-label-caps">Categories</span>
+</a>
+<a class="flex flex-col items-center justify-center text-on-surface-variant dark:text-on-surface-variant hover:bg-surface-container-low active:scale-95 transition-transform duration-100 p-2 w-full h-full" href="#">
+<span class="material-symbols-outlined mb-1" data-icon="movie">movie</span>
+<span class="font-label-caps text-label-caps">Studio</span>
+</a>
+<a class="flex flex-col items-center justify-center text-primary dark:text-primary-fixed-dim font-bold hover:bg-surface-container-low active:scale-95 transition-transform duration-100 p-2 w-full h-full bg-surface-container-low" href="#">
+<span class="material-symbols-outlined mb-1" data-icon="favorite" data-weight="fill">favorite</span>
+<span class="font-label-caps text-label-caps text-primary">Wishlist</span>
+</a>
+<a class="flex flex-col items-center justify-center text-on-surface-variant dark:text-on-surface-variant hover:bg-surface-container-low active:scale-95 transition-transform duration-100 p-2 w-full h-full" href="#">
+<span class="material-symbols-outlined mb-1" data-icon="person">person</span>
+<span class="font-label-caps text-label-caps">Profile</span>
+</a>
+</nav>
+<!-- Overlay & Date Selector Modal -->
+<div class="fixed inset-0 bg-black/40 z-[60]" id="modalOverlay" onclick="closeDateSelector()"></div>
+<div class="fixed bottom-0 left-0 w-full bg-surface z-[70] border-t border-grid max-h-[707px] flex flex-col md:w-96 md:left-1/2 md:-translate-x-1/2 md:bottom-auto md:top-1/2 md:transform md:-translate-y-1/2 md:border-grid shadow-2xl" id="dateSelectorModal">
+<div class="p-md border-bottom-grid flex justify-between items-center bg-surface-container-lowest sticky top-0">
+<h3 class="font-headline-md text-headline-md text-on-background">Schedule Delivery</h3>
+<button class="text-on-surface-variant hover:text-on-background p-1" onclick="closeDateSelector()">
+<span class="material-symbols-outlined" data-icon="close">close</span>
+</button>
+</div>
+<div class="p-md overflow-y-auto">
+<p class="font-body-md text-body-md text-on-surface-variant mb-md">Select a date within the next 7 days to guarantee delivery for your event.</p>
+<div class="grid grid-cols-1 gap-2" id="dateGrid">
+<!-- JavaScript will populate this -->
+</div>
+</div>
+<div class="p-md border-t border-grid bg-surface-container-lowest mt-auto sticky bottom-0">
+<button class="w-full bg-surface-container-highest text-on-surface-variant font-label-caps text-label-caps py-3 transition-colors border-grid" disabled="" id="confirmDateBtn" onclick="confirmDateSelection()">
+                CONFIRM SELECTION
+            </button>
+</div>
+</div>
+<script>
+        let currentProductId = null;
+        let selectedDateText = null;
+        let timers = {};
+
+        function generateDates() {
+            const grid = document.getElementById('dateGrid');
+            const today = new Date();
+            const days = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
+            const months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+            
+            let html = '';
+            for (let i = 1; i <= 7; i++) {
+                const date = new Date(today);
+                date.setDate(today.getDate() + i);
+                
+                const dayName = i === 1 ? 'Tomorrow' : days[date.getDay()];
+                const dateString = `${date.getDate()} ${months[date.getMonth()]}`;
+                const fullDateText = `${dayName}, ${dateString}`;
+                
+                // Add a small extra fee for very fast delivery to simulate reality
+                const feeText = i <= 2 ? '+ ₹99' : 'Standard';
+                const feeClass = i <= 2 ? 'text-on-surface-variant' : 'text-on-surface-variant font-semibold';
+
+                html += `
+                    <button class="date-option border-grid p-3 flex justify-between items-center hover:bg-surface-container-low focus:border-[#ff3f6c] transition-colors text-left" data-date="${fullDateText}">
+                        <div class="flex flex-col">
+                            <span class="font-body-md text-body-md text-on-background font-bold">${dayName}</span>
+                            <span class="font-body-sm text-on-surface-variant text-sm">${dateString}</span>
+                        </div>
+                        <span class="font-label-caps text-label-caps ${feeClass}">${feeText}</span>
+                    </button>
+                `;
+            }
+            grid.innerHTML = html;
+
+            // Add click listeners to options
+            const options = document.querySelectorAll('.date-option');
+            options.forEach(opt => {
+                opt.addEventListener('click', function() {
+                    options.forEach(o => {
+                        o.classList.remove('border-[#ff3f6c]', 'bg-surface-container-low');
+                        o.style.borderWidth = '1px';
+                    });
+                    this.classList.add('border-[#ff3f6c]', 'bg-surface-container-low');
+                    this.style.borderWidth = '2px';
+                    selectedDateText = this.getAttribute('data-date');
+                    
+                    const confirmBtn = document.getElementById('confirmDateBtn');
+                    confirmBtn.disabled = false;
+                    confirmBtn.classList.remove('bg-surface-container-highest', 'text-on-surface-variant');
+                    confirmBtn.classList.add('bg-[#ff3f6c]', 'text-white', 'hover:bg-[#bd0043]');
+                });
+            });
+        }
+
+        function openDateSelector(productId) {
+            currentProductId = productId;
+            document.getElementById('modalOverlay').classList.add('active');
+            
+            // Handle mobile vs desktop centering via class toggle if needed, but CSS handles it mostly.
+            // On desktop we want it centered, mobile bottom sheet.
+            const modal = document.getElementById('dateSelectorModal');
+            if (window.innerWidth >= 768) {
+                // Desktop: It's fixed, we just fade it in (CSS transform handled differently in active class if we wanted, but translateY works for both)
+            }
+            
+            modal.classList.add('active');
+            generateDates();
+            
+            // Reset state
+            selectedDateText = null;
+            const confirmBtn = document.getElementById('confirmDateBtn');
+            confirmBtn.disabled = true;
+            confirmBtn.classList.add('bg-surface-container-highest', 'text-on-surface-variant');
+            confirmBtn.classList.remove('bg-[#ff3f6c]', 'text-white', 'hover:bg-[#bd0043]');
+        }
+
+        function closeDateSelector() {
+            document.getElementById('modalOverlay').classList.remove('active');
+            document.getElementById('dateSelectorModal').classList.remove('active');
+            currentProductId = null;
+        }
+
+        function startTimer(productId) {
+            let timeLeft = 15 * 60; // 15 minutes
+            
+            if (timers[productId]) clearInterval(timers[productId]);
+            
+            const card = document.getElementById(`product-card-${productId}`);
+            const timerDisplay = card.querySelector('.timer-display');
+            
+            timers[productId] = setInterval(() => {
+                timeLeft--;
+                if (timeLeft < 0) {
+                    clearInterval(timers[productId]);
+                    // Reset to normal state if timer expires
+                    document.getElementById(`validation-hub-${productId}`).classList.remove('hidden');
+                    document.getElementById(`validation-hub-${productId}`).classList.add('flex');
+                    document.getElementById(`committed-state-${productId}`).classList.add('hidden');
+                    document.getElementById(`committed-state-${productId}`).classList.remove('flex');
+                    return;
+                }
+                
+                const minutes = Math.floor(timeLeft / 60);
+                const seconds = timeLeft % 60;
+                timerDisplay.textContent = `${minutes}:${seconds.toString().padStart(2, '0')}`;
+            }, 1000);
+        }
+
+        function confirmDateSelection() {
+            if (!currentProductId || !selectedDateText) return;
+
+            const hub = document.getElementById(`validation-hub-${currentProductId}`);
+            const committed = document.getElementById(`committed-state-${currentProductId}`);
+            
+            // Update committed state text
+            const dateDisplay = committed.querySelector('.selected-date-display');
+            dateDisplay.textContent = selectedDateText;
+            
+            // Switch views
+            hub.classList.add('hidden');
+            hub.classList.remove('flex');
+            committed.classList.remove('hidden');
+            committed.classList.add('flex');
+
+            // Style the container border to highlight urgency
+            const card = document.getElementById(`product-card-${currentProductId}`);
+            card.style.borderColor = '#ff3f6c';
+            
+            startTimer(currentProductId);
+            closeDateSelector();
+        }
+
+        // Initialize empty state
+        document.addEventListener('DOMContentLoaded', () => {
+            // Setup generic mobile bottom nav behavior prevention
+            document.querySelectorAll('nav a').forEach(a => {
+                a.addEventListener('click', e => e.preventDefault());
+            });
+        });
+    </script>
+</body></html>

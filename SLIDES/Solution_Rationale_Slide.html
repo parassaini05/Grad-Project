@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Solution Rationale — "Need it By?"</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <style>
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        body { font-family: 'Inter', sans-serif; background: #0f0f1a; display: flex; justify-content: center; align-items: center; min-height: 100vh; padding: 2rem; }
+        .slide { width: 1920px; height: 1080px; background: #0d1117; display: flex; flex-direction: column; overflow: hidden; position: relative; }
+        .slide::before { content: ''; position: absolute; inset: 0; background: radial-gradient(ellipse 900px 600px at 50% 50%, rgba(225,29,72,0.04) 0%, transparent 70%), radial-gradient(ellipse 600px 500px at 10% 80%, rgba(79,70,229,0.05) 0%, transparent 70%); pointer-events: none; }
+        
+        .header { height: 72px; flex-shrink: 0; display: flex; align-items: center; justify-content: space-between; padding: 0 48px; border-bottom: 1px solid rgba(255,255,255,0.07); position: relative; z-index: 2; }
+        .slide-label { font-size: 11px; font-weight: 700; letter-spacing: 2.5px; text-transform: uppercase; color: #e11d48; }
+        .header-title { font-size: 22px; font-weight: 900; color: #f0f4ff; letter-spacing: -0.3px; }
+        
+        .top-strip { height: 50px; display: flex; border-bottom: 1px solid rgba(255,255,255,0.06); background: rgba(255,255,255,0.02); position: relative; z-index: 2; }
+        .strip-item { flex: 1; display: flex; align-items: center; justify-content: center; gap: 10px; font-size: 14px; font-weight: 700; color: #cbd5e1; border-right: 1px solid rgba(255,255,255,0.05); }
+        .strip-item:last-child { border-right: none; }
+        .strip-item span { color: #f43f5e; font-weight: 900; letter-spacing: 1px; text-transform: uppercase; font-size: 12px; }
+
+        .body { flex: 1; display: grid; grid-template-columns: 450px 1fr 400px; position: relative; z-index: 2; }
+        .panel { border-right: 1px solid rgba(255,255,255,0.07); display: flex; flex-direction: column; }
+        .panel:last-child { border-right: none; }
+        
+        .section-header { padding: 18px 24px; background: rgba(255,255,255,0.03); border-bottom: 1px solid rgba(255,255,255,0.07); font-size: 13px; font-weight: 900; color: #e11d48; letter-spacing: 1.5px; text-transform: uppercase; }
+        
+        .content-block { padding: 24px; border-bottom: 1px solid rgba(255,255,255,0.05); }
+        .cb-title { font-size: 16px; font-weight: 800; color: #f8fafc; margin-bottom: 10px; }
+        .cb-text { font-size: 14px; color: #94a3b8; line-height: 1.6; }
+        .cb-text strong { color: #e2e8f0; }
+
+        .dp-item { margin-bottom: 18px; }
+        .dp-item:last-child { margin-bottom: 0; }
+        .dp-title { font-size: 14px; font-weight: 800; color: #818cf8; margin-bottom: 4px; }
+
+        .flow-step { display: flex; gap: 16px; margin-bottom: 24px; }
+        .flow-num { width: 28px; height: 28px; border-radius: 50%; background: rgba(225,29,72,0.15); border: 1px solid rgba(225,29,72,0.4); color: #f43f5e; display: flex; align-items: center; justify-content: center; font-weight: 900; font-size: 13px; flex-shrink: 0; }
+        .flow-text { font-size: 15px; color: #94a3b8; line-height: 1.5; padding-top: 3px; }
+        .flow-text strong { color: #f8fafc; display: block; margin-bottom: 4px; font-size: 16px; }
+
+        .ui-concept { flex: 1; padding: 24px; display: flex; flex-direction: column; align-items: center; justify-content: center; background: radial-gradient(circle at center, rgba(255,255,255,0.03) 0%, transparent 70%); }
+        .phone-mock { width: 340px; height: 500px; background: #fff; border-radius: 24px; border: 8px solid #1e293b; box-shadow: 0 20px 40px rgba(0,0,0,0.5); overflow: hidden; position: relative; }
+        
+        .impact-card { background: linear-gradient(135deg, rgba(5,150,105,0.1), rgba(5,150,105,0.02)); border: 1px solid rgba(5,150,105,0.3); border-radius: 12px; padding: 20px; margin-bottom: 16px; }
+        .ic-title { font-size: 15px; font-weight: 900; color: #34d399; margin-bottom: 8px; display: flex; align-items: center; gap: 8px; }
+        .ic-text { font-size: 14px; color: #cbd5e1; line-height: 1.5; }
+    </style>
+</head>
+<body>
+<div class="slide">
+    <div class="header">
+        <div class="header-left">
+            <div class="slide-label">Solution Rationale</div>
+            <div class="header-title">"Need it By?" — Turning Passive Wishlisting Into Active Delivery Commitment</div>
+        </div>
+    </div>
+    
+    <!-- TOP STRIP -->
+    <div class="top-strip">
+        <div class="strip-item"><span>Target Segment:</span> 68.8% Trust-Gated Shoppers</div>
+        <div class="strip-item"><span>Psychological Lever:</span> Commitment Bias (Zero discount needed)</div>
+    </div>
+
+    <div class="body">
+        <!-- LEFT COLUMN: Problem to Solution -->
+        <div class="panel">
+            <div class="section-header">From Problem To Solution</div>
+            <div class="content-block">
+                <div class="cb-title">The Problem (H2)</div>
+                <div class="cb-text">
+                    How might we help high-intent Myntra wishlist users confidently commit to a purchase by surfacing delivery certainty at the moment of evaluation — before they reach checkout?
+                </div>
+            </div>
+            <div class="content-block" style="background: linear-gradient(180deg, rgba(225,29,72,0.1) 0%, transparent 100%); border-bottom: none;">
+                <div class="cb-title" style="color: #f43f5e;">The Solution</div>
+                <div class="cb-text">
+                    <strong>Let the user name their date on the wishlist card.</strong> The system confirms or denies. Anxiety resolved before checkout.
+                </div>
+            </div>
+            <div class="section-header" style="border-top: 1px solid rgba(255,255,255,0.07);">Design Principles</div>
+            <div class="content-block" style="flex: 1; border-bottom: none;">
+                <div class="dp-item">
+                    <div class="dp-title">P1: Passive to Active</div>
+                    <div class="cb-text">Wishlist is a passive bookmark today. This feature makes it an active scheduling tool — the user declares intent, the platform commits.</div>
+                </div>
+                <div class="dp-item">
+                    <div class="dp-title">P2: Surface Anxiety Pre-Checkout</div>
+                    <div class="cb-text">Delivery date is hidden until checkout. We surface it at the wishlist stage — where the actual decision is made.</div>
+                </div>
+                <div class="dp-item">
+                    <div class="dp-title">P3: Micro-Commitment</div>
+                    <div class="cb-text">Locking in a delivery date creates urgency and confidence, naturally triggering the "Move to Bag" action.</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- MIDDLE COLUMN: Flow & Mockup -->
+        <div class="panel">
+            <div class="section-header" style="color: #f59e0b;">How the feature works - 4 step flow</div>
+            <div class="content-block" style="padding: 32px 32px 16px; border-bottom: none;">
+                <div class="flow-step">
+                    <div class="flow-num">1</div>
+                    <div class="flow-text"><strong>“Need it By?” on Wishlist Card</strong>Injected above 'Move to Bag' — intercepts hesitation at the decision point.</div>
+                </div>
+                <div class="flow-step">
+                    <div class="flow-num">2</div>
+                    <div class="flow-text"><strong>Date Selector Modal</strong>User picks their hard deadline (dates).</div>
+                </div>
+                <div class="flow-step">
+                    <div class="flow-num">3</div>
+                    <div class="flow-text"><strong>Guaranteed Date Confirmed</strong>System checks stock + logistics → Delivery on [Date] — locked in.</div>
+                </div>
+                <div class="flow-step">
+                    <div class="flow-num">4</div>
+                    <div class="flow-text"><strong>15-min Urgency Hook</strong>Move to Bag in 15 mins to secure a slot. Scarcity — no coupon.</div>
+                </div>
+            </div>
+            <div class="section-header" style="color: #a855f7; border-top: 1px solid rgba(255,255,255,0.07);">Wishlist Card - UI Concept</div>
+            <div class="ui-concept">
+                <div class="phone-mock">
+                    <div style="padding:20px; font-family:sans-serif; color:#000;">
+                        <!-- Placeholder mock UI -->
+                        <div style="width:100%; height:240px; background:#f1f5f9; border-radius:12px; margin-bottom:16px; display:flex; align-items:center; justify-content:center; color:#94a3b8;">[Product Image]</div>
+                        <div style="font-size:18px; font-weight:900; margin-bottom:8px;">DUME Commute Bag</div>
+                        <div style="font-size:16px; font-weight:bold; margin-bottom:20px; color:#334155;">₹1,999</div>
+                        
+                        <!-- MVP Feature Highlight -->
+                        <div style="background:#fff1f2; border:2px solid #fda4af; padding:16px; border-radius:10px; display:flex; justify-content:space-between; align-items:center; cursor:pointer; box-shadow: 0 4px 12px rgba(225,29,72,0.1);">
+                            <div>
+                                <div style="color:#e11d48; font-weight:900; font-size:15px; margin-bottom:4px;">Need it by a specific date?</div>
+                                <div style="color:#f43f5e; font-size:12px; font-weight:600;">📅 Schedule Delivery</div>
+                            </div>
+                            <span style="color:#e11d48; font-weight:bold; font-size:18px;">→</span>
+                        </div>
+                        
+                        <div style="width:100%; text-align:center; padding:16px; border: 1px solid #e2e8f0; border-radius:8px; margin-top:20px; color:#f43f5e; font-weight:bold;">MOVE TO BAG</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- RIGHT COLUMN: Business Impact -->
+        <div class="panel">
+            <div class="section-header" style="color: #10b981;">Business Impact</div>
+            <div class="content-block" style="flex: 1; padding: 24px; border-bottom: none;">
+                <div class="impact-card">
+                    <div class="ic-title">📈 Unlocks Idle Demand</div>
+                    <div class="ic-text">Converts high-intent shoppers (68.8%) currently stuck in the Wishlist.</div>
+                </div>
+                <div class="impact-card">
+                    <div class="ic-title">↩️ Reduces Returns</div>
+                    <div class="ic-text">Upfront delivery confirmation prevents rushed, unverified purchases.</div>
+                </div>
+                <div class="impact-card">
+                    <div class="ic-title">🛡️ Plugs Competitor Leakage</div>
+                    <div class="ic-text">Stops the 40% of users leaving to check Amazon/Ajio for faster dates.</div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>

@@ -1,0 +1,403 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Risks &amp; Mitigations — "Need it By?" MVP</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <style>
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: #0f0f1a;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            padding: 2rem;
+        }
+
+        /* SLIDE CANVAS */
+        .slide {
+            width: 1920px;
+            height: 1080px;
+            background: #0d1117;
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .slide::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background:
+                radial-gradient(ellipse 800px 600px at 15% 50%, rgba(245,158,11,0.05) 0%, transparent 70%),
+                radial-gradient(ellipse 600px 500px at 85% 20%, rgba(225,29,72,0.05) 0%, transparent 70%),
+                radial-gradient(ellipse 500px 400px at 70% 80%, rgba(59,130,246,0.04) 0%, transparent 70%);
+            pointer-events: none;
+        }
+
+        /* HEADER */
+        .header {
+            height: 88px;
+            flex-shrink: 0;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 52px;
+            border-bottom: 1px solid rgba(255,255,255,0.07);
+            position: relative;
+            z-index: 2;
+        }
+        .header-left { display: flex; flex-direction: column; gap: 4px; }
+        .slide-label {
+            font-size: 12px; font-weight: 700; letter-spacing: 2.5px;
+            text-transform: uppercase; color: #f59e0b;
+        }
+        .header-title {
+            font-size: 26px; font-weight: 900; color: #f0f4ff; letter-spacing: -0.3px;
+        }
+        .header-badge {
+            background: linear-gradient(135deg, rgba(245,158,11,0.15), rgba(245,158,11,0.06));
+            border: 1px solid rgba(245,158,11,0.3);
+            border-radius: 8px;
+            padding: 8px 20px;
+            font-size: 13px;
+            font-weight: 700;
+            color: #fbbf24;
+            letter-spacing: 0.5px;
+        }
+
+        /* RISK SUMMARY STRIP */
+        .risk-strip {
+            height: 52px;
+            display: flex;
+            border-bottom: 1px solid rgba(255,255,255,0.06);
+            background: rgba(255,255,255,0.02);
+            position: relative;
+            z-index: 2;
+            flex-shrink: 0;
+        }
+        .strip-risk {
+            flex: 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            font-size: 13px;
+            font-weight: 700;
+            border-right: 1px solid rgba(255,255,255,0.05);
+        }
+        .strip-risk:last-child { border-right: none; }
+        .strip-dot {
+            width: 8px; height: 8px; border-radius: 50%; flex-shrink: 0;
+        }
+        .dot-high { background: #ef4444; box-shadow: 0 0 8px rgba(239,68,68,0.6); }
+        .dot-med  { background: #f59e0b; box-shadow: 0 0 8px rgba(245,158,11,0.6); }
+        .dot-med-high { background: #f97316; box-shadow: 0 0 8px rgba(249,115,22,0.6); }
+        .strip-label { color: #94a3b8; font-size: 12px; font-weight: 500; }
+        .strip-title { color: #e2e8f0; }
+
+        /* BODY GRID */
+        .body {
+            flex: 1;
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr 1fr;
+            position: relative;
+            z-index: 2;
+        }
+
+        /* RISK CARD */
+        .risk-card {
+            display: flex;
+            flex-direction: column;
+            border-right: 1px solid rgba(255,255,255,0.06);
+            position: relative;
+            overflow: hidden;
+        }
+        .risk-card:last-child { border-right: none; }
+
+        .risk-card::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0;
+            width: 4px; height: 100%;
+        }
+        .risk-card.high::before   { background: linear-gradient(180deg, #ef4444, #dc2626); }
+        .risk-card.med::before    { background: linear-gradient(180deg, #f59e0b, #d97706); }
+        .risk-card.med-h::before  { background: linear-gradient(180deg, #f97316, #ea580c); }
+
+        /* Risk header */
+        .rc-header {
+            padding: 24px 24px 20px 32px;
+            border-bottom: 1px solid rgba(255,255,255,0.06);
+            background: rgba(255,255,255,0.02);
+        }
+        .rc-number {
+            font-size: 11px; font-weight: 700; letter-spacing: 2px;
+            text-transform: uppercase; margin-bottom: 8px;
+        }
+        .high  .rc-number { color: #f87171; }
+        .med   .rc-number { color: #fbbf24; }
+        .med-h .rc-number { color: #fb923c; }
+
+        .rc-title {
+            font-size: 18px; font-weight: 900; color: #f0f4ff;
+            line-height: 1.3; margin-bottom: 10px;
+        }
+        .impact-badge {
+            display: inline-flex; align-items: center; gap: 6px;
+            padding: 3px 10px; border-radius: 4px;
+            font-size: 11px; font-weight: 700; letter-spacing: 1px; text-transform: uppercase;
+        }
+        .badge-high  { background: rgba(239,68,68,0.15);  color: #fca5a5; border: 1px solid rgba(239,68,68,0.3); }
+        .badge-med   { background: rgba(245,158,11,0.15); color: #fde68a; border: 1px solid rgba(245,158,11,0.3); }
+        .badge-med-h { background: rgba(249,115,22,0.15); color: #fed7aa; border: 1px solid rgba(249,115,22,0.3); }
+
+        /* Why it might fail */
+        .rc-why {
+            padding: 18px 24px 14px 32px;
+            border-bottom: 1px solid rgba(255,255,255,0.05);
+        }
+        .section-label {
+            font-size: 10px; font-weight: 700; letter-spacing: 1.5px;
+            text-transform: uppercase; color: #475569; margin-bottom: 7px;
+        }
+        .rc-why-text {
+            font-size: 13px; color: #94a3b8; line-height: 1.6;
+        }
+
+        /* Guardrail link */
+        .rc-guardrail {
+            padding: 12px 24px 12px 32px;
+            border-bottom: 1px solid rgba(255,255,255,0.05);
+            display: flex; align-items: flex-start; gap: 10px;
+        }
+        .guardrail-pill {
+            font-size: 11px; font-weight: 700; color: #818cf8;
+            background: rgba(129,140,248,0.1);
+            border: 1px solid rgba(129,140,248,0.2);
+            border-radius: 4px; padding: 2px 8px;
+            white-space: nowrap; flex-shrink: 0;
+            margin-top: 1px;
+        }
+        .guardrail-text {
+            font-size: 12px; color: #64748b; line-height: 1.5;
+        }
+
+        /* Mitigation plan */
+        .rc-mitigation {
+            flex: 1;
+            padding: 16px 24px 20px 32px;
+        }
+        .rc-mit-label {
+            font-size: 10px; font-weight: 700; letter-spacing: 1.5px;
+            text-transform: uppercase; color: #10b981; margin-bottom: 12px;
+            display: flex; align-items: center; gap: 6px;
+        }
+        .rc-mit-label::before {
+            content: ''; width: 16px; height: 2px;
+            background: #10b981; border-radius: 1px;
+        }
+        .mit-step {
+            display: flex; gap: 12px; margin-bottom: 12px;
+        }
+        .mit-step:last-child { margin-bottom: 0; }
+        .mit-bullet {
+            width: 20px; height: 20px; border-radius: 50%;
+            background: rgba(16,185,129,0.12);
+            border: 1px solid rgba(16,185,129,0.3);
+            color: #34d399; font-size: 10px; font-weight: 900;
+            display: flex; align-items: center; justify-content: center;
+            flex-shrink: 0; margin-top: 1px;
+        }
+        .mit-text {
+            font-size: 13px; color: #94a3b8; line-height: 1.55;
+        }
+        .mit-text strong {
+            color: #e2e8f0; display: block; margin-bottom: 2px; font-size: 13px;
+        }
+
+        /* FOOTER */
+        .footer {
+            height: 52px; border-top: 1px solid rgba(255,255,255,0.07);
+            display: flex; align-items: center; padding: 0 52px; gap: 16px;
+            flex-shrink: 0; position: relative; z-index: 2;
+            background: rgba(0,0,0,0.3);
+        }
+        .footer-tag {
+            background: linear-gradient(135deg, rgba(16,185,129,0.15), rgba(16,185,129,0.06));
+            border: 1px solid rgba(16,185,129,0.25); border-radius: 6px;
+            padding: 4px 14px; font-size: 12px; font-weight: 700; color: #34d399;
+            white-space: nowrap;
+        }
+        .footer-text { font-size: 13px; color: #475569; }
+        .footer-text strong { color: #64748b; }
+    </style>
+</head>
+<body>
+<div class="slide">
+
+    <!-- HEADER -->
+    <div class="header">
+        <div class="header-left">
+            <div class="slide-label">Risk Management</div>
+            <div class="header-title">Risks &amp; Mitigation — "Need it By?" Delivery Selector</div>
+        </div>
+        <div class="header-badge">4 Identified Failure Points</div>
+    </div>
+
+    <!-- RISK SUMMARY STRIP -->
+    <div class="risk-strip">
+        <div class="strip-risk">
+            <div class="strip-dot dot-high"></div>
+            <span class="strip-title">The Broken Promise</span>
+            <span class="strip-label">Impact: High</span>
+        </div>
+        <div class="strip-risk">
+            <div class="strip-dot dot-med"></div>
+            <span class="strip-title">UI Clutter &amp; Overload</span>
+            <span class="strip-label">Impact: Medium</span>
+        </div>
+        <div class="strip-risk">
+            <div class="strip-dot dot-med-high"></div>
+            <span class="strip-title">Artificial Urgency Backlash</span>
+            <span class="strip-label">Impact: Medium–High</span>
+        </div>
+        <div class="strip-risk">
+            <div class="strip-dot dot-high"></div>
+            <span class="strip-title">API / Technical Latency</span>
+            <span class="strip-label">Impact: High</span>
+        </div>
+    </div>
+
+    <!-- BODY: 4 RISK CARDS -->
+    <div class="body">
+
+        <!-- RISK 1: Broken Promise -->
+        <div class="risk-card high">
+            <div class="rc-header">
+                <div class="rc-number">Risk 01 · Logistics</div>
+                <div class="rc-title">The "Broken Promise"<br>Logistics Failure</div>
+                <span class="impact-badge badge-high">&#9888; High Impact</span>
+            </div>
+            <div class="rc-why">
+                <div class="section-label">Why it might fail</div>
+                <div class="rc-why-text">A supply chain delay breaks our guaranteed promise. For the <strong>68.8%</strong> of users who are "Trust-Gated", this validates their fears and triggers permanent churn.</div>
+            </div>
+            <div class="rc-guardrail">
+                <div class="guardrail-pill">Guardrail</div>
+                <div class="guardrail-text">On-Time Delivery Rate</div>
+            </div>
+            <div class="rc-mitigation">
+                <div class="rc-mit-label">Mitigation Plan</div>
+                <div class="mit-step">
+                    <div class="mit-bullet">1</div>
+                    <div class="mit-text"><strong>Algorithmic Padding</strong>Only offer dates with a <strong>&gt;98% historical success rate</strong> for that specific route.</div>
+                </div>
+                <div class="mit-step">
+                    <div class="mit-bullet">2</div>
+                    <div class="mit-text"><strong>Proactive Recovery</strong>If delay detected, trigger pre-emptive WhatsApp apology + <strong>₹500</strong> Myntra cash.</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- RISK 2: UI Clutter -->
+        <div class="risk-card med">
+            <div class="rc-header">
+                <div class="rc-number">Risk 02 · UX Design</div>
+                <div class="rc-title">UI Clutter &amp;<br>Cognitive Overload</div>
+                <span class="impact-badge badge-med">&#9670; Medium Impact</span>
+            </div>
+            <div class="rc-why">
+                <div class="section-label">Why it might fail</div>
+                <div class="rc-why-text">Adding a calendar to every card could overwhelm the clean UI. This risks dropping engagement from the <strong>53.3%</strong> of users who use Wishlist for casual browsing.</div>
+            </div>
+            <div class="rc-guardrail">
+                <div class="guardrail-pill">Guardrail</div>
+                <div class="guardrail-text">Wishlist Addition Rate</div>
+            </div>
+            <div class="rc-mitigation">
+                <div class="rc-mit-label">Mitigation Plan</div>
+                <div class="mit-step">
+                    <div class="mit-bullet">1</div>
+                    <div class="mit-text"><strong>Progressive Disclosure</strong>Hide the full calendar by default. Only show a subtle "Need it by?" text trigger until clicked.</div>
+                </div>
+                <div class="mit-step">
+                    <div class="mit-bullet">2</div>
+                    <div class="mit-text"><strong>Visual Hierarchy</strong>A/B test the UI to ensure product imagery remains the dominant focus over the logistics tools.</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- RISK 3: Artificial Urgency Backlash -->
+        <div class="risk-card med-h">
+            <div class="rc-header">
+                <div class="rc-number">Risk 03 · Behavioural</div>
+                <div class="rc-title">The "Artificial Urgency"<br>Backlash</div>
+                <span class="impact-badge badge-med-h">&#9650; Medium–High Impact</span>
+            </div>
+            <div class="rc-why">
+                <div class="section-label">Why it might fail</div>
+                <div class="rc-why-text">The 15-minute lock-in timer might feel like a manipulative dark pattern. Gen Z users are highly sensitive to forced urgency and may abandon the bag out of spite.</div>
+            </div>
+            <div class="rc-guardrail">
+                <div class="guardrail-pill">Guardrail</div>
+                <div class="guardrail-text">Bag Abandonment Rate (Post-Date Lock)</div>
+            </div>
+            <div class="rc-mitigation">
+                <div class="rc-mit-label">Mitigation Plan</div>
+                <div class="mit-step">
+                    <div class="mit-bullet">1</div>
+                    <div class="mit-text"><strong>Logistics-Framed Copy</strong><em>"To secure this slot with our courier, move to bag in 15 mins."</em> (Never use "Hurry! Buy now!").</div>
+                </div>
+                <div class="mit-step">
+                    <div class="mit-bullet">2</div>
+                    <div class="mit-text"><strong>Soft Expiration</strong>If timer lapses, simply say <em>"Slot expired — select a new date."</em> No pressure, no penalties.</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- RISK 4: API Latency -->
+        <div class="risk-card high">
+            <div class="rc-header">
+                <div class="rc-number">Risk 04 · Technical</div>
+                <div class="rc-title">API / Technical<br>Latency</div>
+                <span class="impact-badge badge-high">&#9888; High Impact</span>
+            </div>
+            <div class="rc-why">
+                <div class="section-label">Why it might fail</div>
+                <div class="rc-why-text">Calculating dates via real-time inventory and pincodes adds lag. Every 100ms of delay in e-commerce drastically increases bounce rates.</div>
+            </div>
+            <div class="rc-guardrail">
+                <div class="guardrail-pill">Guardrail</div>
+                <div class="guardrail-text">API Latency (&lt;300ms p95 Target)</div>
+            </div>
+            <div class="rc-mitigation">
+                <div class="rc-mit-label">Mitigation Plan</div>
+                <div class="mit-step">
+                    <div class="mit-bullet">1</div>
+                    <div class="mit-text"><strong>Async Loading</strong>Render Wishlist instantly. Fetch dates asynchronously using skeleton loaders.</div>
+                </div>
+                <div class="mit-step">
+                    <div class="mit-bullet">2</div>
+                    <div class="mit-text"><strong>Edge Caching</strong>Cache delivery timeframes for regional hubs to avoid complex supply chain queries per item.</div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <!-- FOOTER -->
+    <div class="footer">
+        <div class="footer-tag">Risk-Aware Rollout</div>
+        <div class="footer-text">
+            Each risk has a <strong>linked guardrail metric</strong> — if any threshold is breached post-launch, rollout pauses and the corresponding mitigation is activated.
+        </div>
+    </div>
+
+</div>
+</body>
+</html>
